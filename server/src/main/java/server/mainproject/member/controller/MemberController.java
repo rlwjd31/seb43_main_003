@@ -33,6 +33,11 @@ public class MemberController {
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
         Member member = mapper.memberPostDtoToMember(requestBody);
 
+        if (memberRepository.existsByEmail(requestBody.getEmail())) {
+            String errorMessage = "이메일 중복! 다른 이메일을 사용해주세요!";
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+        }
+
         Member createdMember = memberService.createMember(member);
 
         return new ResponseEntity<>(

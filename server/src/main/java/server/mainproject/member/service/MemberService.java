@@ -18,10 +18,6 @@ public class MemberService {
 
     public Member createMember(Member member) {
 
-        if (memberRepository.findByMemberId(member.getMemberId()).getEmail().equals(member.getEmail())) {
-            throw new BusinessLogicException(ExceptionCode.EMAIL_EXIST);
-        }
-
         return memberRepository.save(member);
     }
 
