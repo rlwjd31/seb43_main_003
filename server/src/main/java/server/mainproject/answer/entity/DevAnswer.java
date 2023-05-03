@@ -20,6 +20,6 @@ public class DevAnswer {
     private long devAnswerId;
     private String content;
     private int review;  // 별점
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime modifiedAt = LocalDateTime.now();
 }
