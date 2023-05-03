@@ -16,7 +16,6 @@ public class DevAnswerDto {
     public static class PostDevAnswer {
         @NotBlank
         private String content;
-        @NotBlank
         private int review;
     }
 
