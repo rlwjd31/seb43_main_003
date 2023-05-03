@@ -2,9 +2,12 @@ package server.mainproject.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import server.mainproject.post.dto.PostDto;
+import server.mainproject.post.entity.Likes;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 public class MemberDto {
     @Getter
@@ -34,5 +37,7 @@ public class MemberDto {
         private String userName;
         private String nickName;
         private String profileImage;
+//        private List<Likes> likesList;
+        private List<PostDto.Response> postList;
     }
 }
