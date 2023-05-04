@@ -79,6 +79,8 @@ public class PostService {
 
         Optional.ofNullable(post.getLink()).ifPresent(link -> find.setLink(link));
 
+        find.setUserName(member.getUserName());
+
         return repository.save(find);
     }
     @Transactional(readOnly = true)
