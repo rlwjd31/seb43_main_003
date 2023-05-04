@@ -33,8 +33,11 @@ public class Post extends Auditable {
     @Column
     private int likes;
 
-    @Column
+    @Column(nullable = false)
     private int review;
+
+    @Column
+    private double allReviews;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Likes> likesList = new ArrayList<>();
@@ -44,6 +47,6 @@ public class Post extends Auditable {
     private Member member;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<DevAnswer> answerList = new ArrayList<>();
+    private List<DevAnswer> answers = new ArrayList<>();
 
 }

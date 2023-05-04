@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import server.mainproject.answer.entity.DevAnswer;
 import server.mainproject.exception.BusinessLogicException;
 import server.mainproject.exception.ExceptionCode;
 import server.mainproject.member.entity.Member;
@@ -16,6 +17,8 @@ import server.mainproject.post.entity.Post;
 import server.mainproject.post.repository.LikesRepository;
 import server.mainproject.post.repository.PostRepository;
 
+import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -85,13 +88,47 @@ public class PostService {
     }
     @Transactional(readOnly = true)
     public Post findPost (long postId) {
-        return existsPost(postId);
+        Post post = existsPost(postId);
+
+        double answersReview = post.getAnswers()
+                .stream()
+                .filter(id -> id.getPost().getPostId() == postId)
+                .map(review -> review.getReview())
+                .mapToDouble(avr -> avr)
+                .average()
+                .orElse(0.0);
+
+        DecimalFormat df = new DecimalFormat("#.#");
+        String formattedReview = df.format(answersReview);
+        double roundedReview = Double.parseDouble(formattedReview);
+
+        post.setAllReviews(roundedReview);
+
+        return post;
     }
     // 최신글 순으로 조회
     @Transactional(readOnly = true)
     public Page<Post> findAllPost (int page, int size) {
 
-        return repository.findAll(PageRequest.of(page, size, Sort.by("postId").descending()));
+       Page<Post> posts = repository.findAll(PageRequest.of(page, size, Sort.by("postId").descending()));
+
+        DecimalFormat df = new DecimalFormat("#.#");
+
+       posts.forEach(post -> {
+           double reviews = post.getAnswers()
+                .stream()
+                .filter(answer -> answer.getPost().getPostId() == post.getPostId())
+                   .mapToDouble(DevAnswer::getReview)
+                        .average()
+                   .orElse(0.0);
+
+           String format = df.format(reviews);
+           double roundedReview = Double.parseDouble(format);
+
+           post.setAllReviews(roundedReview);
+               });
+
+       return posts;
     }
     // 회원 마이페이지에서 게시물 다 보기 추가
 

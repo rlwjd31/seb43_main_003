@@ -1,5 +1,6 @@
 package server.mainproject.post.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import server.mainproject.answer.dto.DevAnswerDto;
@@ -46,8 +47,8 @@ public class PostDto {
             return member;
         }
     }
-    @Getter
-    @Setter
+    @Getter @Setter
+    @AllArgsConstructor
     public static class Response {
         private long postId;
         private String title;
@@ -55,9 +56,9 @@ public class PostDto {
         private String userName;
         private String link;
         private int review; // todo : 평점/별점 구하는 알고리즘 알아보기 (인터페이스 구현) 아마도
-        private int allReviews; // todo : 댓글 단 사람들의 평점 댓글이랑 매핑 후 인터페이스 적용.
+        private double allReviews; // todo : 댓글 단 사람들의 평점 댓글이랑 매핑 후 인터페이스 적용.
         private int likes;
-        private List<DevAnswerDto.ResponseDevAnswer> answerList;
+        private List<DevAnswerDto.ResponseDevAnswer> answers;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
