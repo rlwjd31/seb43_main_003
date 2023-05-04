@@ -72,7 +72,7 @@ public class MemberController {
     public ResponseEntity getMembers() {
         List<Member> members = memberService.findMembers();
         return new ResponseEntity<>(
-                mapper.membersToMemberReponseDtos(members),
+                new SingleResponse<>(mapper.membersToMemberReponseDtos(members)),
                 HttpStatus.OK);
     }
 

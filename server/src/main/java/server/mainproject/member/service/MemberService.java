@@ -53,5 +53,12 @@ public class MemberService {
         memberRepository.deleteById(memberId);
     }
 
+    public Member verifiedMember(long memberId) {
+        Optional<Member> optional = memberRepository.findById(memberId);
+        Member findId = optional.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        return findId;
+    }
+
 
 }
