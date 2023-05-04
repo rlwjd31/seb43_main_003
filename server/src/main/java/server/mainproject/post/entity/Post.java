@@ -3,6 +3,7 @@ package server.mainproject.post.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import server.mainproject.answer.entity.DevAnswer;
 import server.mainproject.audit.Auditable;
 import server.mainproject.member.entity.Member;
 
@@ -41,5 +42,8 @@ public class Post extends Auditable {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<DevAnswer> answerList = new ArrayList<>();
 
 }

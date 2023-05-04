@@ -49,7 +49,7 @@ public class DevAnswerService {
     }
 
     public DevAnswer findVerifiedDevAnswer(long devAnswerId) {  // 해당 댓글의 존재 유무 체크
-        DevAnswer devAnswer = devAnswerRepository.findByDevAnswerId(devAnswerId)
+        DevAnswer devAnswer = devAnswerRepository.findById(devAnswerId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
 
         return devAnswer;

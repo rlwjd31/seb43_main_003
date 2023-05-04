@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import server.mainproject.member.entity.Member;
+import server.mainproject.post.entity.Post;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class DevAnswerDto {
     public static class PostDevAnswer {
         //Todo : 추가
         private long memberId;
+        private long postId;
         @NotBlank
         private String content;
         private int review;
@@ -28,6 +30,13 @@ public class DevAnswerDto {
 
             return member;
         }
+
+        public Post getPost () {
+            Post post = new Post();
+            post.setPostId(postId);
+
+            return post;
+        }
     }
 
     @Getter
@@ -36,6 +45,7 @@ public class DevAnswerDto {
     public static class PatchDevAnswer {
         //Todo : 추가
         private long memberId;
+        private long postId;
         private long devAnswerId;
         @NotBlank
         private String content;
@@ -49,11 +59,22 @@ public class DevAnswerDto {
 
             return member;
         }
+
+        public Post getPost () {
+            Post post = new Post();
+            post.setPostId(postId);
+
+            return post;
+        }
     }
 
     @Getter
     @Setter
     public static class ResponseDevAnswer {
+        private long memberId;
+        private String nickName;
+        private String profileImage;
+        private long postId;
         private long devAnswerId;
         private String content;
         private int review;
