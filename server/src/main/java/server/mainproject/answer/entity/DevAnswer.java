@@ -3,11 +3,9 @@ package server.mainproject.answer.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import server.mainproject.member.entity.Member;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -22,4 +20,9 @@ public class DevAnswer {
     private int review;  // 별점
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime modifiedAt = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "memberId")
+    private Member member;
+
 }

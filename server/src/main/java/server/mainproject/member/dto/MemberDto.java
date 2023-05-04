@@ -2,11 +2,13 @@ package server.mainproject.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import server.mainproject.answer.dto.DevAnswerDto;
 import server.mainproject.post.dto.PostDto;
 import server.mainproject.post.entity.Likes;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MemberDto {
@@ -39,5 +41,8 @@ public class MemberDto {
         private String profileImage;
 //        private List<Likes> likesList;
         private List<PostDto.Response> postList;
+        private List<DevAnswerDto.ResponseDevAnswer> answerList;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
     }
 }
