@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import server.mainproject.answer.dto.DevAnswerDto;
 import server.mainproject.member.entity.Member;
+import server.mainproject.tag.Tag;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,13 +15,15 @@ import java.util.List;
 public class PostDto {
     @Getter
     public static class Post {
-        private long memberId;
+        private Long memberId;
         @NotBlank
         private String title;
         @NotBlank
         private String content;
-        private int review;
+        private int star;
         private String link;
+
+        private List<String> tag;   // 리스트로 받아서
 
         public Member getMember () {
             Member member = new Member();
@@ -33,11 +35,11 @@ public class PostDto {
     @Getter
     @Setter
     public static class Patch {
-        private long postId;
-        private long memberId;
+        private Long postId;
+        private Long memberId;
         private String title;
         private String content;
-        private int review;
+        private int star;
         private String link;
 
         public Member getMember () {
@@ -50,14 +52,15 @@ public class PostDto {
     @Getter @Setter
     @AllArgsConstructor
     public static class Response {
-        private long postId;
+        private Long postId;
         private String title;
         private String content;
         private String userName;
         private String link;
-        private int review; // todo : 평점/별점 구하는 알고리즘 알아보기 (인터페이스 구현) 아마도
-        private double allReviews; // todo : 댓글 단 사람들의 평점 댓글이랑 매핑 후 인터페이스 적용.
+        private int star;
+        private double starAvg;
         private int likes;
+        private List<Tag> tags;
         private List<DevAnswerDto.ResponseDevAnswer> answers;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

@@ -6,17 +6,20 @@ import lombok.Setter;
 import server.mainproject.answer.entity.DevAnswer;
 import server.mainproject.audit.Auditable;
 import server.mainproject.member.entity.Member;
+import server.mainproject.tag.Post_Tag;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity @Getter @Setter
 @NoArgsConstructor
 public class Post extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long postId;
+    private Long postId;
 
     @Column(nullable = false)
     private String title;
@@ -39,6 +42,9 @@ public class Post extends Auditable {
     @Column
     private double allReviews;
 
+    @Transient
+    private List<String> tags;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Likes> likesList = new ArrayList<>();
 
@@ -48,5 +54,8 @@ public class Post extends Auditable {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<DevAnswer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
+    private Set<Post_Tag> postTags = new HashSet<>();
 
 }

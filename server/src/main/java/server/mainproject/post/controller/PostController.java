@@ -12,11 +12,14 @@ import server.mainproject.post.entity.Post;
 import server.mainproject.post.mapper.PostMapper;
 import server.mainproject.post.service.PostService;
 import server.mainproject.response.MultiResponse;
+import server.mainproject.tag.Tag;
+import server.mainproject.tag.TagRepository;
 import server.mainproject.utils.URICreator;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 // todo : 회원이 탈퇴되도 글은 유지.
@@ -27,11 +30,24 @@ import java.util.List;
 public class PostController {
     private final PostService service;
     private final PostMapper mapper;
+    private final TagRepository tagRepository;
 
     @PostMapping
     public ResponseEntity postPost (@RequestBody @Valid PostDto.Post post) {
 
-        Post create = service.createdPost(mapper.postToEntity(post));
+        Post mappPost = mapper.postToEntity(post);
+        List<Tag> tags = new ArrayList<>();
+
+        for (String tagName : post.getTag()) {
+            Tag tag = tagRepository.findByName(tagName);
+            if (tag == null) {
+                tag = new Tag(tagName);
+                tagRepository.save(tag);
+            }
+            tags.add(tag);
+        }
+
+        Post create = service.createdPost(mappPost, tags);
         URI uri = URICreator.createUri("/post", create.getPostId());
 
         return ResponseEntity.created(uri).build();
@@ -47,12 +63,21 @@ public class PostController {
 
         return new ResponseEntity(mapper.EntityToResponse(update), HttpStatus.OK);
     }
-    // TODO : 전체 조회 시 ID 낮은 순(최신글) 과 평점 순 으로 나눠짐.
-    @GetMapping // page : 1 size : 9-16 1페이지에 9-16 개 정도의 게시물. 일단 16으로
-    public ResponseEntity getAllPost (@RequestParam(defaultValue = "1") @Positive int page,
-                                      @RequestParam(defaultValue = "16") @Positive int size) {
+    // 최신 글 순
+    @GetMapping("/new_post") // page : 1 size : 9-16 1페이지에 9-16 개 정도의 게시물. 일단 16으로
+    public ResponseEntity getAllNewPost(@RequestParam(defaultValue = "1") @Positive int page,
+                                        @RequestParam(defaultValue = "16") @Positive int size) {
 
         Page<Post> posts = service.findAllPost (page -1, size);
+        List<Post> list = posts.getContent();
+
+        return new ResponseEntity(new MultiResponse<>(mapper.ListResponse(list), posts), HttpStatus.OK);
+    }
+    // 평점이 높은 순
+    @GetMapping("/top_review")
+    public ResponseEntity getAllTopPost (@RequestParam(defaultValue = "1") @Positive int page,
+                                         @RequestParam(defaultValue = "16") @Positive int size) {
+        Page<Post> posts = service.findAllTopPost (page -1, size);
         List<Post> list = posts.getContent();
 
         return new ResponseEntity(new MultiResponse<>(mapper.ListResponse(list), posts), HttpStatus.OK);
@@ -72,17 +97,16 @@ public class PostController {
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-    @PostMapping("/{post-id}/likes/{member-id}")
+    @PostMapping("/{post-id}/likes/{member-id}")    // todo : security 적용 후 member 제거
     public ResponseEntity likesPost (@PathVariable("post-id") @Positive long postId,
                                      @PathVariable("member-id") @Positive long memberId) {
 
         Likes create = service.createLikes(postId, memberId);
-//        URI uri = URICreator.createUri("/post/{post-id}/likes/{member-id}", create.getLikesId());
 
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{post-id}/likes/{member-id}")
+    @DeleteMapping("/{post-id}/likes/{member-id}")      // todo : member 제거
     public ResponseEntity unLikesPost (@PathVariable("post-id") @Positive long postId,
                                        @PathVariable("member-id") @Positive long memberId) {
 

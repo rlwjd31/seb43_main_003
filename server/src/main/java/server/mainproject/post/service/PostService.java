@@ -3,6 +3,7 @@ package server.mainproject.post.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,12 @@ import server.mainproject.post.entity.Likes;
 import server.mainproject.post.entity.Post;
 import server.mainproject.post.repository.LikesRepository;
 import server.mainproject.post.repository.PostRepository;
+import server.mainproject.tag.Post_Tag;
+import server.mainproject.tag.Tag;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,13 +36,19 @@ public class PostService {
     private final LikesRepository likesRepository;
     private final MemberService memberService;
 
-    public Post createdPost (Post post) {
+    public Post createdPost (Post post, List<Tag> tags) {
 
         Member member = memberService.verifiedMember(post.getMember().getMemberId());
         post.setUserName(member.getUserName());
 
-//        post.setUserName("보름달");
-        return repository.save(post);
+        Post savePost = repository.save(post);
+
+        for (Tag tag : tags) {
+            Post_Tag postTag = new Post_Tag();
+            postTag.setTag(tag);
+            savePost.getPostTags().add(postTag);
+        }
+        return savePost;
     }
     // 종아요 누름 기능
     public Likes createLikes (long postId, long memberId) {
@@ -64,7 +75,7 @@ public class PostService {
 
         return likesRepository.save(likes);
     }
-//    public Likes
+//    public void save
     public Post updatePost (Post post) {
 
         Member member = memberService.verifiedMember(post.getMember().getMemberId());
@@ -114,24 +125,28 @@ public class PostService {
 
         DecimalFormat df = new DecimalFormat("#.#");
 
-       posts.forEach(post -> {
-           double reviews = post.getAnswers()
-                .stream()
-                .filter(answer -> answer.getPost().getPostId() == post.getPostId())
-                   .mapToDouble(DevAnswer::getReview)
-                        .average()
-                   .orElse(0.0);
+        postAnswerReviewAvg(posts, df);
 
-           String format = df.format(reviews);
-           double roundedReview = Double.parseDouble(format);
-
-           post.setAllReviews(roundedReview);
-               });
-
-       return posts;
+        return posts;
     }
-    // 회원 마이페이지에서 게시물 다 보기 추가
 
+    @Transactional(readOnly = true)
+    public Page<Post> findAllTopPost (int page, int size) {
+
+        Page<Post> posts = repository.findAll(PageRequest.of(page, size));
+
+        DecimalFormat df = new DecimalFormat("#.#");
+
+        postAnswerReviewAvg(posts, df);
+
+//        posts.stream().sorted(Comparator.comparingDouble(Post::getAllReviews));
+        List<Post> sortedReviews = new ArrayList<>(posts.getContent());
+        sortedReviews.sort(Comparator.comparingDouble(Post::getAllReviews).reversed());
+
+        return new PageImpl<>(sortedReviews, posts.getPageable(), posts.getTotalElements());
+    }
+
+    // 회원 마이페이지에서 게시물 다 보기 추가
     public void deletePost (long postId, long memberId) {
 
         Post post = existsPost(postId);
@@ -168,10 +183,26 @@ public class PostService {
 
         return findId;
     }
-// 좋아요 post 이미 눌렀는지 확인. 좋아요 취소에 이 글의 이 멤버의 좋아요가 맞는지.
+
+    // 좋아요 post 이미 눌렀는지 확인. 좋아요 취소에 이 글의 이 멤버의 좋아요가 맞는지.
     public void verifiedPostMember(Post post, long memberId) {
         if (post.getMember().getMemberId() != memberId) {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_WRITE);
         }
+    }
+    private static void postAnswerReviewAvg(Page<Post> posts, DecimalFormat df) {
+        posts.forEach(post -> {
+            double reviews = post.getAnswers()
+                    .stream()
+                    .filter(answer -> answer.getPost().getPostId() == post.getPostId())
+                    .mapToDouble(DevAnswer::getReview)
+                    .average()
+                    .orElse(0.0);
+
+            String format = df.format(reviews);
+            double roundedReview = Double.parseDouble(format);
+
+            post.setAllReviews(roundedReview);
+        });
     }
 }
