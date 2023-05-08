@@ -3,7 +3,7 @@ package server.mainproject.post.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import server.mainproject.answer.dto.DevAnswerDto;
+import server.mainproject.comment.dto.CommentDto;
 import server.mainproject.member.dto.AuthorResponseDto;
 import server.mainproject.member.entity.Member;
 import server.mainproject.tag.Tag;
@@ -63,7 +63,7 @@ public class DevPostDto {
         private int recommend;
         private List<AuthorResponseDto> authors;
         private List<Tag> tags;
-        private List<DevAnswerDto.ResponseDevAnswer> answers;
+        private List<CommentDto.ResponseComment> answers;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 

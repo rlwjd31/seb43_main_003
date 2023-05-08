@@ -1,4 +1,4 @@
-package server.mainproject.answer.entity;
+package server.mainproject.comment.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class DevAnswer {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long devAnswerId;
+    private long commentId;
     private String content;
-    private int review;  // 별점
+    private int star;  // 별점
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
@@ -31,14 +31,14 @@ public class DevAnswer {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "POST_ID")
-    private DevPost post;
+    private DevPost devPost;
 
     public long getMemberId() {
         return member.getMemberId();
     }
 
-    public String getNickName() {
-        return member.getNickName();
+    public String getUserName() {
+        return member.getUserName();
     }
 
     public String getProfileImage() {
@@ -46,6 +46,6 @@ public class DevAnswer {
     }
 
     public long getPostId() {
-        return post.getPostId();
+        return devPost.getPostId();
     }
 }

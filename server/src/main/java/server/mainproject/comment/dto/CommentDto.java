@@ -1,4 +1,4 @@
-package server.mainproject.answer.dto;
+package server.mainproject.comment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,18 +10,18 @@ import server.mainproject.post.entity.DevPost;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
-public class DevAnswerDto {
+public class CommentDto {
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class PostDevAnswer {
+    public static class PostComment {
         //Todo : 추가
         private long memberId;
         private long postId;
         @NotBlank
         private String content;
-        private int review;
+        private int star;
 
         //Todo : 추가
         public Member getMember () {
@@ -31,26 +31,26 @@ public class DevAnswerDto {
             return member;
         }
 
-        public DevPost getPost () {
-            DevPost post = new DevPost();
-            post.setPostId(postId);
+        public DevPost getDevPost() {
+            DevPost devPost = new DevPost();
+            devPost.setPostId(postId);
 
-            return post;
+            return devPost;
         }
     }
 
     @Getter
     @Setter
     @AllArgsConstructor
-    public static class PatchDevAnswer {
+    public static class PatchComment {
         //Todo : 추가
         private long memberId;
         private long postId;
-        private long devAnswerId;
+        private long commentId;
         @NotBlank
         private String content;
         @NotBlank
-        private int review;
+        private int star;
 
         //Todo : 추가
         public Member getMember () {
@@ -60,24 +60,24 @@ public class DevAnswerDto {
             return member;
         }
 
-        public DevPost getPost () {
-            DevPost post = new DevPost();
-            post.setPostId(postId);
+        public DevPost getDevPost() {
+            DevPost devPost = new DevPost();
+            devPost.setPostId(postId);
 
-            return post;
+            return devPost;
         }
     }
 
     @Getter
     @Setter
-    public static class ResponseDevAnswer {
+    public static class ResponseComment {
         private long memberId;
-        private String nickName;
+        private String userName;
         private String profileImage;
         private long postId;
-        private long devAnswerId;
+        private long commentId;
         private String content;
-        private int review;
+        private int star;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }

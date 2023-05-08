@@ -9,8 +9,8 @@ public enum ExceptionCode {
     EMAIL_EXIST(404,"이메일 중복! 다른 이메일을 사용해주세요!"),
     POST_NOT_FOUND(404, "게시글이 존재하지 않습니다."),
     POST_NOT_WRITE(402, "권한이 없습니다."),
-    ANSWER_NOT_FOUND(404, "답변이 존재하지 않습니다."),
-    ANSWER_NOT_MEMBER(402, "회원이 작성한 답변이 아닙니다."),
+    COMMENT_NOT_FOUND(404, "답변이 존재하지 않습니다."),
+    COMMENT_NOT_MEMBER(402, "회원이 작성한 답변이 아닙니다."),
     ALREADY_LIKES(402, "이미 좋아요를 눌렀습니다.");
 
     @Getter

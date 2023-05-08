@@ -2,10 +2,10 @@ package server.mainproject.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import server.mainproject.answer.entity.DevAnswer;
+import server.mainproject.comment.entity.Comment;
 import server.mainproject.audit.Auditable;
-import server.mainproject.post.entity.Likes;
-import server.mainproject.post.entity.Post;
+import server.mainproject.post.entity.DevPost;
+import server.mainproject.post.entity.Recommends;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -36,14 +36,14 @@ public class Member extends Auditable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")
-    private List<Post> postList = new ArrayList<>();
+    private List<DevPost> postList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Likes> likesList = new ArrayList<>();
+    private List<Recommends> likesList = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")
-    private List<DevAnswer> answerList = new ArrayList<>();
+    private List<Comment> answerList = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();

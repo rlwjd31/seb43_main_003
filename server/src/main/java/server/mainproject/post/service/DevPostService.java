@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import server.mainproject.answer.entity.DevAnswer;
+import server.mainproject.comment.entity.Comment;
 import server.mainproject.exception.BusinessLogicException;
 import server.mainproject.exception.ExceptionCode;
 import server.mainproject.member.entity.Member;
@@ -107,7 +107,7 @@ public class DevPostService {
         double answersReview = post.getAnswers()
                 .stream()
                 .filter(id -> id.getPost().getPostId() == postId)
-                .map(review -> review.getReview())
+                .map(review -> review.getStar())
                 .mapToDouble(avr -> avr)
                 .average()
                 .orElse(0.0);
@@ -196,8 +196,8 @@ public class DevPostService {
         posts.forEach(post -> {
             double reviews = post.getAnswers()
                     .stream()
-                    .filter(answer -> answer.getPost().getPostId() == post.getPostId())
-                    .mapToDouble(DevAnswer::getReview)
+                    .filter(answer -> answer.getDevPost().getPostId() == post.getPostId())
+                    .mapToDouble(Comment::getStar)
                     .average()
                     .orElse(0.0);
 
