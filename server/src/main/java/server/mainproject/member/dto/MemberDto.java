@@ -27,7 +27,6 @@ public class MemberDto {
     public static class Patch {
         private long memberId;
         private String userName;
-        private String nickName;
         private String password;
         private String profileImage;
     }
