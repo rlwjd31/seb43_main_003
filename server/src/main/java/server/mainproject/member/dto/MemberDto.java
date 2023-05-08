@@ -28,7 +28,7 @@ public class MemberDto {
         private long memberId;
         private String userName;
         private String password;
-        private String profileImage;
+//        private String profileImage;
     }
 
     @Getter
@@ -37,7 +37,7 @@ public class MemberDto {
         private String memberId;
         private String email;
         private String userName;
-        private String profileImage;
+//        private String profileImage;
 //        private List<Likes> likesList;
         private List<DevPostDto.Response> posts;
         private List<CommentDto.ResponseComment> answers;
