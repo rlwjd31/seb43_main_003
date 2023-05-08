@@ -5,7 +5,7 @@ import lombok.*;
 import server.mainproject.comment.entity.Comment;
 import server.mainproject.audit.Auditable;
 import server.mainproject.post.entity.DevPost;
-import server.mainproject.post.entity.Recommends;
+import server.mainproject.post.entity.Recommend;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,25 +25,22 @@ public class Member extends Auditable {
     @Column(nullable = false)
     private String password;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String userName;
-
-    @Column
-    private String nickName;
 
     @Column(nullable = false)
     private String ProfileImage = "https://mblogthumb-phinf.pstatic.net/MjAyMDA2MTBfMTY1/MDAxNTkxNzQ2ODcyOTI2.Yw5WjjU3IuItPtqbegrIBJr3TSDMd_OPhQ2Nw-0-0ksg.8WgVjtB0fy0RCv0XhhUOOWt90Kz_394Zzb6xPjG6I8gg.PNG.lamute/user.png?type=w800";
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")
-    private List<DevPost> postList = new ArrayList<>();
+    private List<DevPost> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Recommends> likesList = new ArrayList<>();
+    private List<Recommend> likes = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")
-    private List<Comment> answerList = new ArrayList<>();
+    private List<Comment> answers = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();

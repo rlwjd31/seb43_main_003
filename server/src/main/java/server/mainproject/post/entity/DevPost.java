@@ -48,7 +48,7 @@ public class DevPost extends Auditable {
 
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<Recommends> recommends = new ArrayList<>();
+    private List<Recommend> recommends = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")

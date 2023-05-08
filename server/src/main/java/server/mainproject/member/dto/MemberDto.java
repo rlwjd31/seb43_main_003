@@ -19,6 +19,8 @@ public class MemberDto {
         private String email;
         @NotBlank
         private String password;
+        @NotBlank
+        private String userName;
     }
     @Getter
     @AllArgsConstructor
@@ -36,11 +38,10 @@ public class MemberDto {
         private String memberId;
         private String email;
         private String userName;
-        private String nickName;
         private String profileImage;
 //        private List<Likes> likesList;
-        private List<DevPostDto.Response> postList;
-        private List<CommentDto.ResponseComment> answerList;
+        private List<DevPostDto.Response> posts;
+        private List<CommentDto.ResponseComment> answers;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }

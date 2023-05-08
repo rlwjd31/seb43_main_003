@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Entity @Getter @Setter
 @NoArgsConstructor
-public class Recommends extends Auditable {
+public class Recommend extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long recommendsId;

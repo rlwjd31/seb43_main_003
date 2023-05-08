@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import server.mainproject.comment.dto.CommentDto;
-import server.mainproject.member.dto.AuthorResponseDto;
+//import server.mainproject.member.dto.AuthorResponseDto;
 import server.mainproject.member.entity.Member;
 import server.mainproject.tag.Tag;
 
@@ -61,7 +61,7 @@ public class DevPostDto {
         private int star;
         private Double starAvg;
         private int recommend;
-        private List<AuthorResponseDto> authors;
+//        private List<AuthorResponseDto> authors;
         private List<Tag> tags;
         private List<CommentDto.ResponseComment> answers;
         private LocalDateTime createdAt;

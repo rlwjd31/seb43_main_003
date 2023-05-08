@@ -15,8 +15,8 @@ import server.mainproject.member.entity.Member;
 import server.mainproject.member.mapper.MemberMapper;
 import server.mainproject.member.service.MemberService;
 import server.mainproject.post.entity.DevPost;
-import server.mainproject.post.entity.Recommends;
-import server.mainproject.post.repository.RecommendsRepository;
+import server.mainproject.post.entity.Recommend;
+import server.mainproject.post.repository.RecommendRepository;
 import server.mainproject.post.repository.DevPostRepository;
 import server.mainproject.tag.Post_Tag;
 import server.mainproject.tag.Tag;
@@ -33,7 +33,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DevPostService {
     private final DevPostRepository repository;
-    private final RecommendsRepository recommendsRepository;
+    private final RecommendRepository recommendRepository;
     private final MemberService memberService;
     private final MemberMapper memberMapper;
 
@@ -42,7 +42,7 @@ public class DevPostService {
         Member member = memberService.verifiedMember(post.getMember().getMemberId());
         post.setUserName(member.getUserName());
 
-        memberMapper.memberInformation(member);
+//        memberMapper.memberInformation(member);
 
         DevPost savePost = repository.save(post);
 
@@ -54,7 +54,7 @@ public class DevPostService {
         return savePost;
     }
     // 종아요 누름 기능
-    public Recommends createLikes (long postId, long memberId) {
+    public Recommend createLikes (long postId, long memberId) {
 
         Member member = memberService.verifiedMember(memberId);
 
@@ -72,11 +72,11 @@ public class DevPostService {
         int like = post.getRecommend();
         post.setRecommend(like + 1);
 
-        Recommends recommends = new Recommends();
-        recommends.setPost(post);
-        recommends.setMember(member);
+        Recommend recommend = new Recommend();
+        recommend.setPost(post);
+        recommend.setMember(member);
 
-        return recommendsRepository.save(recommends);
+        return recommendRepository.save(recommend);
     }
 //    public void save
     public DevPost updatePost (DevPost post) {
@@ -104,9 +104,9 @@ public class DevPostService {
     public DevPost findPost (long postId) {
         DevPost post = existsPost(postId);
 
-        double answersReview = post.getAnswers()
+        double answersReview = post.getComments()
                 .stream()
-                .filter(id -> id.getPost().getPostId() == postId)
+                .filter(id -> id.getDevPost().getPostId() == postId)
                 .map(review -> review.getStar())
                 .mapToDouble(avr -> avr)
                 .average()
@@ -164,18 +164,18 @@ public class DevPostService {
         memberService.verifiedMember(memberId);
         DevPost post = existsPost(postId);
 
-        Optional<Recommends> optional = recommendsRepository.findAll()
+        Optional<Recommend> optional = recommendRepository.findAll()
                 .stream()
                         .filter(id -> id.getMember().getMemberId() == memberId)
                                 .filter(i -> i.getPost().getPostId() == postId)
                                         .findFirst();
-        Recommends recommends = optional.orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_WRITE));
+        Recommend recommend = optional.orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_WRITE));
 
         int num = post.getRecommend();
         post.setRecommend(num -1);
         updatePost(post);
 
-        recommendsRepository.delete(recommends);
+        recommendRepository.delete(recommend);
     }
 
 
@@ -194,7 +194,7 @@ public class DevPostService {
     }
     private static void postAnswerReviewAvg(Page<DevPost> posts, DecimalFormat df) {
         posts.forEach(post -> {
-            double reviews = post.getAnswers()
+            double reviews = post.getComments()
                     .stream()
                     .filter(answer -> answer.getDevPost().getPostId() == post.getPostId())
                     .mapToDouble(Comment::getStar)

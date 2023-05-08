@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import server.mainproject.post.dto.DevPostDto;
 import server.mainproject.post.entity.DevPost;
-import server.mainproject.post.entity.Recommends;
+import server.mainproject.post.entity.Recommend;
 import server.mainproject.post.mapper.DevPostMapper;
 import server.mainproject.post.service.DevPostService;
 import server.mainproject.response.MultiResponse;
@@ -102,7 +102,7 @@ public class DevPostController {
     public ResponseEntity likesPost (@PathVariable("post-id") @Positive long postId,
                                      @PathVariable("member-id") @Positive long memberId) {
 
-        Recommends create = service.createLikes(postId, memberId);
+        Recommend create = service.createLikes(postId, memberId);
 
         return ResponseEntity.ok().build();
     }
