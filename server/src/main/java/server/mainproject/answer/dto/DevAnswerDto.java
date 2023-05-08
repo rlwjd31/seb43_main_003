@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import server.mainproject.member.entity.Member;
-import server.mainproject.post.entity.Post;
+import server.mainproject.post.entity.DevPost;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -31,8 +31,8 @@ public class DevAnswerDto {
             return member;
         }
 
-        public Post getPost () {
-            Post post = new Post();
+        public DevPost getPost () {
+            DevPost post = new DevPost();
             post.setPostId(postId);
 
             return post;
@@ -60,8 +60,8 @@ public class DevAnswerDto {
             return member;
         }
 
-        public Post getPost () {
-            Post post = new Post();
+        public DevPost getPost () {
+            DevPost post = new DevPost();
             post.setPostId(postId);
 
             return post;

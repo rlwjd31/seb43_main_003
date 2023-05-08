@@ -12,11 +12,12 @@ import server.mainproject.answer.entity.DevAnswer;
 import server.mainproject.exception.BusinessLogicException;
 import server.mainproject.exception.ExceptionCode;
 import server.mainproject.member.entity.Member;
+import server.mainproject.member.mapper.MemberMapper;
 import server.mainproject.member.service.MemberService;
-import server.mainproject.post.entity.Likes;
-import server.mainproject.post.entity.Post;
-import server.mainproject.post.repository.LikesRepository;
-import server.mainproject.post.repository.PostRepository;
+import server.mainproject.post.entity.DevPost;
+import server.mainproject.post.entity.Recommends;
+import server.mainproject.post.repository.RecommendsRepository;
+import server.mainproject.post.repository.DevPostRepository;
 import server.mainproject.tag.Post_Tag;
 import server.mainproject.tag.Tag;
 
@@ -25,23 +26,25 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @Slf4j
 @RequiredArgsConstructor
-public class PostService {
-    private final PostRepository repository;
-    private final LikesRepository likesRepository;
+public class DevPostService {
+    private final DevPostRepository repository;
+    private final RecommendsRepository recommendsRepository;
     private final MemberService memberService;
+    private final MemberMapper memberMapper;
 
-    public Post createdPost (Post post, List<Tag> tags) {
+    public DevPost createdPost (DevPost post, List<Tag> tags) {
 
         Member member = memberService.verifiedMember(post.getMember().getMemberId());
         post.setUserName(member.getUserName());
 
-        Post savePost = repository.save(post);
+        memberMapper.memberInformation(member);
+
+        DevPost savePost = repository.save(post);
 
         for (Tag tag : tags) {
             Post_Tag postTag = new Post_Tag();
@@ -51,13 +54,13 @@ public class PostService {
         return savePost;
     }
     // 종아요 누름 기능
-    public Likes createLikes (long postId, long memberId) {
+    public Recommends createLikes (long postId, long memberId) {
 
         Member member = memberService.verifiedMember(memberId);
 
-        Post post = existsPost(postId);
+        DevPost post = existsPost(postId);
 
-        post.getLikesList()
+        post.getRecommends()
                 .stream()
                 .filter(id -> id.getMember().getMemberId() == memberId)
                 .filter(two -> two.getPost().getPostId() == postId)
@@ -66,29 +69,29 @@ public class PostService {
                     throw new BusinessLogicException(ExceptionCode.ALREADY_LIKES);
                 });
 
-        int like = post.getLikes();
-        post.setLikes(like + 1);
+        int like = post.getRecommend();
+        post.setRecommend(like + 1);
 
-        Likes likes = new Likes();
-        likes.setPost(post);
-        likes.setMember(member);
+        Recommends recommends = new Recommends();
+        recommends.setPost(post);
+        recommends.setMember(member);
 
-        return likesRepository.save(likes);
+        return recommendsRepository.save(recommends);
     }
 //    public void save
-    public Post updatePost (Post post) {
+    public DevPost updatePost (DevPost post) {
 
         Member member = memberService.verifiedMember(post.getMember().getMemberId());
 
-        Post find = existsPost(post.getPostId());
+        DevPost find = existsPost(post.getPostId());
 
         verifiedPostMember(find, member.getMemberId());
 
         Optional.ofNullable(post.getTitle()).ifPresent(title -> find.setTitle(title));
         Optional.ofNullable(post.getContent()).ifPresent(content -> find.setContent(content));
 
-        if (post.getReview() != 0) {
-            find.setReview(post.getReview());
+        if (post.getStar() != 0) {
+            find.setStar(post.getStar());
         }
 
         Optional.ofNullable(post.getLink()).ifPresent(link -> find.setLink(link));
@@ -98,8 +101,8 @@ public class PostService {
         return repository.save(find);
     }
     @Transactional(readOnly = true)
-    public Post findPost (long postId) {
-        Post post = existsPost(postId);
+    public DevPost findPost (long postId) {
+        DevPost post = existsPost(postId);
 
         double answersReview = post.getAnswers()
                 .stream()
@@ -113,15 +116,15 @@ public class PostService {
         String formattedReview = df.format(answersReview);
         double roundedReview = Double.parseDouble(formattedReview);
 
-        post.setAllReviews(roundedReview);
+        post.setStarAvg(roundedReview);
 
         return post;
     }
     // 최신글 순으로 조회
     @Transactional(readOnly = true)
-    public Page<Post> findAllPost (int page, int size) {
+    public Page<DevPost> findAllPost (int page, int size) {
 
-       Page<Post> posts = repository.findAll(PageRequest.of(page, size, Sort.by("postId").descending()));
+       Page<DevPost> posts = repository.findAll(PageRequest.of(page, size, Sort.by("postId").descending()));
 
         DecimalFormat df = new DecimalFormat("#.#");
 
@@ -131,17 +134,16 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Post> findAllTopPost (int page, int size) {
+    public Page<DevPost> findAllTopPost (int page, int size) {
 
-        Page<Post> posts = repository.findAll(PageRequest.of(page, size));
+        Page<DevPost> posts = repository.findAll(PageRequest.of(page, size));
 
         DecimalFormat df = new DecimalFormat("#.#");
 
         postAnswerReviewAvg(posts, df);
 
-//        posts.stream().sorted(Comparator.comparingDouble(Post::getAllReviews));
-        List<Post> sortedReviews = new ArrayList<>(posts.getContent());
-        sortedReviews.sort(Comparator.comparingDouble(Post::getAllReviews).reversed());
+        List<DevPost> sortedReviews = new ArrayList<>(posts.getContent());
+        sortedReviews.sort(Comparator.comparingDouble(DevPost::getStarAvg).reversed());
 
         return new PageImpl<>(sortedReviews, posts.getPageable(), posts.getTotalElements());
     }
@@ -149,7 +151,7 @@ public class PostService {
     // 회원 마이페이지에서 게시물 다 보기 추가
     public void deletePost (long postId, long memberId) {
 
-        Post post = existsPost(postId);
+        DevPost post = existsPost(postId);
 
         verifiedPostMember(post, memberId);
 
@@ -160,37 +162,37 @@ public class PostService {
     public void unLikesPost (long postId, long memberId) {
 
         memberService.verifiedMember(memberId);
-        Post post = existsPost(postId);
+        DevPost post = existsPost(postId);
 
-        Optional<Likes> optional = likesRepository.findAll()
+        Optional<Recommends> optional = recommendsRepository.findAll()
                 .stream()
                         .filter(id -> id.getMember().getMemberId() == memberId)
                                 .filter(i -> i.getPost().getPostId() == postId)
                                         .findFirst();
-        Likes likes = optional.orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_WRITE));
+        Recommends recommends = optional.orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_WRITE));
 
-        int num = post.getLikes();
-        post.setLikes(num -1);
+        int num = post.getRecommend();
+        post.setRecommend(num -1);
         updatePost(post);
 
-        likesRepository.delete(likes);
+        recommendsRepository.delete(recommends);
     }
 
 
-    public Post existsPost (long postId) {
-        Optional<Post> optional = repository.findById(postId);
-        Post findId = optional.orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+    public DevPost existsPost (long postId) {
+        Optional<DevPost> optional = repository.findById(postId);
+        DevPost findId = optional.orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
         return findId;
     }
 
     // 좋아요 post 이미 눌렀는지 확인. 좋아요 취소에 이 글의 이 멤버의 좋아요가 맞는지.
-    public void verifiedPostMember(Post post, long memberId) {
+    public void verifiedPostMember(DevPost post, long memberId) {
         if (post.getMember().getMemberId() != memberId) {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_WRITE);
         }
     }
-    private static void postAnswerReviewAvg(Page<Post> posts, DecimalFormat df) {
+    private static void postAnswerReviewAvg(Page<DevPost> posts, DecimalFormat df) {
         posts.forEach(post -> {
             double reviews = post.getAnswers()
                     .stream()
@@ -202,7 +204,7 @@ public class PostService {
             String format = df.format(reviews);
             double roundedReview = Double.parseDouble(format);
 
-            post.setAllReviews(roundedReview);
+            post.setStarAvg(roundedReview);
         });
     }
 }

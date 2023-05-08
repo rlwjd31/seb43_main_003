@@ -10,17 +10,17 @@ import javax.persistence.*;
 
 @Entity @Getter @Setter
 @NoArgsConstructor
-public class Likes extends Auditable {
+public class Recommends extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long likesId;
+    private long recommendsId;
 
 //    @Column
 //    private Boolean likeStatus = false; // 좋아요 상태. 기본값 : 해제.
 
     @ManyToOne
     @JoinColumn(name = "POST_ID")
-    private Post post;
+    private DevPost post;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")

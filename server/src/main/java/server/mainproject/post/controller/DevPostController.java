@@ -6,11 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import server.mainproject.post.dto.PostDto;
-import server.mainproject.post.entity.Likes;
-import server.mainproject.post.entity.Post;
-import server.mainproject.post.mapper.PostMapper;
-import server.mainproject.post.service.PostService;
+import server.mainproject.post.dto.DevPostDto;
+import server.mainproject.post.entity.DevPost;
+import server.mainproject.post.entity.Recommends;
+import server.mainproject.post.mapper.DevPostMapper;
+import server.mainproject.post.service.DevPostService;
 import server.mainproject.response.MultiResponse;
 import server.mainproject.tag.Tag;
 import server.mainproject.tag.TagRepository;
@@ -27,39 +27,40 @@ import java.util.List;
 @RequestMapping("/post")
 @Validated
 @RequiredArgsConstructor
-public class PostController {
-    private final PostService service;
-    private final PostMapper mapper;
+public class DevPostController {
+    private final DevPostService service;
+    private final DevPostMapper mapper;
     private final TagRepository tagRepository;
 
     @PostMapping
-    public ResponseEntity postPost (@RequestBody @Valid PostDto.Post post) {
+    public ResponseEntity postPost(@RequestBody @Valid DevPostDto.Post post) {
 
-        Post mappPost = mapper.postToEntity(post);
+        DevPost mappPost = mapper.postToEntity(post);
         List<Tag> tags = new ArrayList<>();
 
         for (String tagName : post.getTag()) {
             Tag tag = tagRepository.findByName(tagName);
             if (tag == null) {
                 tag = new Tag(tagName);
+                tag.setName(tagName);
                 tagRepository.save(tag);
             }
             tags.add(tag);
         }
 
-        Post create = service.createdPost(mappPost, tags);
+        DevPost create = service.createdPost(mappPost, tags);
         URI uri = URICreator.createUri("/post", create.getPostId());
 
         return ResponseEntity.created(uri).build();
     }
     @PatchMapping("/{post-id}/edit/{member-id}")    // todo : security 적용 후 memberId 는 제거
-    public ResponseEntity updatePost (@PathVariable("post-id") @Positive long postId,
-                                      @PathVariable("member-id") @Positive long memberId,
-                                      @RequestBody @Valid PostDto.Patch patch) {
+    public ResponseEntity patchPost(@PathVariable("post-id") @Positive long postId,
+                                    @PathVariable("member-id") @Positive long memberId,
+                                    @RequestBody @Valid DevPostDto.Patch patch) {
         patch.setPostId(postId);
         patch.setMemberId(memberId);
 
-        Post update = service.updatePost(mapper.patchToEntity(patch));
+        DevPost update = service.updatePost(mapper.patchToEntity(patch));
 
         return new ResponseEntity(mapper.EntityToResponse(update), HttpStatus.OK);
     }
@@ -68,8 +69,8 @@ public class PostController {
     public ResponseEntity getAllNewPost(@RequestParam(defaultValue = "1") @Positive int page,
                                         @RequestParam(defaultValue = "16") @Positive int size) {
 
-        Page<Post> posts = service.findAllPost (page -1, size);
-        List<Post> list = posts.getContent();
+        Page<DevPost> posts = service.findAllPost (page -1, size);
+        List<DevPost> list = posts.getContent();
 
         return new ResponseEntity(new MultiResponse<>(mapper.ListResponse(list), posts), HttpStatus.OK);
     }
@@ -77,15 +78,15 @@ public class PostController {
     @GetMapping("/top_review")
     public ResponseEntity getAllTopPost (@RequestParam(defaultValue = "1") @Positive int page,
                                          @RequestParam(defaultValue = "16") @Positive int size) {
-        Page<Post> posts = service.findAllTopPost (page -1, size);
-        List<Post> list = posts.getContent();
+        Page<DevPost> posts = service.findAllTopPost (page -1, size);
+        List<DevPost> list = posts.getContent();
 
         return new ResponseEntity(new MultiResponse<>(mapper.ListResponse(list), posts), HttpStatus.OK);
     }
     @GetMapping("/{post-id}")
     public ResponseEntity getPost (@PathVariable("post-id") @Positive long postId) {
 
-        Post find = service.findPost(postId);
+        DevPost find = service.findPost(postId);
 
         return new ResponseEntity(mapper.EntityToResponse(find), HttpStatus.OK);
     }
@@ -101,7 +102,7 @@ public class PostController {
     public ResponseEntity likesPost (@PathVariable("post-id") @Positive long postId,
                                      @PathVariable("member-id") @Positive long memberId) {
 
-        Likes create = service.createLikes(postId, memberId);
+        Recommends create = service.createLikes(postId, memberId);
 
         return ResponseEntity.ok().build();
     }

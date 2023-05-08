@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import server.mainproject.member.entity.Member;
-import server.mainproject.post.entity.Post;
+import server.mainproject.post.entity.DevPost;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,7 +31,7 @@ public class DevAnswer {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "POST_ID")
-    private Post post;
+    private DevPost post;
 
     public long getMemberId() {
         return member.getMemberId();

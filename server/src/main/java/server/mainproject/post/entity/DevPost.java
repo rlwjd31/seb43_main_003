@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Entity @Getter @Setter
 @NoArgsConstructor
-public class Post extends Auditable {
+public class DevPost extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
@@ -34,19 +34,21 @@ public class Post extends Auditable {
     private String link;
 
     @Column
-    private int likes;
+    private int recommend;
 
     @Column(nullable = false)
-    private int review;
+    private int star;
 
     @Column
-    private double allReviews;
+    private Double starAvg;
 
-    @Transient
-    private List<String> tags;
+//    @Transient
+//    @Column
+//    private List<String> tags;
+
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<Likes> likesList = new ArrayList<>();
+    private List<Recommends> recommends = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")

@@ -3,7 +3,7 @@ package server.mainproject.tag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import server.mainproject.post.entity.Post;
+import server.mainproject.post.entity.DevPost;
 
 import javax.persistence.*;
 
@@ -16,7 +16,7 @@ public class Post_Tag {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "POST_ID")
-    private Post post;
+    private DevPost post;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TAG_ID")

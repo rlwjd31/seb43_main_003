@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import server.mainproject.answer.dto.DevAnswerDto;
+import server.mainproject.member.dto.AuthorResponseDto;
 import server.mainproject.member.entity.Member;
 import server.mainproject.tag.Tag;
 
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-public class PostDto {
+public class DevPostDto {
     @Getter
     public static class Post {
         private Long memberId;
@@ -58,11 +59,17 @@ public class PostDto {
         private String userName;
         private String link;
         private int star;
-        private double starAvg;
-        private int likes;
+        private Double starAvg;
+        private int recommend;
+        private List<AuthorResponseDto> authors;
         private List<Tag> tags;
         private List<DevAnswerDto.ResponseDevAnswer> answers;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+
+//        public Member getMember() {
+//            Member member = new Member();
+//            member
+//        }
     }
 }
