@@ -17,6 +17,10 @@ export default {
         gray8: '#7A7A7A',
         activeBlue: '#0045F6',
       },
+      fontFamily: {
+        'noto-kr': ['Noto Sans KR', 'sans-serif'],
+        play: ['Play', 'sans-serif'],
+      },
     },
   },
   plugins: [],
