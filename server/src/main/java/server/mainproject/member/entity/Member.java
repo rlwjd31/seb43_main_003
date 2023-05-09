@@ -36,7 +36,7 @@ public class Member extends Auditable {
     private List<DevPost> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Recommend> likes = new ArrayList<>();
+    private List<Recommend> recommends = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")

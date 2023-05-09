@@ -49,8 +49,10 @@ public class DevPostService {
         for (Tag tag : tags) {
             Post_Tag postTag = new Post_Tag();
             postTag.setTag(tag);
+            postTag.setPost(savePost);
             savePost.getPostTags().add(postTag);
         }
+
         return savePost;
     }
     // 종아요 누름 기능
@@ -78,7 +80,6 @@ public class DevPostService {
 
         return recommendRepository.save(recommend);
     }
-//    public void save
     public DevPost updatePost (DevPost post) {
 
         Member member = memberService.verifiedMember(post.getMember().getMemberId());
@@ -148,7 +149,6 @@ public class DevPostService {
         return new PageImpl<>(sortedReviews, posts.getPageable(), posts.getTotalElements());
     }
 
-    // 회원 마이페이지에서 게시물 다 보기 추가
     public void deletePost (long postId, long memberId) {
 
         DevPost post = existsPost(postId);
@@ -186,7 +186,6 @@ public class DevPostService {
         return findId;
     }
 
-    // 좋아요 post 이미 눌렀는지 확인. 좋아요 취소에 이 글의 이 멤버의 좋아요가 맞는지.
     public void verifiedPostMember(DevPost post, long memberId) {
         if (post.getMember().getMemberId() != memberId) {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_WRITE);

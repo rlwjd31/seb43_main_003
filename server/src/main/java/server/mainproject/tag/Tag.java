@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity @Getter
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 public class Tag {
     @Id
@@ -16,9 +16,9 @@ public class Tag {
     @Column @Setter
     private String name;
 
-    @OneToMany(mappedBy = "tag", orphanRemoval = true)
+    @OneToMany(mappedBy = "tag", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Post_Tag> postTags = new HashSet<>();
 
-    public Tag(String tagName) {
-    }
+//    public Tag (String tagName) {
+//    }
 }

@@ -41,9 +41,9 @@ public class Comment {
         return member.getUserName();
     }
 
-    public String getProfileImage() {
-        return member.getProfileImage();
-    }
+//    public String getProfileImage() {
+//        return member.getProfileImage();
+//    }
 
     public long getPostId() {
         return devPost.getPostId();

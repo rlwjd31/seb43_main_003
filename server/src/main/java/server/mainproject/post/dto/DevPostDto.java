@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import server.mainproject.comment.dto.CommentDto;
 //import server.mainproject.member.dto.AuthorResponseDto;
+import server.mainproject.member.dto.AuthorResponseDto;
 import server.mainproject.member.entity.Member;
+import server.mainproject.tag.Post_Tag;
 import server.mainproject.tag.Tag;
 
 import javax.validation.constraints.NotBlank;
@@ -25,6 +27,7 @@ public class DevPostDto {
         private String link;
 
         private List<String> tag;   // 리스트로 받아서
+
 
         public Member getMember () {
             Member member = new Member();
@@ -53,23 +56,17 @@ public class DevPostDto {
     @Getter @Setter
     @AllArgsConstructor
     public static class Response {
+        private String status;
         private Long postId;
         private String title;
         private String content;
-        private String userName;
         private String link;
         private int star;
         private Double starAvg;
         private int recommend;
-//        private List<AuthorResponseDto> authors;
-        private List<Tag> tags;
-        private List<CommentDto.ResponseComment> answers;
-        private LocalDateTime createdAt;
-        private LocalDateTime modifiedAt;
+        private List<AuthorResponseDto> authors;
+        private List<Post_TagResponseDto> postTags;
+        private List<CommentDto.ResponseComment> comments;
 
-//        public Member getMember() {
-//            Member member = new Member();
-//            member
-//        }
     }
 }

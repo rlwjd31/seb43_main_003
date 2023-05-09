@@ -41,7 +41,7 @@ public class DevPostController {
         for (String tagName : post.getTag()) {
             Tag tag = tagRepository.findByName(tagName);
             if (tag == null) {
-                tag = new Tag(tagName);
+                tag = new Tag();
                 tag.setName(tagName);
                 tagRepository.save(tag);
             }

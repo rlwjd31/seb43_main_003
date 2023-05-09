@@ -49,7 +49,6 @@ public class CommentDto {
         private long commentId;
         @NotBlank
         private String content;
-        @NotBlank
         private int star;
 
         //Todo : 추가

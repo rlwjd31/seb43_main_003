@@ -57,7 +57,7 @@ public class DevPost extends Auditable {
     @OneToMany(mappedBy = "devPost", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", orphanRemoval = true)
+    @OneToMany(mappedBy = "post", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Post_Tag> postTags = new HashSet<>();
 
 }

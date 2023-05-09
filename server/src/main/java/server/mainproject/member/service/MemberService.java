@@ -39,8 +39,8 @@ public class MemberService {
                 .ifPresent(findMember::setUserName);
         Optional.ofNullable(member.getPassword())
                 .ifPresent(findMember::setPassword);
-        Optional.ofNullable(member.getProfileImage())
-                .ifPresent(findMember::setProfileImage);
+//        Optional.ofNullable(member.getProfileImage())
+//                .ifPresent(findMember::setProfileImage);
 
         return memberRepository.save(findMember);
     }
