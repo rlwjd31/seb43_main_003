@@ -8,7 +8,7 @@ export default {
         black2: '#111111',
         black3: '#222222',
         gray1: '#ECE9E7',
-        gray2: '#DCDAD6',
+        gray2: '#DADADA',
         gray3: '#B1B1B1',
         gray4: '#555555',
         gray5: '#595959',
@@ -20,6 +20,12 @@ export default {
       fontFamily: {
         'noto-kr': ['Noto Sans KR', 'sans-serif'],
         play: ['Play', 'sans-serif'],
+      },
+      maxWidth: {
+        limit: '1080px',
+      },
+      boxShadow: {
+        around: 'rgba(0, 0, 0, 0.05) 0px 3px 50px',
       },
     },
   },
