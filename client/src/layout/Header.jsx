@@ -31,7 +31,7 @@ function Header() {
             <SearchIcon className="h-[14px] w-[14px] mr-2" />
             <input
               ref={inputRef}
-              className="w-full bg-transparent outline-none"
+              className="w-full bg-transparent outline-none border-0 focus:ring-0"
               type="text"
               placeholder="Search"
             />
