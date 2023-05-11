@@ -13,7 +13,7 @@ function Header() {
   };
 
   return (
-    <div className="fixed top-0 flex justify-center h-[180px] w-screen pt-8 bg-gray1 font-play text-[0.75rem] border-solid border-b-[1px] border-gray7/30">
+    <div className="z-10 fixed top-0 flex justify-center h-[180px] w-screen pt-8 bg-gray1 font-play text-[0.75rem] border-solid border-b-[1px] border-gray7/30">
       <div className="flex flex-col w-full max-w-limit">
         <Link to="user/login" className="flex justify-end pr-[10px]">
           <UserIcon className="h-[12px] w-[12px] mr-2" />

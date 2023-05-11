@@ -10,12 +10,14 @@ export default {
         black3: '#222222',
         gray1: '#ECE9E7',
         gray2: '#DADADA',
-        gray3: '#B1B1B1',
-        gray4: '#555555',
-        gray5: '#595959',
-        gray6: '#777777',
-        gray7: '#787878',
-        gray8: '#7A7A7A',
+        gray3: '#DCDAD6',
+        gray4: '#B1B1B1',
+        gray5: '#555555',
+        gray6: '#595959',
+        gray7: '#777777',
+        gray8: '#787878',
+        gray9: '#7A7A7A',
+        gray10: '#858585',
         activeBlue: '#0045F6',
       },
       fontFamily: {
@@ -30,6 +32,5 @@ export default {
       },
     },
   },
-  // eslint-disable-next-line global-require
-  plugins: [require('flowbite/plugin')],
+  plugins: [],
 };
