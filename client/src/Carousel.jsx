@@ -6,7 +6,13 @@ import CarouselImg3 from './assets/carousel-3.png';
 function Carousel() {
   const [currentIdx, setCurrentIdx] = useState(0);
 
-  const carouselImgs = [CarouselImg1, CarouselImg2, CarouselImg3];
+  const carouselImgs = [
+    CarouselImg3,
+    CarouselImg1,
+    CarouselImg2,
+    CarouselImg3,
+    CarouselImg1,
+  ];
 
   const onPrevClickHandler = () =>
     setCurrentIdx(prev => (prev === 0 ? carouselImgs.length - 1 : prev - 1));
@@ -14,28 +20,23 @@ function Carousel() {
   const onNextClickHandler = () =>
     setCurrentIdx(prev => (prev === carouselImgs.length - 1 ? 0 : prev + 1));
 
-  console.log(`currentIndex: ${currentIdx}`);
-
   return (
-    <div className="relative w-full h-[560px] overflow-hidden">
+    <div className="relative w-full overflow-hidden">
       <div
-        className={`flex w-full transition-all ease-in-out duration-500 translate-x-[-${
-          currentIdx * 100
-        }%]`}
+        style={{ transform: `translateX(-${currentIdx * 100}%)` }}
+        className="flex w-full transition-all ease-in-out duration-500"
       >
         {carouselImgs.map((imgSource, index) => (
           <img
             // eslint-disable-next-line react/no-array-index-key
-            key={new Date().getTime() + index}
+            key={`carousel-img${index + 1}`}
             src={imgSource}
             // className="object-fill object-center"
             alt={`carousel-img-${index + 1}`}
           />
         ))}
       </div>
-      {/* <img src={CarouselImg2} className="object-fill object-center" alt="coursel-img-2" />
-      <img src={CarouselImg2} className="object-fill object-center" alt="coursel-img-1" /> */}
-      <div className="absolute bottom-10 left-[45%] flex w-full">
+      <div className="absolute bottom-6 left-[45%] flex w-full">
         <button
           type="button"
           onClick={onPrevClickHandler}
@@ -44,9 +45,20 @@ function Carousel() {
           <span className="absolute top-2 left-2">&larr;</span>
         </button>
         <div className="flex items-center gap-2 mr-2">
-          <div className="w-[6px] h-[6px] bg-gray10 rounded-full cursor-pointer" />
-          <div className="w-[6px] h-[6px] bg-gray10 rounded-full cursor-pointer" />
-          <div className="w-[6px] h-[6px] bg-gray10 rounded-full cursor-pointer" />
+          {Array(carouselImgs.length)
+            .fill(0)
+            .map((_, index) => (
+              <div
+                // eslint-disable-next-line react/no-array-index-key
+                key={`ellipsis-${index}`}
+                aria-label="HandleCarousel"
+                role="button"
+                onClick={() => onEllipsisClickHandler(index)}
+                className={`w-[6px] h-[6px] ${
+                  currentIdx === index ? 'bg-[#FFFFFF]' : 'bg-gray10'
+                } rounded-full cursor-pointer`}
+              />
+            ))}
         </div>
         <button
           type="button"
