@@ -14,8 +14,6 @@ function Carousel() {
   const onNextClickHandler = () =>
     setCurrentIdx(prev => (prev === carouselImgs.length - 1 ? 0 : prev + 1));
 
-  console.log(`currentIndex: ${currentIdx}`);
-
   return (
     <div className="relative w-full h-[560px] overflow-hidden">
       <div
@@ -28,7 +26,7 @@ function Carousel() {
             // eslint-disable-next-line react/no-array-index-key
             key={new Date().getTime() + index}
             src={imgSource}
-            // className="object-fill object-center"
+            className="object-fill object-center"
             alt={`carousel-img-${index + 1}`}
           />
         ))}
