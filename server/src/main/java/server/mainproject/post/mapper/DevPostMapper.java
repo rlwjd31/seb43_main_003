@@ -30,7 +30,8 @@ public interface DevPostMapper {
                 post.getRecommend(),
                 postMemberDtoResponse(post),
                 postTagDtoResponse(postTags),
-                postCommentResponse(post.getComments())
+                postCommentResponse(post.getComments()),
+                post.getCreatedAt(),post.getModifiedAt()
         );
 
         return response;
@@ -72,8 +73,6 @@ public interface DevPostMapper {
                 .builder()
                 .memberId(devPost.getMember().getMemberId())
                 .userName(devPost.getMember().getUserName())
-                .createdAt(devPost.getCreatedAt())
-                .modifiedAt(devPost.getModifiedAt())
                 .build();
         author.add(ar);
 

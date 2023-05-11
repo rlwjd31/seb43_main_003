@@ -11,6 +11,8 @@ import server.mainproject.tag.Post_Tag;
 import server.mainproject.tag.Tag;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,14 +21,20 @@ public class DevPostDto {
     @Getter
     public static class Post {
         private Long memberId;
-        @NotBlank
+
+        @NotBlank(message = "제목은 필수 입력 사항입니다.")
+        @Size(max = 250, message = "제목은 250자를 넘을 수 없습니다.")
         private String title;
-        @NotBlank
+
+        @NotBlank(message = "내용은 필수 입력 사항입니다.")
         private String content;
+
+        @NotNull(message = "평점은 필수 입력 사항입니다.")
         private int star;
+
         private String link;
 
-        private List<String> tag;   // 리스트로 받아서
+        private List<String> tag;
 
 
         public Member getMember () {
@@ -45,6 +53,7 @@ public class DevPostDto {
         private String content;
         private int star;
         private String link;
+        private List<String> tag;
 
         public Member getMember () {
             Member member = new Member();
@@ -67,6 +76,8 @@ public class DevPostDto {
         private List<AuthorResponseDto> authors;
         private List<Post_TagResponseDto> postTags;
         private List<CommentDto.ResponseComment> comments;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
 
     }
 }

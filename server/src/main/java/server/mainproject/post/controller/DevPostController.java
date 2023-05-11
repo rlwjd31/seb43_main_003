@@ -12,6 +12,8 @@ import server.mainproject.post.entity.Recommend;
 import server.mainproject.post.mapper.DevPostMapper;
 import server.mainproject.post.service.DevPostService;
 import server.mainproject.response.MultiResponse;
+import server.mainproject.tag.Post_Tag;
+import server.mainproject.tag.Post_TagRepository;
 import server.mainproject.tag.Tag;
 import server.mainproject.tag.TagRepository;
 import server.mainproject.utils.URICreator;
@@ -31,22 +33,36 @@ public class DevPostController {
     private final DevPostService service;
     private final DevPostMapper mapper;
     private final TagRepository tagRepository;
+    private final Post_TagRepository ptr;
 
+    // todo : controller 말고 service 에서 할 수 있도록 생각.
     @PostMapping
     public ResponseEntity postPost(@RequestBody @Valid DevPostDto.Post post) {
 
         DevPost mappPost = mapper.postToEntity(post);
-        List<Tag> tags = new ArrayList<>();
+
+        List<Post_Tag> tags = new ArrayList<>();
 
         for (String tagName : post.getTag()) {
             Tag tag = tagRepository.findByName(tagName);
+            Post_Tag postTag = new Post_Tag();
             if (tag == null) {
                 tag = new Tag();
                 tag.setName(tagName);
-                tagRepository.save(tag);
+                postTag.setTag(tag);
+                ptr.save(postTag);
             }
-            tags.add(tag);
+            tags.add(postTag);
         }
+//        for (String tagName : post.getTag()) {
+//            Tag tag = tagRepository.findByName(tagName);
+//            if (tag == null) {
+//                tag = new Tag();
+//                tag.setName(tagName);
+//                tagRepository.save(tag);
+//            }
+//            tags.add(tag);
+//        }
 
         DevPost create = service.createdPost(mappPost, tags);
         URI uri = URICreator.createUri("/post", create.getPostId());
@@ -59,6 +75,8 @@ public class DevPostController {
                                     @RequestBody @Valid DevPostDto.Patch patch) {
         patch.setPostId(postId);
         patch.setMemberId(memberId);
+
+
 
         DevPost update = service.updatePost(mapper.patchToEntity(patch));
 

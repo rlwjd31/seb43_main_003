@@ -16,7 +16,8 @@ public class Tag {
     @Column @Setter
     private String name;
 
-    @OneToMany(mappedBy = "tag", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tag")
+//    @OneToMany(mappedBy = "tag", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Post_Tag> postTags = new HashSet<>();
 
 //    public Tag (String tagName) {

@@ -42,11 +42,6 @@ public class DevPost extends Auditable {
     @Column
     private Double starAvg;
 
-//    @Transient
-//    @Column
-//    private List<String> tags;
-
-
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Recommend> recommends = new ArrayList<>();
 
@@ -57,7 +52,8 @@ public class DevPost extends Auditable {
     @OneToMany(mappedBy = "devPost", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "post", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Post_Tag> postTags = new HashSet<>();
 
 }

@@ -19,6 +19,7 @@ import server.mainproject.post.entity.Recommend;
 import server.mainproject.post.repository.RecommendRepository;
 import server.mainproject.post.repository.DevPostRepository;
 import server.mainproject.tag.Post_Tag;
+import server.mainproject.tag.Post_TagRepository;
 import server.mainproject.tag.Tag;
 
 import java.text.DecimalFormat;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,23 +37,22 @@ public class DevPostService {
     private final DevPostRepository repository;
     private final RecommendRepository recommendRepository;
     private final MemberService memberService;
-    private final MemberMapper memberMapper;
+    private final Post_TagRepository ptr;
 
-    public DevPost createdPost (DevPost post, List<Tag> tags) {
+    public DevPost createdPost (DevPost post, List<Post_Tag> tags) {
 
         Member member = memberService.verifiedMember(post.getMember().getMemberId());
         post.setUserName(member.getUserName());
 
-//        memberMapper.memberInformation(member);
-
         DevPost savePost = repository.save(post);
 
-        for (Tag tag : tags) {
-            Post_Tag postTag = new Post_Tag();
-            postTag.setTag(tag);
-            postTag.setPost(savePost);
-            savePost.getPostTags().add(postTag);
-        }
+        tags
+                .stream()
+                .map(tag -> {
+                    tag.setPost(savePost);
+                    return tag;
+                })
+                .forEach(tag -> ptr.save(tag));
 
         return savePost;
     }

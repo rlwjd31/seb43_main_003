@@ -12,6 +12,4 @@ import java.time.LocalDateTime;
 public class AuthorResponseDto {
     private Long memberId;
     private String userName;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
 }
