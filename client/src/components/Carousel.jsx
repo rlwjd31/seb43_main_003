@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import CarouselImg1 from './assets/carousel-1.png';
-import CarouselImg2 from './assets/carousel-2.png';
-import CarouselImg3 from './assets/carousel-3.png';
-import useAutoSlide from './hooks/useAutoSlide';
+import CarouselImg1 from '../assets/carousel-1.png';
+import CarouselImg2 from '../assets/carousel-2.png';
+import CarouselImg3 from '../assets/carousel-3.png';
+import useAutoSlide from '../hooks/useAutoSlide';
 
 const carouselImgs = [
   CarouselImg3,

@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 
-import Header from '../layout/Header';
-import Carousel from '../Carousel';
-import Footer from '../layout/Footer';
+import Header from '../components/layout/Header';
+import Carousel from '../components/Carousel';
+import Footer from '../components/layout/Footer';
 
 function Home() {
   const { infos } = useSelector(state => state.developInfos);
