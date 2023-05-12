@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 
 import Header from '../layout/Header';
 import Carousel from '../Carousel';
+import Footer from '../layout/Footer';
 
 function Home() {
   const { infos } = useSelector(state => state.developInfos);
@@ -37,6 +38,7 @@ function Home() {
           );
         })}
       </div>
+      <Footer />
     </div>
   );
 }

@@ -1,26 +1,38 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CarouselImg1 from './assets/carousel-1.png';
 import CarouselImg2 from './assets/carousel-2.png';
 import CarouselImg3 from './assets/carousel-3.png';
 
+const carouselImgs = [
+  CarouselImg3,
+  CarouselImg1,
+  CarouselImg2,
+  CarouselImg3,
+  CarouselImg1,
+];
+
 function Carousel() {
   const [currentIdx, setCurrentIdx] = useState(0);
 
-  const carouselImgs = [
-    CarouselImg3,
-    CarouselImg1,
-    CarouselImg2,
-    CarouselImg3,
-    CarouselImg1,
-  ];
+  const onSliderClickHandler = () =>
+    setCurrentIdx(prev => (prev + 1) % carouselImgs.length);
 
-  const onPrevClickHandler = () =>
-    setCurrentIdx(prev => (prev === 0 ? carouselImgs.length - 1 : prev - 1));
+  const autoSlider = intervalTime => {
+    console.log(`in autoSlider function!!`);
+    setInterval(onSliderClickHandler, intervalTime);
+  };
 
-  const onNextClickHandler = () =>
-    setCurrentIdx(prev => (prev === carouselImgs.length - 1 ? 0 : prev + 1));
+  // react-hook/exhausting-deps에서 빈배열에 오류가 생기면 함수의 선언을 useEffect안으로 넣어주면 된다.
+  useEffect(() => {
+    console.log(`mount...`);
+    autoSlider(3000);
+
+    return () => console.log(`unmount...`);
+  }, []);
 
   const onEllipsisClickHandler = index => setCurrentIdx(index);
+
+  console.log(`currentIdx: ${currentIdx}`);
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -41,7 +53,7 @@ function Carousel() {
       <div className="absolute bottom-6 left-[45%] flex w-full">
         <button
           type="button"
-          onClick={onPrevClickHandler}
+          onClick={onSliderClickHandler}
           className="relative rounded-full w-[30px] h-[30px] cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8 mr-2"
         >
           <span className="absolute top-2 left-2">&larr;</span>
@@ -64,7 +76,7 @@ function Carousel() {
         </div>
         <button
           type="button"
-          onClick={onNextClickHandler}
+          onClick={onSliderClickHandler}
           className="relative rounded-full w-[30px] h-[30px] cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8"
         >
           <span className="absolute top-2 left-2">&rarr;</span>
