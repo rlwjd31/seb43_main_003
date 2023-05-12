@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import Header from '../components/layout/Header';
 import Carousel from '../components/Carousel';
 import Footer from '../components/layout/Footer';
+import Card from '../components/UI/Card';
+import Item from '../components/Item';
 
 function Home() {
   const { infos } = useSelector(state => state.developInfos);
@@ -12,31 +14,13 @@ function Home() {
       <Header />
       <div className="max-w-limit pt-[180px]">
         <Carousel />
-        {infos.map(info => {
-          const {
-            id,
-            title,
-            source,
-            imageURI,
-            recommendedAvg,
-            recommends,
-            author,
-            sorta,
-            sourceUrI,
-          } = info;
-          return (
-            <div key={id}>
-              <div>{title}</div>
-              <div>{source}</div>
-              <img src={imageURI} alt="썸네일 및 대표 사진" className="h-48 w-48" />
-              <div>{recommendedAvg}</div>
-              <div>{recommends}</div>
-              <div>{author}</div>
-              <div>{sorta}</div>
-              <div>{sourceUrI}</div>
-            </div>
-          );
-        })}
+        <div className="flex w-full justify-between">
+          {infos.map(info => (
+            <Card key={info.id} width="32%">
+              <Item {...info} />
+            </Card>
+          ))}
+        </div>
       </div>
       <Footer />
     </div>

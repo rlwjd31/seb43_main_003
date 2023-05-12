@@ -23,7 +23,7 @@ const initialState = {
       imageURI: 'https://img.youtube.com/vi/tosLBcAX1vk/0.jpg',
       recommendedAvg: 4.32,
       recommends: 54,
-      autho: 'yu ha',
+      author: 'yu ha',
       sorta: 'video',
       sourceUrI:
         'https://www.youtube.com/watch?v=tosLBcAX1vk&t=114s&ab_channel=%EB%85%B8%EB%A7%88%EB%93%9C%EC%BD%94%EB%8D%94NomadCoders',
@@ -36,7 +36,7 @@ const initialState = {
         'https://devographics.github.io/surveys/state_of_js/js2022/images/js2022-og.png',
       recommendedAvg: 4.82,
       recommends: 231,
-      autho: 'yoon su',
+      author: 'yoon su',
       sorta: 'text',
       sourceUrI: 'https://2022.stateofjs.com/en-US/libraries/',
     },
