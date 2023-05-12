@@ -31,7 +31,7 @@ function Carousel() {
             // eslint-disable-next-line react/no-array-index-key
             key={`carousel-img${index + 1}`}
             src={imgSource}
-            // className="object-fill object-center"
+            className="object-fill object-center"
             alt={`carousel-img-${index + 1}`}
           />
         ))}
