@@ -2,23 +2,26 @@ import { useState } from 'react';
 import CarouselImg1 from './assets/carousel-1.png';
 import CarouselImg2 from './assets/carousel-2.png';
 import CarouselImg3 from './assets/carousel-3.png';
+import useAutoSlide from './hooks/useAutoSlide';
+
+const carouselImgs = [
+  CarouselImg3,
+  CarouselImg1,
+  CarouselImg2,
+  CarouselImg3,
+  CarouselImg1,
+];
 
 function Carousel() {
+  const delay = 3000;
   const [currentIdx, setCurrentIdx] = useState(0);
 
-  const carouselImgs = [
-    CarouselImg3,
-    CarouselImg1,
-    CarouselImg2,
-    CarouselImg3,
-    CarouselImg1,
-  ];
+  const onSliderClickHandler = () =>
+    setCurrentIdx(prev => (prev + 1) % carouselImgs.length);
 
-  const onPrevClickHandler = () =>
-    setCurrentIdx(prev => (prev === 0 ? carouselImgs.length - 1 : prev - 1));
+  useAutoSlide(onSliderClickHandler, delay);
 
-  const onNextClickHandler = () =>
-    setCurrentIdx(prev => (prev === carouselImgs.length - 1 ? 0 : prev + 1));
+  const onEllipsisClickHandler = index => setCurrentIdx(index);
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -29,9 +32,8 @@ function Carousel() {
         {carouselImgs.map((imgSource, index) => (
           <img
             // eslint-disable-next-line react/no-array-index-key
-            key={`carousel-img${index + 1}`}
+            key={index}
             src={imgSource}
-            className="object-fill object-center"
             alt={`carousel-img-${index + 1}`}
           />
         ))}
@@ -39,7 +41,7 @@ function Carousel() {
       <div className="absolute bottom-6 left-[45%] flex w-full">
         <button
           type="button"
-          onClick={onPrevClickHandler}
+          onClick={onSliderClickHandler}
           className="relative rounded-full w-[30px] h-[30px] cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8 mr-2"
         >
           <span className="absolute top-2 left-2">&larr;</span>
@@ -50,7 +52,7 @@ function Carousel() {
             .map((_, index) => (
               <div
                 // eslint-disable-next-line react/no-array-index-key
-                key={`ellipsis-${index}`}
+                key={index}
                 aria-label="HandleCarousel"
                 role="button"
                 onClick={() => onEllipsisClickHandler(index)}
@@ -62,7 +64,7 @@ function Carousel() {
         </div>
         <button
           type="button"
-          onClick={onNextClickHandler}
+          onClick={onSliderClickHandler}
           className="relative rounded-full w-[30px] h-[30px] cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8"
         >
           <span className="absolute top-2 left-2">&rarr;</span>
