@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CarouselImg1 from './assets/carousel-1.png';
 import CarouselImg2 from './assets/carousel-2.png';
 import CarouselImg3 from './assets/carousel-3.png';
+import useAutoSlide from './hooks/useAutoSlide';
 
 const carouselImgs = [
   CarouselImg3,
@@ -12,27 +13,15 @@ const carouselImgs = [
 ];
 
 function Carousel() {
+  const delay = 3000;
   const [currentIdx, setCurrentIdx] = useState(0);
 
   const onSliderClickHandler = () =>
     setCurrentIdx(prev => (prev + 1) % carouselImgs.length);
 
-  const autoSlider = intervalTime => {
-    console.log(`in autoSlider function!!`);
-    setInterval(onSliderClickHandler, intervalTime);
-  };
-
-  // react-hook/exhausting-deps에서 빈배열에 오류가 생기면 함수의 선언을 useEffect안으로 넣어주면 된다.
-  useEffect(() => {
-    console.log(`mount...`);
-    autoSlider(3000);
-
-    return () => console.log(`unmount...`);
-  }, []);
+  useAutoSlide(onSliderClickHandler, delay);
 
   const onEllipsisClickHandler = index => setCurrentIdx(index);
-
-  console.log(`currentIdx: ${currentIdx}`);
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -43,9 +32,8 @@ function Carousel() {
         {carouselImgs.map((imgSource, index) => (
           <img
             // eslint-disable-next-line react/no-array-index-key
-            key={`carousel-img${index + 1}`}
+            key={index}
             src={imgSource}
-            // className="object-fill object-center"
             alt={`carousel-img-${index + 1}`}
           />
         ))}
@@ -64,7 +52,7 @@ function Carousel() {
             .map((_, index) => (
               <div
                 // eslint-disable-next-line react/no-array-index-key
-                key={`ellipsis-${index}`}
+                key={index}
                 aria-label="HandleCarousel"
                 role="button"
                 onClick={() => onEllipsisClickHandler(index)}
