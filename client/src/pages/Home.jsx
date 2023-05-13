@@ -12,11 +12,11 @@ function Home() {
   return (
     <div className="w-screen flex flex-col items-center bg-gray1">
       <Header />
-      <div className="max-w-limit pt-[180px]">
+      <div className="max-w-limit pt-[160px]">
         <Carousel />
         <div className="flex w-full justify-between">
           {infos.map(info => (
-            <Card key={info.id} width="32%">
+            <Card key={info.id} width="31.5%">
               <Item {...info} />
             </Card>
           ))}

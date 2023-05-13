@@ -13,11 +13,11 @@ function Header() {
   };
 
   return (
-    <div className="z-10 fixed top-0 flex justify-center h-[180px] w-screen pt-8 bg-gray1 font-play text-[0.75rem] border-solid border-b-[1px] border-gray7/30">
+    <div className="z-10 fixed top-0 flex justify-center h-[160px] w-screen pt-8 bg-gray1 font-play text-[0.75rem] border-solid border-b-[1px] border-gray7/60">
       <div className="flex flex-col w-full max-w-limit">
         <Link to="user/login" className="flex justify-end pr-[10px]">
           <UserIcon className="h-[12px] w-[12px] mr-2" />
-          <span>LOGIN</span>
+          <span className="tracking-[.15rem]">LOGIN</span>
         </Link>
         <div className="flex items-end">
           <h1 className="text-[28px] font-[900] font-noto-kr pr-14">
@@ -37,9 +37,9 @@ function Header() {
             />
           </form>
           <nav className="flex">
-            <NavLink to="/" className={applyNavLinkActivedStyle}>
+            {/* <NavLink to="/" className={applyNavLinkActivedStyle}>
               HOME
-            </NavLink>
+            </NavLink> */}
             <NavLink to="/about" className={applyNavLinkActivedStyle}>
               ABOUT
             </NavLink>
