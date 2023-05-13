@@ -6,11 +6,15 @@ const autoSlideInterval = (effectCallback, delay) => {
   return intervalId;
 };
 
-function useAutoSlide(effectCallback, delay) {
+function useAutoSlide(effectCallback, delay, trigger) {
   useEffect(() => {
-    const intervalId = autoSlideInterval(effectCallback, delay);
+    if (trigger) {
+      const intervalId = autoSlideInterval(effectCallback, delay);
 
-    return () => clearInterval(intervalId);
+      return () => clearInterval(intervalId);
+    }
+
+    return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
