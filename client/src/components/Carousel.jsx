@@ -18,7 +18,7 @@ const carouselImgs = [
 // TODO: 3. mouseover시 autoSlide 멈춤 기능 추가!  -> priority: 상
 // TODO: 4. draggable carousel 구현 -> priority: 하
 function Carousel({ auto, infinite, carouselIntervalTime, transitionDelay }) {
-  const transitionStyle = `transition-all ease-in-out duration-${transitionDelay}`;
+  const transitionStyle = `all ease-in-out ${transitionDelay / 1000}s`;
   const [currentIdx, setCurrentIdx] = useState(1);
   const [isTransition, setIsTransition] = useState(true);
 
@@ -58,8 +58,11 @@ function Carousel({ auto, infinite, carouselIntervalTime, transitionDelay }) {
   return (
     <div className="relative w-full overflow-hidden duration">
       <div
-        style={{ transform: `translateX(-${currentIdx * 100}%)` }}
-        className={`flex w-full ${isTransition ? transitionStyle : ''}`}
+        style={{
+          transform: `translateX(-${currentIdx * 100}%)`,
+          transition: isTransition ? transitionStyle : '',
+        }}
+        className="flex w-full"
       >
         {carouselImgs.map((imgSource, index) => (
           <img
