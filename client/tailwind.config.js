@@ -18,7 +18,9 @@ export default {
         gray8: '#787878',
         gray9: '#7A7A7A',
         gray10: '#858585',
+        gray11: '#717171',
         activeBlue: '#0045F6',
+        kakaoYellow: '#FDDC3F',
       },
       fontFamily: {
         'noto-kr': ['Noto Sans KR', 'sans-serif'],
