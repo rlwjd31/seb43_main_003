@@ -30,6 +30,7 @@ function Home() {
     fetchPopular();
 
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
@@ -52,20 +53,42 @@ function Home() {
           </div>
         </div>
         {/* flex flex-col 같이 써주어야 items-center 먹음 */}
-        <div className="w-full flex flex-col items-center bg-gray1">
-          <div className="flex w-full max-w-limit justify-between">
-            {infos.map(info => (
-              <Card key={info.id} width="31.5%">
-                <Item {...info} />
-              </Card>
-            ))}
+        <div className="w-full flex flex-col py-36 items-center bg-gray1">
+          <div className="w-full flex flex-col max-w-limit">
+            <h3 className="text-[1.6rem] font-bold  mb-[3rem]">실시간 순위</h3>
+            <div className="flex justify-between">
+              {infos.map(info => (
+                <Card key={info.id} width="31.5%">
+                  <Item {...info} />
+                </Card>
+              ))}
+            </div>
           </div>
-          <div className="flex w-full max-w-limit justify-between">
-            {infos.map(info => (
-              <Card key={info.id} width="31.5%">
-                <Item {...info} />
-              </Card>
-            ))}
+          <div className="w-full flex flex-col max-w-limit mt-36">
+            <h3 className="text-[1.6rem] font-bold  mb-[3rem]">인기 게시물</h3>
+            <div className="flex justify-between">
+              {infos.map((info, index) => (
+                <Card key={info.id} width="31.5%">
+                  <h1 className="pb-3 mb-7 text-lg font-medium border-b-[1px] border-solid border-gray4">
+                    {/* eslint-disable-next-line no-nested-ternary */}
+                    {index === 0 ? '글' : index === 1 ? '영상' : '트렌드'}
+                  </h1>
+                  <Item {...info} />
+                </Card>
+              ))}
+            </div>
+          </div>
+          <div className="w-full flex flex-col max-w-limit mt-36">
+            <h3 className="text-[1.6rem] font-bold  mb-[3rem]">
+              당신이 찾고 있던, 그 장비
+            </h3>
+            <div className="flex justify-between">
+              {infos.map(info => (
+                <Card key={info.id} width="31.5%">
+                  <Item {...info} />
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
         <Footer />
