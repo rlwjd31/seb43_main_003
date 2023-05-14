@@ -21,6 +21,7 @@ function Carousel({ auto, infinite, carouselIntervalTime, transitionDelay }) {
   const transitionStyle = `all ease-in-out ${transitionDelay / 1000}s`;
   const [currentIdx, setCurrentIdx] = useState(1);
   const [isTransition, setIsTransition] = useState(true);
+  const [isAutoSlideTrigger, setIsAutoSlideTrigger] = useState(auto);
 
   // carousel edge부분(양 끝) 눈속임 처리
   const replaceSlide = (targetCarouselIndex, delay) => {
@@ -56,7 +57,7 @@ function Carousel({ auto, infinite, carouselIntervalTime, transitionDelay }) {
   const onEllipsisClickHandler = index => setCurrentIdx(index);
 
   return (
-    <div className="relative w-full overflow-hidden duration">
+    <div className="max-w-limit relative overflow-hidden duration bg-gray8">
       <div
         style={{
           transform: `translateX(-${currentIdx * 100}%)`,
@@ -70,39 +71,40 @@ function Carousel({ auto, infinite, carouselIntervalTime, transitionDelay }) {
             key={index}
             src={imgSource}
             alt={`carousel-img-${index + 1}`}
+            className="object-cover object-center"
           />
         ))}
       </div>
-      <div className="absolute bottom-6 left-[45%] flex w-full">
+      <div className="absolute bottom-8 left-[47%] flex items-center gap-4 mr-2">
+        {Array(carouselImgs.length - 2)
+          .fill(0)
+          .map((_, index) => (
+            <div
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
+              aria-label="CarouselPagination"
+              role="button"
+              onClick={() => onEllipsisClickHandler(index + 1)}
+              className={`w-[0.5rem] h-[0.5rem] ${
+                currentIdx === index + 1 ? 'bg-[#FFFFFF]' : 'bg-gray10/80'
+              } rounded-full cursor-pointer`}
+            />
+          ))}
+      </div>
+      <div className="absolute top-1/2 left-0 w-full flex justify-between px-7">
         <button
           type="button"
           onClick={() => onSliderHandler('prev')}
-          className="relative rounded-full w-[30px] h-[30px] cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8 mr-2"
+          className="flex justify-center items-center pt-1 rounded-full w-9 h-9 cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8"
         >
-          <span className="absolute top-2 left-2">&larr;</span>
+          <span className="text-gray6 text-xl">&larr;</span>
         </button>
-        <div className="flex items-center gap-2 mr-2">
-          {Array(carouselImgs.length - 2)
-            .fill(0)
-            .map((_, index) => (
-              <div
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-                aria-label="CarouselPagination"
-                role="button"
-                onClick={() => onEllipsisClickHandler(index + 1)}
-                className={`w-[0.5rem] h-[0.5rem] ${
-                  currentIdx === index + 1 ? 'bg-[#FFFFFF]' : 'bg-gray10'
-                } rounded-full cursor-pointer`}
-              />
-            ))}
-        </div>
         <button
           type="button"
           onClick={() => onSliderHandler('next')}
-          className="relative rounded-full w-[30px] h-[30px] cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8"
+          className="flex justify-center items-center pt-1 rounded-full w-9 h-9 cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8"
         >
-          <span className="absolute top-2 left-2">&rarr;</span>
+          <span className="text-gray6 text-xl">&rarr;</span>
         </button>
       </div>
     </div>

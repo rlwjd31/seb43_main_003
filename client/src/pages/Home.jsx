@@ -17,20 +17,35 @@ function Home() {
   const { infos } = useSelector(state => state.developInfos);
 
   return (
-    <div className="w-screen flex flex-col items-center bg-gray1">
+    <>
       <Header />
-      <div className="max-w-limit pt-[160px]">
-        <Carousel {...CaurouselConfig} />
-        <div className="flex w-full justify-between">
-          {infos.map(info => (
-            <Card key={info.id} width="31.5%">
-              <Item {...info} />
-            </Card>
-          ))}
+      <div className="w-screen flex flex-col items-center bg-gray1">
+        <div className="w-full flex justify-center pt-[160px] bg-gray3">
+          <Carousel {...CaurouselConfig} />
         </div>
+        <div className="w-full flex justify-center bg-white1">
+          <h1>something</h1>
+        </div>
+        {/* flex flex-col 같이 써주어야 items-center 먹음 */}
+        <div className="w-full flex flex-col items-center bg-gray1">
+          <div className="flex w-full max-w-limit justify-between">
+            {infos.map(info => (
+              <Card key={info.id} width="31.5%">
+                <Item {...info} />
+              </Card>
+            ))}
+          </div>
+          <div className="flex w-full max-w-limit justify-between">
+            {infos.map(info => (
+              <Card key={info.id} width="31.5%">
+                <Item {...info} />
+              </Card>
+            ))}
+          </div>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 }
 
