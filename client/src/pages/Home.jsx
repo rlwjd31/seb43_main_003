@@ -36,7 +36,7 @@ function Home() {
     <>
       <Header />
       <div className="w-screen flex flex-col items-center bg-gray1 font-noto-kr">
-        <div className="w-full flex justify-center pt-[160px] bg-gray3">
+        <div className="w-full flex justify-center pt-36 bg-gray3">
           <Carousel {...CaurouselConfig} />
         </div>
         <div className="w-full flex justify-center bg-white1">

@@ -69,7 +69,7 @@ function Carousel({ auto, infinite, carouselIntervalTime, transitionDelay }) {
     <div
       onMouseEnter={onMouseEnterHandler}
       onMouseLeave={onMouseLeaveHandler}
-      className="max-w-limit relative overflow-hidden"
+      className="w-full max-w-limit relative overflow-hidden"
     >
       <div
         style={{
@@ -84,7 +84,7 @@ function Carousel({ auto, infinite, carouselIntervalTime, transitionDelay }) {
             key={index}
             src={imgSource}
             alt={`carousel-img-${index + 1}`}
-            className="object-cover object-center"
+            className="object-cover"
           />
         ))}
       </div>
