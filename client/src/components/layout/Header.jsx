@@ -6,7 +6,7 @@ import { UserIcon, SearchIcon } from '../Icons';
 function Header() {
   const inputRef = useRef(null);
   const applyNavLinkActivedStyle = ({ isActive }) =>
-    `p-[10px] pb-[15px] tracking-[.15rem] ${isActive && 'text-[#0045F6]'}`;
+    `p-[10px] pb-[15px] tracking-[.15rem] ${isActive && 'text-activeBlue'}`;
 
   const onFormClickHandler = () => {
     inputRef.current.focus();
@@ -37,9 +37,9 @@ function Header() {
             />
           </form>
           <nav className="flex">
-            {/* <NavLink to="/" className={applyNavLinkActivedStyle}>
+            <NavLink to="/" className={applyNavLinkActivedStyle}>
               HOME
-            </NavLink> */}
+            </NavLink>
             <NavLink to="/about" className={applyNavLinkActivedStyle}>
               ABOUT
             </NavLink>

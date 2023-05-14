@@ -108,14 +108,14 @@ function Carousel({ auto, infinite, carouselIntervalTime, transitionDelay }) {
         <button
           type="button"
           onClick={() => onSliderHandler('prev')}
-          className="flex justify-center items-center pt-1 rounded-full w-9 h-9 cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8"
+          className="flex justify-center items-center rounded-full w-9 h-9 cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8"
         >
           <span className="text-gray6 text-xl">&larr;</span>
         </button>
         <button
           type="button"
           onClick={() => onSliderHandler('next')}
-          className="flex justify-center items-center pt-1 rounded-full w-9 h-9 cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8"
+          className="flex justify-center items-center rounded-full w-9 h-9 cursor-pointer hover:bg-[#E8E8E8] border-solid border-[1px] border-gray8"
         >
           <span className="text-gray6 text-xl">&rarr;</span>
         </button>

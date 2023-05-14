@@ -33,6 +33,32 @@ export default {
       boxShadow: {
         around: 'rgba(0, 0, 0, 0.05) 0px 3px 50px',
       },
+      keyframes: {
+        'fadeIn-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(10%)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+        'fadeIn-right': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateX(-20%)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateX(0)',
+          },
+        },
+      },
+      animation: {
+        'fadeIn-up': 'fadeIn-up 1s ease-in',
+        'fadeIn-right': 'fadeIn-right 1s ease-in-out',
+      },
     },
   },
   plugins: [],
