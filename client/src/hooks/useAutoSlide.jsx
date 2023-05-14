@@ -16,7 +16,7 @@ function useAutoSlide(effectCallback, delay, trigger) {
 
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [trigger]);
 }
 
 export default useAutoSlide;

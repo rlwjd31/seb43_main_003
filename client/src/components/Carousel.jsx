@@ -51,13 +51,26 @@ function Carousel({ auto, infinite, carouselIntervalTime, transitionDelay }) {
     setIsTransition(true);
   };
 
-  useAutoSlide(() => onSliderHandler('next'), carouselIntervalTime, auto);
+  useAutoSlide(() => onSliderHandler('next'), carouselIntervalTime, isAutoSlideTrigger);
 
   // handle pagination ellipsis
   const onEllipsisClickHandler = index => setCurrentIdx(index);
 
+  // mouse over/out과 달리 bubbling이 일어나지 않는 enter/leave를 이용함
+  const onMouseEnterHandler = () => {
+    setIsAutoSlideTrigger(false);
+  };
+
+  const onMouseLeaveHandler = () => {
+    setIsAutoSlideTrigger(true);
+  };
+
   return (
-    <div className="max-w-limit relative overflow-hidden duration bg-gray8">
+    <div
+      onMouseEnter={onMouseEnterHandler}
+      onMouseLeave={onMouseLeaveHandler}
+      className="max-w-limit relative overflow-hidden"
+    >
       <div
         style={{
           transform: `translateX(-${currentIdx * 100}%)`,
