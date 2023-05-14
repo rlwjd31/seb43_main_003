@@ -1,11 +1,11 @@
-import { GithubIcon, GoogleIcon, KakaoIcon } from '../components/Icons.jsx';
+import { GithubIcon, GoogleIcon, KakaoIcon } from '../components/Icons.js';
 
 function Login() {
   return (
     <div className="my-[9.6rem] flex justify-center items-center pt-[180px]">
-      <div className="w-[33.5rem] h-[31.5rem] px-[3rem] flex-col">
+      <div className="w-[33.5rem] h-[31.5rem] px-[3rem] flex flex-col">
         <p className="text-[30px] text-black3 font-bold text-center">로그인</p>
-        <form className="mt-[3.75rem] py-[15px] flex-col">
+        <form className="mt-[3.75rem] py-[15px] flex flex-col">
           <input
             type="email"
             className="bg-white w-full h-[3.5rem] px-[1.3rem] py-[0.5rem]"
