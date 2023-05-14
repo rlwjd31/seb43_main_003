@@ -1,4 +1,4 @@
-import { GithubIcon, GoogleIcon, KakaoIcon } from '../components/Icons.js';
+import { GithubIcon, GoogleIcon, KakaoIcon } from '../components/Icons';
 
 function Login() {
   return (
@@ -27,17 +27,26 @@ function Login() {
           비밀번호 찾기
         </p>
         <div className="w-full flex justify-between mt-[2.7rem] px-[8.5rem] ">
-          <button className="w-[2.6rem] h-[2.6rem] rounded-full bg-black flex justify-center items-center">
+          <button
+            type="button"
+            className="w-[2.6rem] h-[2.6rem] rounded-full bg-black flex justify-center items-center"
+          >
             <GithubIcon className="w-[2rem] h-[2rem]" />
           </button>
-          <button className="w-[2.6rem] h-[2.6rem] rounded-full bg-white flex justify-center items-center">
+          <button
+            type="button"
+            className="w-[2.6rem] h-[2.6rem] rounded-full bg-white flex justify-center items-center"
+          >
             <GoogleIcon className="w-[2rem] h-[2rem]" />
           </button>
-          <button className="w-[2.6rem] h-[2.6rem] rounded-full bg-kakaoYellow flex justify-center items-center">
+          <button
+            type="button"
+            className="w-[2.6rem] h-[2.6rem] rounded-full bg-kakaoYellow flex justify-center items-center"
+          >
             <KakaoIcon className="w-[2rem] h-[2rem]" />
           </button>
         </div>
-        <div className="my-[26px] mx-[12.5rem] border-t-[1px] border-solid border-gray8"></div>
+        <div className="my-[26px] mx-[12.5rem] border-t-[1px] border-solid border-gray8" />
         <div className="flex justify-center">
           <p className="text-black3 text-[12px] font-bold pr-[5px]">
             아직 계정이 없으신가요?
