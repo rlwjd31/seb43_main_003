@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 
+import { useEffect } from 'react';
+import axios from 'axios';
 import Header from '../components/layout/Header';
 import Carousel from '../components/Carousel';
 import Footer from '../components/layout/Footer';
@@ -15,7 +17,20 @@ const CaurouselConfig = {
 
 function Home() {
   const { infos } = useSelector(state => state.developInfos);
+  const BASE_URI = `${import.meta.env.VITE_BACKEND_DOMAIN}:${
+    import.meta.env.VITE_BACKEND_PORT
+  }`;
 
+  useEffect(() => {
+    const fetchPopular = async () => {
+      const response = await axios.get(`${BASE_URI}/popular`);
+      console.log(response.data);
+    };
+
+    fetchPopular();
+
+    return () => {};
+  }, []);
   return (
     <>
       <Header />
