@@ -19,12 +19,23 @@ function Home() {
   return (
     <>
       <Header />
-      <div className="w-screen flex flex-col items-center bg-gray1">
+      <div className="w-screen flex flex-col items-center bg-gray1 font-noto-kr">
         <div className="w-full flex justify-center pt-[160px] bg-gray3">
           <Carousel {...CaurouselConfig} />
         </div>
         <div className="w-full flex justify-center bg-white1">
-          <h1>something</h1>
+          <div className="flex w-full justify-between max-w-limit pt-24 pb-32 animate-fadeIn-up">
+            <h2 className="text-4xl font-bold">개발자를 위한 공간.</h2>
+            <div className="flex flex-col text-sm font-normal max-w-[26rem]">
+              <p>
+                이곳은 개발자들을 위한 <span className="text-activeBlue">공간</span>
+                입니다.
+              </p>
+              <p>자유롭게 탐색하고, 유용한 정보들을 찾아가세요.</p>
+              <p>당신의 지식을 나누어주세요.</p>
+              <p>개발에 대한 정보라면 어떤 것이든 환영합니다.</p>
+            </div>
+          </div>
         </div>
         {/* flex flex-col 같이 써주어야 items-center 먹음 */}
         <div className="w-full flex flex-col items-center bg-gray1">
