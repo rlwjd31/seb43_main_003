@@ -16,7 +16,7 @@ const CaurouselConfig = {
 };
 
 function Home() {
-  const { infos } = useSelector(state => state.developInfos);
+  const { popular, ranking } = useSelector(state => state);
   const BASE_URI = `${import.meta.env.VITE_BACKEND_DOMAIN}:${
     import.meta.env.VITE_BACKEND_PORT
   }`;
@@ -32,6 +32,7 @@ function Home() {
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <>
       <Header />
@@ -57,7 +58,7 @@ function Home() {
           <div className="w-full flex flex-col max-w-limit">
             <h3 className="text-[1.6rem] font-bold  mb-[3rem]">실시간 순위</h3>
             <div className="flex justify-between">
-              {infos.map(info => (
+              {ranking.infos.map(info => (
                 <Card key={info.id} width="31.5%">
                   <Item {...info} />
                 </Card>
@@ -67,7 +68,7 @@ function Home() {
           <div className="w-full flex flex-col max-w-limit mt-36">
             <h3 className="text-[1.6rem] font-bold  mb-[3rem]">인기 게시물</h3>
             <div className="flex justify-between">
-              {infos.map((info, index) => (
+              {popular.infos.map((info, index) => (
                 <Card key={info.id} width="31.5%">
                   <h1 className="pb-3 mb-7 text-lg font-medium border-b-[1px] border-solid border-gray4">
                     {/* eslint-disable-next-line no-nested-ternary */}
@@ -83,7 +84,7 @@ function Home() {
               당신이 찾고 있던, 그 장비
             </h3>
             <div className="flex justify-between">
-              {infos.map(info => (
+              {ranking.infos.map(info => (
                 <Card key={info.id} width="31.5%">
                   <Item {...info} />
                 </Card>
