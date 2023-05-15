@@ -1,82 +1,78 @@
 package server.mainproject.comment.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import server.mainproject.member.dto.AuthorResponseDto;
 import server.mainproject.member.entity.Member;
 import server.mainproject.post.entity.DevPost;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class CommentDto {
-    @Getter
-    @Setter
+    @Getter @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class PostComment {
-        //Todo : 추가
-        private long memberId;
-        private long postId;
-        @NotBlank
-        private String content;
-        private int star;
-
-        //Todo : 추가
-        public Member getMember () {
-            Member member = new Member();
-            member.setMemberId(memberId);
-
-            return member;
-        }
-
-        public DevPost getDevPost() {
-            DevPost devPost = new DevPost();
-            devPost.setPostId(postId);
-
-            return devPost;
-        }
-    }
-
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    public static class PatchComment {
-        //Todo : 추가
-        private long memberId;
-        private long postId;
-        private long commentId;
-        @NotBlank
-        private String content;
-        private int star;
-
-        //Todo : 추가
-        public Member getMember () {
-            Member member = new Member();
-            member.setMemberId(memberId);
-
-            return member;
-        }
-
-        public DevPost getDevPost() {
-            DevPost devPost = new DevPost();
-            devPost.setPostId(postId);
-
-            return devPost;
-        }
-    }
-
-    @Getter
-    @Setter
-    public static class ResponseComment {
-        private long memberId;
+        private Long memberId;
         private String userName;
-        private String profileImage;
-        private long postId;
-        private long commentId;
-        private String content;
+        private Long postId;
+        @NotBlank
+        private String comment;
         private int star;
+
+        public Member getMember() {
+            Member member = new Member();
+            member.setMemberId(memberId);
+
+            return member;
+        }
+
+        public DevPost getDevPost() {
+            DevPost devPost = new DevPost();
+            devPost.setPostId(postId);
+
+            return devPost;
+        }
+    }
+
+    @Getter @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class PatchComment {
+        private Long memberId;
+        private Long postId;
+        private Long commentId;
+        @NotBlank
+        private String comment;
+        private int star;
+
+        public Member getMember () {
+            Member member = new Member();
+            member.setMemberId(memberId);
+
+            return member;
+        }
+
+        public DevPost getDevPost() {
+            DevPost devPost = new DevPost();
+            devPost.setPostId(postId);
+
+            return devPost;
+        }
+    }
+
+    @Getter @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ResponseComment {
+        private String status;
+        private Long postId;
+        private Long commentId;
+        private String comment;
+        private int star;
+        private List<AuthorResponseDto> author;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }

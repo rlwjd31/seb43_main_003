@@ -8,7 +8,6 @@ import server.mainproject.comment.repository.CommentRepository;
 import server.mainproject.exception.BusinessLogicException;
 import server.mainproject.exception.ExceptionCode;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,26 +28,24 @@ public class CommentService {
     public Comment updateComment(Comment comment) {  // 댓글과 별점 수정
         Comment findComment = findVerifiedComment(comment.getCommentId());
 
-        Optional.ofNullable(comment.getContent())
-                .ifPresent(content -> findComment.setContent(content));
+        Optional.ofNullable(comment.getComment())
+                .ifPresent(content -> findComment.setComment(content));
         Optional.ofNullable(comment.getStar())
                 .ifPresent(star -> findComment.setStar(star));
 
-        findComment.setModifiedAt(LocalDateTime.now());
 
         return commentRepository.save(findComment);
     }
 
     public List<Comment> findComments() {  // 모든 댓글 조회
-
         return commentRepository.findAll();
     }
 
-    public void deleteComment(long commentId) {  // 특정 댓글 삭제
+    public void deleteComment(Long commentId) {  // 특정 댓글 삭제
         commentRepository.deleteById(commentId);
     }
 
-    public Comment findVerifiedComment(long commentId) {  // 해당 댓글의 존재 유무 체크
+    public Comment findVerifiedComment(Long commentId) {  // 해당 댓글의 존재 유무 체크
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
 
