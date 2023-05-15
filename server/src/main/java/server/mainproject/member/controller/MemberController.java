@@ -17,7 +17,9 @@ import server.mainproject.member.service.MemberService;
 import server.mainproject.response.SingleResponse;
 import server.mainproject.utils.URICreator;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -47,10 +49,6 @@ public class MemberController {
         URI uri = URICreator.createUri("/post", createdMember.getMemberId());
 
         return ResponseEntity.created(uri).build();
-
-//        return new ResponseEntity<>(
-//                new SingleResponse<>(mapper.memberToMemberResponseDto(createdMember)),
-//                HttpStatus.CREATED);
     }
 
 
@@ -93,6 +91,80 @@ public class MemberController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+//    // 이메일키 인증
+//    @GetMapping("/email_auth")
+//    public void getEmailAuth(@RequestParam("id")  Long id,
+//                             @RequestParam("mailKey") String mailKey,
+//                             HttpServletResponse response) throws IOException {
+//
+//        memberService.mailKeyAuth(id, mailKey);
+//        String redirectUri = "http://localhost:8080";
+//        response.sendRedirect(redirectUri);
+//    }
+
+    // 비밀번호 변경
+//    @PatchMapping("/password")
+//    public ResponseEntity updatePassword(Principal principal,
+//                                         @RequestBody @Valid PasswordPatchDto passwordPatchDto) {
+//        log.info("### PW PATCH 시작합니다!");
+//        String password = passwordPatchDto.getPassword();
+//        String afterPassword = passwordPatchDto.getAfterPassword();
+//        log.info("###PW = " + password + ", AFTER PW = " + afterPassword);
+//        memberService.updatePassword(principal.getName(), password, afterPassword);
+//
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    // 리커버리 이메일 샌드
+//    @PostMapping("/recovery/signup/send")
+//    public ResponseEntity recoveryEmailSend(@RequestBody @Valid RecoveryEmailSendDto dto)
+//            throws MessagingException, UnsupportedEncodingException {
+//        String emailSignUp = dto.getEmailSignUp();
+//        String emailNeedToSend = dto.getEmailNeedToSend();
+//
+//        userService.recoveryEmailSend(emailSignUp, emailNeedToSend);
+//
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @PostMapping("/recovery/password/send")
+//    public ResponseEntity recoveryPWEmailSend(@RequestBody @Valid RecoveryPWEmailSendDto dto)
+//            throws MessagingException, UnsupportedEncodingException {
+//        String email = dto.getEmail();
+//
+//        userService.recoveryPWEmailSend(email);
+//        log.info("if문 start!");
+//        if (userService.existsByEmail(email)){
+//            User findUser = userService.checkUserExist(email);
+//            userService.checkNotGoogleAuth(findUser);
+//        }
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    // 리커버리 진행
+//    @PatchMapping("/recovery")
+//    public ResponseEntity recovery(@RequestBody @Valid RecoveryPasswordPatchDto dto) {
+//        String email = dto.getEmail();
+//        String mailKey = dto.getMailKey();
+//        String afterPassword = dto.getAfterPassword();
+//
+//        userService.recovery(email, mailKey, afterPassword);
+//
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    //이메일 인증 다시 보내기
+//    @GetMapping("/resend")
+//    public ResponseEntity resend(Principal principal)
+//            throws MessagingException, UnsupportedEncodingException {
+//        String email = principal.getName();
+//        User findUser = userService.checkUserExist(email);
+//        userService.sendEmail(email, findUser.getMailKey(), findUser.getId());
+//
+//        return ResponseEntity.ok().build();
+//    }
+
 
 }
 

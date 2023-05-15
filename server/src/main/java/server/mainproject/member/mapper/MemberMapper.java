@@ -143,7 +143,6 @@ public interface MemberMapper {
     //Todo : Recommend 수동 매핑
     default List<RecommendResponseDto> getRecommendResponseDtos(List<Recommend> recommends) {
 
-
         return recommends.stream()
                 .map(recommend -> new RecommendResponseDto(
                         recommend.getRecommendsId(),
@@ -152,7 +151,12 @@ public interface MemberMapper {
                         recommend.getPost().getTitle(),
                         recommend.getPost().getLink(),
                         recommend.getPost().getStar(),
-                        recommend.getPost().getStarAvg(),
+                        recommend.getPost().getComments()
+                                .stream()
+                                .map(review -> review.getStar())
+                                .mapToDouble(avr -> avr)
+                                .average()
+                                .orElse(0.0),
                         recommend.getPost().getRecommend(),
                         postMemberDtoResponse (recommend.getPost()),
                         postTagDtoResponse(recommend.getPost().getPostTags()),

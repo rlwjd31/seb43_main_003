@@ -43,7 +43,6 @@ public class MemberDto {
         private String userName;
         private List<DevPostDto.Response> posts;
         private List<CommentDto.ResponseComment> comments;
-        private List<Post_TagResponseDto> tags;
         private List<RecommendResponseDto> recommends;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

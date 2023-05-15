@@ -2,8 +2,6 @@ package server.mainproject.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
-import server.mainproject.auth.Oauth.OauthUser;
 import server.mainproject.comment.entity.Comment;
 import server.mainproject.audit.Auditable;
 import server.mainproject.post.entity.DevPost;
@@ -46,6 +44,10 @@ public class Member extends Auditable {
     private List<String> roles = new ArrayList<>();
 
     private String provider;
+
+    @Builder.Default
+    @Setter
+    private String mailKey = "";
 
     public Member updateMember(String username, String email) {
         this.userName = username;
