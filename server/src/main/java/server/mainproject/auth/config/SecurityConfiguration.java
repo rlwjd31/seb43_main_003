@@ -73,7 +73,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .oauth2Login() // OAuth2를 통한 로그인 사용
                .defaultSuccessUrl("/", true) // 로그인 성공시 이동할 URL
                 .failureUrl("/login")
-//                .loginPage("/login")
+//                .loginPage("/oauth/login")
                 .userInfoEndpoint() // 사용자가 로그인에 성공하였을 경우,
                 .userService(oAuth2Service); // 해당 서비스 로직을 타도록 설정
 //                .oauth2Login(login -> login

@@ -1,7 +1,6 @@
 package server.mainproject.member.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import server.mainproject.auth.Oauth.OauthUser;
 import server.mainproject.member.entity.Member;
 
 import java.util.Optional;
