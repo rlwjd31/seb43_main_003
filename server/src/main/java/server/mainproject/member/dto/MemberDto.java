@@ -2,8 +2,11 @@ package server.mainproject.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import server.mainproject.comment.dto.CommentDto;
 import server.mainproject.post.dto.DevPostDto;
+import server.mainproject.post.dto.Post_TagResponseDto;
+import server.mainproject.post.dto.RecommendResponseDto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -31,13 +34,17 @@ public class MemberDto {
     }
 
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Response {
+        private String status;
         private String memberId;
         private String email;
         private String userName;
         private List<DevPostDto.Response> posts;
-        private List<CommentDto.ResponseComment> answers;
+        private List<CommentDto.ResponseComment> comments;
+        private List<Post_TagResponseDto> tags;
+        private List<RecommendResponseDto> recommends;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
