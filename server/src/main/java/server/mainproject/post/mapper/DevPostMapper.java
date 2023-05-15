@@ -40,9 +40,9 @@ public interface DevPostMapper {
                 .stream()
                 .map(comment -> {
                     CommentDto.ResponseComment response = new CommentDto.ResponseComment();
-                    response.setMemberId(comment.getMemberId());
-                    response.setUserName(comment.getUserName());
-                    response.setProfileImage(null);
+//                    response.setMemberId(comment.getMemberId());
+//                    response.setUserName(comment.getUserName());
+//                    response.setProfileImage(null);
                     response.setPostId(comment.getPostId());
                     response.setCommentId(comment.getCommentId());
                     response.setStar(comment.getStar());
@@ -72,8 +72,8 @@ public interface DevPostMapper {
                 .builder()
                 .memberId(devPost.getMember().getMemberId())
                 .userName(devPost.getMember().getUserName())
-                .createdAt(devPost.getCreatedAt())
-                .modifiedAt(devPost.getModifiedAt())
+//                .createdAt(devPost.getCreatedAt())
+//                .modifiedAt(devPost.getModifiedAt())
                 .build();
         author.add(ar);
 

@@ -4,24 +4,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import server.mainproject.audit.Auditable;
 import server.mainproject.member.entity.Member;
 import server.mainproject.post.entity.DevPost;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-public class Comment {
+public class Comment extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long commentId;
-    private String content;
+    private Long commentId;
+    private String comment;
     private int star;  // 별점
-    private LocalDateTime createdAt = LocalDateTime.now();
-    private LocalDateTime modifiedAt = LocalDateTime.now();
 
     @JsonIgnore
     @ManyToOne
@@ -33,7 +31,7 @@ public class Comment {
     @JoinColumn(name = "POST_ID")
     private DevPost devPost;
 
-    public long getMemberId() {
+    public Long getMemberId() {
         return member.getMemberId();
     }
 
@@ -41,11 +39,7 @@ public class Comment {
         return member.getUserName();
     }
 
-//    public String getProfileImage() {
-//        return member.getProfileImage();
-//    }
-
-    public long getPostId() {
+    public Long getPostId() {
         return devPost.getPostId();
     }
 }

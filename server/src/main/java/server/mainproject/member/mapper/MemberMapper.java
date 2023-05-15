@@ -173,11 +173,11 @@ public interface MemberMapper {
 
         CommentDto.ResponseComment responseComment = new CommentDto.ResponseComment();
 
-        responseComment.setMemberId( comment.getMemberId() );
-        responseComment.setUserName( comment.getUserName() );
+//        responseComment.setMemberId( comment.getMemberId() );
+//        responseComment.setUserName( comment.getUserName() );
         responseComment.setPostId( comment.getPostId() );
         responseComment.setCommentId( comment.getCommentId() );
-        responseComment.setContent( comment.getContent() );
+        responseComment.setComment( comment.getComment() );
         responseComment.setStar( comment.getStar() );
         responseComment.setCreatedAt( comment.getCreatedAt() );
         responseComment.setModifiedAt( comment.getModifiedAt() );
@@ -207,8 +207,8 @@ public interface MemberMapper {
                 .builder()
                 .memberId(devPost.getMember().getMemberId())
                 .userName(devPost.getMember().getUserName())
-                .createdAt(devPost.getCreatedAt())
-                .modifiedAt(devPost.getModifiedAt())
+//                .createdAt(devPost.getCreatedAt())
+//                .modifiedAt(devPost.getModifiedAt())
                 .build();
         author.add(ar);
 
