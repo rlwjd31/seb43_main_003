@@ -2,6 +2,8 @@ package server.mainproject.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
+import server.mainproject.auth.Oauth.OauthUser;
 import server.mainproject.comment.entity.Comment;
 import server.mainproject.audit.Auditable;
 import server.mainproject.post.entity.DevPost;
@@ -25,22 +27,30 @@ public class Member extends Auditable {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String userName;
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<DevPost> posts = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<Recommend> recommends = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")
-    private List<Comment> answers = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
     private String provider;
+
+    public Member updateMember(String username, String email) {
+        this.userName = username;
+        this.email = email;
+
+        return this;
+    }
 }

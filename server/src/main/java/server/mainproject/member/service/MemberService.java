@@ -1,9 +1,9 @@
 package server.mainproject.member.service;
 
 import lombok.RequiredArgsConstructor;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-//import server.mainproject.auth.utils.CustomAuthorityUtils;
+import server.mainproject.auth.utils.CustomAuthorityUtils;
 import server.mainproject.exception.BusinessLogicException;
 import server.mainproject.exception.ExceptionCode;
 import server.mainproject.member.entity.Member;
@@ -17,16 +17,17 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-//    private final PasswordEncoder passwordEncoder;
-//    private final CustomAuthorityUtils authorityUtils;
+
+    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtils authorityUtils;
 
     public Member createMember(Member member) {
 
-//        String encryptedPassword = passwordEncoder.encode(member.getPassword());
-//        member.setPassword(encryptedPassword);
-//
-//        List<String> roles = authorityUtils.createRoles(member.getEmail());
-//        member.setRoles(roles);
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
+
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
 
         return memberRepository.save(member);
     }
@@ -39,6 +40,10 @@ public class MemberService {
                 .ifPresent(findMember::setUserName);
         Optional.ofNullable(member.getPassword())
                 .ifPresent(findMember::setPassword);
+
+        //변경된 비밀번호 암호화 해서 저장
+        String encryptedPassword = passwordEncoder.encode(findMember.getPassword());
+        findMember.setPassword(encryptedPassword);
 
         return memberRepository.save(findMember);
     }
