@@ -1,11 +1,13 @@
 package server.mainproject.post.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import server.mainproject.comment.entity.Comment;
 import server.mainproject.audit.Auditable;
 import server.mainproject.member.entity.Member;
+import server.mainproject.post.dto.DevPostPatchDto;
 import server.mainproject.tag.Post_Tag;
 
 import javax.persistence.*;
@@ -36,6 +38,9 @@ public class DevPost extends Auditable {
     @Column
     private int recommend;
 
+    @Column
+    private String source;
+
     @Column(nullable = false)
     private int star;
 
@@ -52,8 +57,16 @@ public class DevPost extends Auditable {
     @OneToMany(mappedBy = "devPost", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
-//    @OneToMany(mappedBy = "post", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<Post_Tag> postTags = new HashSet<>();
+
+    @Builder
+    public DevPost (String title, String content, String userName, String link, int star, String source) {
+        this.title = title;
+        this.content = content;
+        this.link = link;
+        this.star = star;
+        this.source = source;
+    }
 
 }

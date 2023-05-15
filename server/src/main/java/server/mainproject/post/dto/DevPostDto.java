@@ -7,6 +7,7 @@ import server.mainproject.comment.dto.CommentDto;
 //import server.mainproject.member.dto.AuthorResponseDto;
 import server.mainproject.member.dto.AuthorResponseDto;
 import server.mainproject.member.entity.Member;
+import server.mainproject.post.entity.DevPost;
 import server.mainproject.tag.Post_Tag;
 import server.mainproject.tag.Tag;
 
@@ -33,6 +34,7 @@ public class DevPostDto {
         private int star;
 
         private String link;
+        private String source;
 
         private List<String> tag;
 
@@ -43,25 +45,18 @@ public class DevPostDto {
 
             return member;
         }
-    }
-    @Getter
-    @Setter
-    public static class Patch {
-        private Long postId;
-        private Long memberId;
-        private String title;
-        private String content;
-        private int star;
-        private String link;
-        private List<String> tag;
-
-        public Member getMember () {
-            Member member = new Member();
-            member.setMemberId(memberId);
-
-            return member;
+        public DevPost toEntity() {
+            return DevPost
+                    .builder()
+                    .content(getContent())
+                    .title(getTitle())
+                    .link(getLink())
+                    .star(getStar())
+                    .source(getSource())
+                    .build();
         }
     }
+
     @Getter @Setter
     @AllArgsConstructor
     public static class Response {
@@ -73,6 +68,7 @@ public class DevPostDto {
         private int star;
         private Double starAvg;
         private int recommend;
+        private String source;
         private List<AuthorResponseDto> authors;
         private List<Post_TagResponseDto> postTags;
         private List<CommentDto.ResponseComment> comments;

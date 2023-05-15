@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface DevPostMapper {
     DevPost postToEntity (DevPostDto.Post post);
-    DevPost patchToEntity (DevPostDto.Patch patch);
     default DevPostDto.Response EntityToResponse (DevPost post) {
         Set<Post_Tag> postTags = post.getPostTags();
 
@@ -28,6 +27,7 @@ public interface DevPostMapper {
                 post.getPostId(), post.getTitle(), post.getContent(),
                 post.getLink(), post.getStar(), post.getStarAvg(),
                 post.getRecommend(),
+                post.getSource(),
                 postMemberDtoResponse(post),
                 postTagDtoResponse(postTags),
                 postCommentResponse(post.getComments()),
