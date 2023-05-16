@@ -9,6 +9,7 @@ export default {
         black1: '#OAOAOA',
         black2: '#111111',
         black3: '#222222',
+        black4: '#4B4B4B',
         gray1: '#ECE9E7',
         gray2: '#DADADA',
         gray3: '#DCD9D6',
