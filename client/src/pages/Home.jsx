@@ -1,7 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useEffect } from 'react';
-import { fetchPopularDevelopmentsAction } from '../store/developmentSlice';
+import {
+  fetchPopularDevelopmentsAction,
+  fetchRealTimeDevelopmentsAction,
+} from '../store/developmentSlice';
 
 import Header from '../components/layout/Header';
 import Carousel from '../components/Carousel';
@@ -17,11 +20,13 @@ const CaurouselConfig = {
 };
 
 function Home() {
-  const { popularRanking } = useSelector(state => state.development);
+  const { popularRanking, realTimeRanking } = useSelector(state => state.development);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchPopularDevelopmentsAction());
+    dispatch(fetchRealTimeDevelopmentsAction());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -49,7 +54,7 @@ function Home() {
           <div className="w-full flex flex-col max-w-limit">
             <h3 className="text-[1.6rem] font-bold  mb-[3rem]">실시간 순위</h3>
             <div className="flex justify-between">
-              {popularRanking.data.map(info => (
+              {realTimeRanking.data.map(info => (
                 <Card key={info.id} width="31.5%">
                   <Item {...info} />
                 </Card>
