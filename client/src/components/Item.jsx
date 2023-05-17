@@ -1,11 +1,11 @@
 import { StarIcon, UnionIcon } from './Icons';
 
-function Item({ imageURI, source, title, author, recommendedAvg, recommends }) {
+function Item({ imageURL, source, title, author, starAvg, recommends }) {
   return (
     <div className="w-full">
       <div className="w-full h-[12rem] flex justify-center items-center bg-yellow-100">
         <img
-          src={imageURI}
+          src={imageURL}
           className="w-full h-full object-cover"
           alt="썸네일 및 대표 사진"
         />
@@ -13,7 +13,7 @@ function Item({ imageURI, source, title, author, recommendedAvg, recommends }) {
       <div className="w-full h-[10.5rem] bg-white p-[26px]">
         <div>
           <p className="text-[12px] text-gray4 font-semibold">{source}</p>
-          <div className="w-full h-[4.6rem] text-[17px] text-black3 font-bold border-b-[1px] border-solid border-gray2 mt-[13px]">
+          <div className="w-full h-[4.6rem] text-[17px] leading-7 text-black3 font-bold border-b-[1px] border-solid border-gray2 mt-[13px]">
             {title}
           </div>
         </div>
@@ -21,7 +21,7 @@ function Item({ imageURI, source, title, author, recommendedAvg, recommends }) {
           <div className="flex items-center">
             <img
               className="w-[21px] h-[21px] rounded-full mr-[10px]"
-              src="imageURI"
+              src="imageURL"
               alt="유저이미지"
             />
             <p className="text-[12px] text-gray4">{author}</p>
@@ -29,7 +29,7 @@ function Item({ imageURI, source, title, author, recommendedAvg, recommends }) {
           <div className="flex items-center">
             <div className="flex items-center">
               <StarIcon className="mr-[9px] mb-[3px]" />
-              <p className="text-[12px] text-gray4 mr-[15px]">{recommendedAvg}</p>
+              <p className="text-[12px] text-gray4 mr-[15px]">{starAvg}</p>
             </div>
             <div className="flex item-center">
               <UnionIcon className="mr-[9px] mb-[3px]" />
