@@ -1,9 +1,8 @@
 import { NavLink } from 'react-router-dom';
 
 function Aside({ title, categories }) {
-  const profileNveActiveStyle = ({ isActive }) => {
-    `text-[17px] font-normal border-none ${isActive && 'text-activeBlue'}`;
-  };
+  const profileNavActiveStyle = ({ isActive }) =>
+    `text-[17px] font-normal ${isActive && 'text-activeBlue'}`;
 
   return (
     <div className="mt-[282px] w-[13rem] mr-[4.125rem]">
@@ -14,7 +13,7 @@ function Aside({ title, categories }) {
         {categories?.titles?.map((title, index) => {
           return (
             <div className="flex flex-col items-start py-[15px]">
-              <NavLink to={categories?.path[index]} className={profileNveActiveStyle}>
+              <NavLink to={categories?.path[index]} className={profileNavActiveStyle}>
                 {title}
               </NavLink>
             </div>
