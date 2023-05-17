@@ -1,20 +1,62 @@
+import { useState } from 'react';
+import axios from 'axios';
+
 import { GithubIcon, GoogleIcon, KakaoIcon } from '../components/Icons';
 
+const instanceAxios = axios.create({
+  withCredentials: true,
+});
+
+const fetchLogin = async loginInfo => {
+  const URL = 'http://localhost:4000/login';
+  const body = loginInfo;
+  console.log('body', body);
+  try {
+    const response = await instanceAxios.post(URL, body);
+    return response.data;
+  } catch (err) {
+    console.log(`error: ${err.message}`);
+  }
+
+  return null;
+};
+
 function Login() {
+  const [loginInfo, setLoginInfo] = useState({
+    userId: '',
+    password: '',
+  });
+
+  const onLoginSubmitHandler = e => {
+    e.preventDefault();
+    const userData = fetchLogin(loginInfo);
+    console.log('response.data ->', userData);
+  };
+
+  const onEmailChangeHandler = e =>
+    setLoginInfo(prev => ({ ...prev, userId: e.target.value }));
+
+  const onPasswordChangeHandler = e =>
+    setLoginInfo(prev => ({ ...prev, password: e.target.value }));
+
   return (
     <div className="my-[9.6rem] flex justify-center items-center pt-[180px]">
       <div className="w-[33.5rem] h-[31.5rem] px-[3rem] flex flex-col">
         <p className="text-[30px] text-black3 font-bold text-center">로그인</p>
-        <form className="mt-[3.75rem] py-[15px] flex flex-col">
+        <form onSubmit={onLoginSubmitHandler} className="mt-[3.75rem] py-[15px] flex-col">
           <input
-            type="email"
+            onChange={onEmailChangeHandler}
+            type="text"
             className="bg-white w-full h-[3.5rem] px-[1.3rem] py-[0.5rem]"
-            placeholder="아이디"
+            placeholder="이메일"
+            required
           />
           <input
+            onChange={onPasswordChangeHandler}
             type="password"
             className="mt-[15px] bg-white w-full h-[3.5rem] px-[1.3rem] py-[0.5rem]"
             placeholder="비밀번호"
+            required
           />
           <button
             type="submit"
