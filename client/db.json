@@ -3,70 +3,100 @@
     {
       "id": 1,
       "title": "Webpack 배우기",
-      "source": "velog",
-      "imageURI": "https://velog.velcdn.com/images/rlwjd31/post/b1e71178-a5e1-418a-a3e5-c4bdd0cebaf1/image.png",
-      "recommendedAvg": 4.59,
+      "sourceMedia": "velog",
+      "thumbnailImage": "https://velog.velcdn.com/images/rlwjd31/post/b1e71178-a5e1-418a-a3e5-c4bdd0cebaf1/image.png",
+      "starAvg": 4.59,
       "recommends": 120,
-      "author": "gijung",
+      "author": {
+        "name": "gijung",
+        "profileImage": "",
+        "star": "4"
+      },
       "sorta": "text",
-      "sourceUrI": "https://velog.io/@rlwjd31/webpack-1"
+      "sourceURL": "https://velog.io/@rlwjd31/webpack-1",
+      "tags": ["webpack"]
     },
     {
       "id": 2,
       "title": "The Ultimate Redux Course 2023 - [LATEST Redux-toolkit]",
-      "source": "udemy",
-      "imageURI": "https://img-c.udemycdn.com/course/480x270/4965902_1592_5.jpg",
-      "recommendedAvg": 4.11,
+      "sourceMedia": "udemy",
+      "thumbnailImage": "https://img-c.udemycdn.com/course/480x270/4965902_1592_5.jpg",
+      "starAvg": 4.11,
       "recommends": 354,
-      "author": "yuha",
+      "author": {
+        "name": "yuha",
+        "profileImage": "",
+        "start": 4
+      },
       "sorta": "video",
-      "sourceUrI": "https://www.udemy.com/course/the-ultimate-redux-course-state-management-library/"
+      "sourceURL": "https://www.udemy.com/course/the-ultimate-redux-course-state-management-library/",
+      "tags": ["redux", "toolkit"]
     },
     {
       "id": 3,
       "title": "state of 2022 js",
-      "source": "docs",
-      "imageURI": "https://devographics.github.io/surveys/state_of_js/js2022/images/js2022-og.png",
-      "recommendedAvg": 4.82,
+      "sourceMedia": "docs",
+      "thumbnailImage": "https://devographics.github.io/surveys/state_of_js/js2022/images/js2022-og.png",
+      "starAvg": 4.82,
       "recommends": 231,
-      "author": "yoonsu",
+      "author": {
+        "name": "yoonsu",
+        "profileImage": "",
+        "star": 5
+      },
       "sorta": "text",
-      "sourceUrI": "https://2022.stateofjs.com/en-US/libraries/"
+      "sourceURL": "https://2022.stateofjs.com/en-US/libraries/",
+      "tags": ["javascript trend"]
     }
   ],
   "realtimeRanking": [
     {
       "id": 4,
       "title": "Http의 특성과 쿠키, 세션, 토큰",
-      "source": "velog",
-      "imageURI": "https://velog.velcdn.com/images/bumsu0211/post/5f856261-83f3-456b-8c76-c0c3bf1bc61c/Untitled%205.png",
-      "recommendedAvg": 4.49,
+      "sourceMedia": "velog",
+      "thumbnailImage": "https://velog.velcdn.com/images/bumsu0211/post/5f856261-83f3-456b-8c76-c0c3bf1bc61c/Untitled%205.png",
+      "starAvg": 4.49,
       "recommends": 100,
-      "author": "gijung",
+      "author": {
+        "name": "gijung",
+        "profileImage": "",
+        "star": 5
+      },
       "sorta": "text",
-      "sourceUrI": "https://velog.io/@bumsu0211/HTTP%EC%9D%98-%ED%8A%B9%EC%84%B1%EA%B3%BC-%EC%BF%A0%ED%82%A4-%EC%84%B8%EC%85%98-%ED%86%A0%ED%81%B0"
+      "sourceURL": "https://velog.io/@bumsu0211/HTTP%EC%9D%98-%ED%8A%B9%EC%84%B1%EA%B3%BC-%EC%BF%A0%ED%82%A4-%EC%84%B8%EC%85%98-%ED%86%A0%ED%81%B0",
+      "tags": ["cookie", "http request", "authentication"]
     },
     {
       "id": 5,
       "title": "노션 사용자의 98%가 이 기능을 모르고 있다!?",
-      "source": "youtube",
-      "imageURI": "https://img.youtube.com/vi/XCAwSBdeejU/0.jpg",
-      "recommendedAvg": 3.24,
+      "sourceMedia": "youtube",
+      "thumbnailImage": "https://img.youtube.com/vi/XCAwSBdeejU/0.jpg",
+      "starAvg": 3.24,
       "recommends": 231,
-      "author": "yuha",
+      "author": {
+        "name": "yuha",
+        "profileImage": "",
+        "star": 3
+      },
       "sorta": "video",
-      "sourceUrI": "https://www.youtube.com/watch?v=XCAwSBdeejU&ab_channel=%EB%85%B8%EB%A7%88%EB%93%9C%EC%BD%94%EB%8D%94NomadCoders"
+      "sourceURL": "https://www.youtube.com/watch?v=XCAwSBdeejU&ab_channel=%EB%85%B8%EB%A7%88%EB%93%9C%EC%BD%94%EB%8D%94NomadCoders",
+      "tags": ["db", "notion"]
     },
     {
       "id": 6,
       "title": "Home v6.11.0",
-      "source": "docs",
-      "imageURI": "https://reactrouter.com/ogimage.png",
-      "recommendedAvg": 4.24,
+      "sourceMedia": "docs",
+      "thumbnailImage": "https://reactrouter.com/ogimage.png",
+      "starAvg": 4.24,
       "recommends": 211,
-      "author": "yoonsu",
+      "author": {
+        "name": "yoonsu",
+        "profileImage": "",
+        "star": 4
+      },
       "sorta": "text",
-      "sourceUrI": "https://reactrouter.com/en/main"
+      "sourceURL": "https://reactrouter.com/en/main",
+      "tags": ["react", "router"]
     }
   ]
 }
