@@ -1,16 +1,9 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function Aside({ title, categories }) {
-  const subNavLinkActiveStyle = ({ isActive }) => {
-    isActive
-      ? 'text-[17px] font-normal text-activeBlue border-none'
-      : 'text-[17px] font-normal text-gray6 border-none';
+  const profileNveActiveStyle = ({ isActive }) => {
+    `text-[17px] font-normal border-none ${isActive && 'text-activeBlue'}`;
   };
-
-  // {
-  //   titles: ['내 프로필', '내 활동'],
-  //   path: [`${BASE_URL}/my-profile`, `${BASE_URL}/my-activies`],
-  // }
 
   return (
     <div className="mt-[282px] w-[13rem] mr-[4.125rem]">
@@ -19,11 +12,11 @@ function Aside({ title, categories }) {
       </div>
       <div>
         {categories?.titles?.map((title, index) => {
-          console.log(`title: ${title}`);
-
           return (
             <div className="flex flex-col items-start py-[15px]">
-              <Link to={categories?.path[index]}>{title}</Link>
+              <NavLink to={categories?.path[index]} className={profileNveActiveStyle}>
+                {title}
+              </NavLink>
             </div>
           );
         })}

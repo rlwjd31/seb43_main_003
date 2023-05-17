@@ -21,6 +21,7 @@ export default {
         gray9: '#7A7A7A',
         gray10: '#858585',
         gray11: '#717171',
+        gray12: '#C6C6C6',
         activeBlue: '#0045F6',
         kakaoYellow: '#FDDC3F',
       },

@@ -16,6 +16,7 @@ function Profile() {
             titles: ['내 프로필', '내 활동'],
             path: [`${BASE_URL}/user`, `${BASE_URL}/user/activities`],
           }}
+          ddddd
         />
         <ProfileContent />
       </div>
