@@ -1,5 +1,5 @@
 {
-  "popular": [
+  "popularRanking": [
     {
       "id": 1,
       "title": "Webpack 배우기",
@@ -49,7 +49,7 @@
       "tags": ["javascript trend"]
     }
   ],
-  "realtimeRanking": [
+  "realTimeRanking": [
     {
       "id": 4,
       "title": "Http의 특성과 쿠키, 세션, 토큰",
