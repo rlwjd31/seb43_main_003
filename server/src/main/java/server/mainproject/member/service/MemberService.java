@@ -1,6 +1,8 @@
 package server.mainproject.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class MemberService {
 
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
-    private JavaMailSender mailSender;
+    private final JavaMailSender javaMailSender;
 
     public Member createMember(Member member) {
 
@@ -78,146 +80,60 @@ public class MemberService {
         return findId;
     }
 
-//    // 패스워드 변경
-//    public Member updatePassword(String email, String password, String afterPassword) {
-//        // 회원이 존재하는지 검증
-//        Member findMember = checkMemberExist(email);
-//        // 비밀번호가 일치하는지 검증
-//        if (passwordEncoder.matches(password, findMember.getPassword())) {
-//            findMember.setPassword(passwordEncoder.encode(afterPassword));
-//            memberRepository.save(findMember);
-//        } else {
-//            throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_CORRECT);
-//        }
-//        return findMember;
-//    }
-//
-//    // 메일 인증을 통한 리커버리
-//    public Member recovery(String email, String mailKey, String afterPassword) {
-//        //회원이 존재하는지 검증
-//        Member findMember = checkMemberExist(email);
-//        //메일 키가 일치하는지 검증
-//        if (findMember.getMailKey().equals(mailKey)) {
-//            findMember.setPassword(passwordEncoder.encode(afterPassword));
-//            memberRepository.save(findMember);
-//        } else {
-//            throw new BusinessLogicException(ExceptionCode.MAILKEY_MISMATCH);
-//        }
-//
-//        return findMember;
-//    }
-//
-//    // recovery email send
-//    @Async
-//    public void recoveryEmailSend(String emailSignUp, String emailNeedToSend)
-//            throws MessagingException, UnsupportedEncodingException {
-//        String newMailKey = createCode();
-//        Member findMember = memberRepository.findByEmail(emailSignUp));
-//        if (emailSignUp.equals(emailNeedToSend)) {
-//            findMember.setMailKey(newMailKey);
-//            memberRepository.save(findMember);
-//            sendEmailRecovery(emailSignUp, newMailKey);
-//        } else {
-//            sendEmailDismatch(emailNeedToSend);
-//        }
-//
-//    }
-//
-//
-//
-//
-//
-//    public Member checkMemberExist(Long id) {
-//        return memberRepository.findById(id)
-//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-//    }
-//
-//    public Member checkMemberExist(String email) {
-//        return memberRepository.findByEmail(email)
-//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-//    }
-//
-//    public String createCode() {
-//        Random random = new Random();
-//        StringBuffer key = new StringBuffer();
-//
-//        for (int i = 0; i < 10; i++) {
-//            int index = random.nextInt(3);
-//
-//            switch (index) {
-//                case 0:
-//                    key.append((char) ((int) random.nextInt(26) + 97));
-//                    break;
-//                case 1:
-//                    key.append((char) ((int) random.nextInt(26) + 65));
-//                    break;
-//                case 2:
-//                    key.append(random.nextInt(9));
-//                    break;
-//            }
-//        }
-//        return key.toString();
-//    }
-//
-//    public String sendEmailRecovery(String toEmail, String mailKey)
-//            throws MessagingException, UnsupportedEncodingException {
-//
-//        //메일전송에 필요한 정보 설정
-//        MimeMessage emailForm = createEmailFormRecovery(toEmail, mailKey);
-//        //실제 메일 전송
-//        mailSender.send(emailForm);
-//
-//        return mailKey;
-//    }
-//
-//    public MimeMessage createEmailFormRecovery(String email, String mailKey)
-//            throws MessagingException, UnsupportedEncodingException {
-//
-////    String mailKey = createCode(); //인증 코드 생성
-//        String setFrom = "${spring.mail.username}"; //email-config에 설정한 자신의 이메일 주소(보내는 사람)
-////    String setFrom = "hgm@hgm.com"; //email-config에 설정한 자신의 이메일 주소(보내는 사람)
-//        String toEmail = email; //받는 사람
-//        String title = "Hello Developer 계정 복구 서비스입니다."; //제목
-//        String href =
-//                ""
-//                        + email + "&mailKey=" + mailKey;
-//
-//        MimeMessage message = mailSender.createMimeMessage();
-//        message.addRecipients(MimeMessage.RecipientType.TO, email); //보낼 이메일 설정
-//        message.setSubject(title); //제목 설정
-//        message.setFrom(setFrom); //보내는 이메일
-//        message.setText(setContextRecovery(href), "utf-8", "html");
-//
-//        return message;
-//    }
-//
-//    public void sendEmailDismatch(String toEmail)
-//            throws MessagingException, UnsupportedEncodingException {
-//
-//        //메일전송에 필요한 정보 설정
-//        MimeMessage emailForm = createEmailFormDismatch(toEmail);
-//        //실제 메일 전송
-//        mailSender.send(emailForm);
-//
-//    }
-//
-//    public MimeMessage createEmailFormDismatch(String email)
-//            throws MessagingException, UnsupportedEncodingException {
-//
-////    String mailKey = createCode(); //인증 코드 생성
-////        String setFrom = "${spring.mail.username}"; //email-config에 설정한 자신의 이메일 주소(보내는 사람)
-//    String setFrom = "ksr940818@gmail.com"; //email-config에 설정한 자신의 이메일 주소(보내는 사람)
-//        String toEmail = email; //받는 사람
-//        String title = "HelloDeveloper 계정 복구 서비스입니다."; //제목
-//
-//
-//        MimeMessage message = mailSender.createMimeMessage();
-//        message.addRecipients(MimeMessage.RecipientType.TO, email); //보낼 이메일 설정
-//        message.setSubject(title); //제목 설정
-//        message.setFrom(setFrom); //보내는 이메일
-//
-//        return message;
-//    }
+    // Todo: 비밀번호 찾기 로직
+
+    public void sendVerificationCode(String email) {
+        // 사용자 정보 가져오기
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("입력한 이메일 주소가 존재하지 않습니다."));
+
+        // 인증번호 생성 및 저장
+        String verificationCode = generateVerificationCode();
+        member.setVerificationCode(verificationCode);
+        memberRepository.save(member);
+
+        // 이메일 발송
+        String appUrl = getAppUrl(); // 애플리케이션 URL 가져오기
+        String message = "인증번호: " + verificationCode + "\n" + appUrl;
+        sendEmail(email, "인증번호 발송", message);
+    }
+
+    public void verifyCode(String email, String verificationCode) {
+        // 사용자 정보 가져오기
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("입력한 이메일 주소가 존재하지 않습니다."));
+
+        // 인증번호 확인
+        String savedVerificationCode = member.getVerificationCode();
+        if (savedVerificationCode == null || !savedVerificationCode.equals(verificationCode)) {
+            throw new IllegalArgumentException("잘못된 인증번호입니다.");
+        }
+
+        // 인증번호 검증 완료
+        member.setVerificationCode(null);
+        memberRepository.save(member);
+    }
+
+    private void sendEmail(String email, String subject, String message) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("ksr940818@gmail.com");
+        mailMessage.setTo(email);
+        mailMessage.setSubject(subject);
+        mailMessage.setText(message);
+        javaMailSender.send(mailMessage);
+    }
+
+    private String generateVerificationCode() {
+        // 랜덤 숫자 문자열 생성
+        return RandomStringUtils.randomNumeric(6);
+    }
+
+    private String getAppUrl() {
+        // 애플리케이션 URL 반환
+        return "http://localhost:8080";
+    }
+
+
 
 
 }

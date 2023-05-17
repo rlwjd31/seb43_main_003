@@ -45,9 +45,9 @@ public class Member extends Auditable {
 
     private String provider;
 
-    @Builder.Default
+    @Getter
     @Setter
-    private String mailKey = "";
+    private String verificationCode;
 
     public Member updateMember(String username, String email) {
         this.userName = username;

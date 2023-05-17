@@ -15,6 +15,7 @@ import server.mainproject.post.entity.Recommend;
 import server.mainproject.tag.Post_Tag;
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -103,8 +104,12 @@ public interface MemberMapper {
         int star = 0;
         Double starAvg = null;
         int recommend = 0;
+        String source;
         List<Post_TagResponseDto> postTags = null;
         List<CommentDto.ResponseComment> comments = null;
+        LocalDateTime createdAt;
+        LocalDateTime modifiedAt;
+
 
         postId = devPost.getPostId();
         title = devPost.getTitle();
@@ -113,13 +118,16 @@ public interface MemberMapper {
         star = devPost.getStar();
         starAvg = roundedReview;
         recommend = devPost.getRecommend();
+        source = devPost.getSource();
         postTags = postTagDtoResponse( devPost.getPostTags() );
         comments = commentListToResponseCommentList( devPost.getComments() );
+        createdAt = devPost.getCreatedAt();
+        modifiedAt = devPost.getModifiedAt();
 
         String status = "success";
         List<AuthorResponseDto> authors = postMemberDtoResponse (devPost);
 
-        DevPostDto.Response response = new DevPostDto.Response( status, postId, title, content, link, star, starAvg, recommend, authors, postTags, comments );
+        DevPostDto.Response response = new DevPostDto.Response( status, postId, title, content, link, star, starAvg, recommend,source, authors, postTags, comments,createdAt, modifiedAt );
 
         return response;
     }
@@ -173,12 +181,11 @@ public interface MemberMapper {
 
         CommentDto.ResponseComment responseComment = new CommentDto.ResponseComment();
 
-        responseComment.setMemberId( comment.getMemberId() );
-        responseComment.setUserName( comment.getUserName() );
         responseComment.setPostId( comment.getPostId() );
         responseComment.setCommentId( comment.getCommentId() );
-        responseComment.setContent( comment.getContent() );
+        responseComment.setComment( comment.getComment() );
         responseComment.setStar( comment.getStar() );
+        responseComment.setAuthor(commentMemberDtoResponse (comment));
         responseComment.setCreatedAt( comment.getCreatedAt() );
         responseComment.setModifiedAt( comment.getModifiedAt() );
 
@@ -207,8 +214,20 @@ public interface MemberMapper {
                 .builder()
                 .memberId(devPost.getMember().getMemberId())
                 .userName(devPost.getMember().getUserName())
-                .createdAt(devPost.getCreatedAt())
-                .modifiedAt(devPost.getModifiedAt())
+                .build();
+        author.add(ar);
+
+        return author;
+    }
+
+    //Todo: Author 수동매핑
+    default List<AuthorResponseDto> commentMemberDtoResponse (Comment comment) {
+        List<AuthorResponseDto> author = new ArrayList<>();
+
+        AuthorResponseDto ar = AuthorResponseDto
+                .builder()
+                .memberId(comment.getMember().getMemberId())
+                .userName(comment.getMember().getUserName())
                 .build();
         author.add(ar);
 
