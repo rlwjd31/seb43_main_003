@@ -6,7 +6,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const fetchPopularDevelopments = async (something, rejectWithValue) => {
   try {
-    const response = await axios.get(`${BASE_URL}/popular`);
+    const response = await axios.get(`${BASE_URL}/popularRanking`);
     if (response.status >= 200 && response.status < 300) {
       return { popularRanking: response.data };
     }
