@@ -12,6 +12,7 @@ const routers = createBrowserRouter([
   {
     path: '/user',
     element: <Profile />,
+    errorElement: <PageNotFound />,
   },
 ]);
 

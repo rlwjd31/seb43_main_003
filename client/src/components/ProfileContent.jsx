@@ -12,7 +12,7 @@ function ProfileContent() {
         </div>
       </div>
       <p className="mt-[6.25rem] text-black3 text-[18px] font-bold">회원정보</p>
-      <div className="mt-[18px] w-[50rem] h-[20rem] border-solid border-y-[1px] border-gray4">
+      <div className="mt-[18px] w-[50rem] border-solid border-y-[1px] border-gray4">
         <ProfileLine title={'이름'} content={'Hello213'} />
         <ProfileLine title={'비밀번호'} content={'******'} />
         <ProfileLine title={'이메일'} content={'Hello213@gmail.com'} />
