@@ -56,7 +56,7 @@ public class DevPostController {
         return new ResponseEntity<>(mapper.ListResponse(posts), HttpStatus.OK);
     }
     // 평점이 높은 순
-    @GetMapping("/top_post")
+    @GetMapping("/top-post")
     public ResponseEntity getAllTopPost () {
 
         List<DevPost> posts = service.findAllTopPost ();
@@ -70,7 +70,7 @@ public class DevPostController {
 
         return new ResponseEntity(mapper.EntityToResponse(find), HttpStatus.OK);
     }
-    @GetMapping("/ranking_post")
+    @GetMapping("/ranking-post")
     public ResponseEntity rankingPosts () {
 
         List<DevPost> posts = service.rankingPost();
