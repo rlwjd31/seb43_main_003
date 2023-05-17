@@ -16,7 +16,5 @@ public class MemberAuthenticationSuccessHandler implements AuthenticationSuccess
                                         Authentication authentication) throws IOException {
 
         log.info("# Authenticated successfully!");
-
-
     }
 }

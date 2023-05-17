@@ -18,6 +18,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import server.mainproject.auth.Oauth.OAuth2Service;
 import server.mainproject.auth.filter.JwtAuthenticationFilter;
 import server.mainproject.auth.filter.JwtVerificationFilter;
+import server.mainproject.auth.handler.MemberAuthenticationDeniedHandler;
+import server.mainproject.auth.handler.MemberAuthenticationEntryPoint;
 import server.mainproject.auth.handler.MemberAuthenticationFailureHandler;
 import server.mainproject.auth.handler.MemberAuthenticationSuccessHandler;
 import server.mainproject.auth.jwt.JwtTokenizer;
@@ -43,12 +45,12 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .cors(httpSecurityCorsConfigurer -> corsConfigurationSource())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .formLogin().permitAll()
-//                .formLogin().disable()
-//                .httpBasic().disable()
-//                .exceptionHandling()
-//                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())  // 추가
-//                .accessDeniedHandler(new MemberAuthenticationDeniedHandler())            // 추가
+//                .formLogin().permitAll()
+                .formLogin().disable()
+                .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())  // 추가
+                .accessDeniedHandler(new MemberAuthenticationDeniedHandler())            // 추가
                 .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
@@ -112,7 +114,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer());
-            jwtAuthenticationFilter.setFilterProcessesUrl("auth/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
