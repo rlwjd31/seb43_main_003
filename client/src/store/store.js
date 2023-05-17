@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import developInfos from './developInfos';
+import popularSlice from './popular';
+import realtimeRankingSlice from './realtimeRanking';
+import developmentsSlice from './developmentSlice';
 
 const store = configureStore({
   reducer: {
-    developInfos: developInfos.reducer,
+    popular: popularSlice.reducer,
+    ranking: realtimeRankingSlice.reducer,
+    development: developmentsSlice.reducer,
   },
 });
 
