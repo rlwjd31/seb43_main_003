@@ -14,8 +14,8 @@ function Tabs({ children }) {
           <button
             key={child.props.label}
             className={`${
-              activeTab === child.props.label ? 'text-black3' : 'text-gray6'
-            } text-[15px] font-medium leading-4`}
+              activeTab === child.props.label ? 'text-black3' : ''
+            } text-[15px] font-medium leading-4 mr-[36px] text-gray6`}
             onClick={e => handleTabClick(e, child.props.label)}
           >
             {child.props.label}
