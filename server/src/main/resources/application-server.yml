@@ -1,0 +1,17 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://database-1.c9igss2zos9v.ap-northeast-2.rds.amazonaws.com:13306/main?severTimezone=UTC&characterEncoding=UTF-8
+    username:
+    password:
+
+  config:
+    domain: http://mainmay.s3-website.ap-northeast-2.amazonaws.com/
