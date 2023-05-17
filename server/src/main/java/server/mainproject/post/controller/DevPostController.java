@@ -30,8 +30,6 @@ import java.util.List;
 public class DevPostController {
     private final DevPostService service;
     private final DevPostMapper mapper;
-    private final TagRepository tagRepository;
-    private final Post_TagRepository ptr;
 
     @PostMapping
     public ResponseEntity postPost(@RequestBody @Valid DevPostDto.Post post) {
@@ -58,7 +56,7 @@ public class DevPostController {
         return new ResponseEntity<>(mapper.ListResponse(posts), HttpStatus.OK);
     }
     // 평점이 높은 순
-    @GetMapping("/top_review")
+    @GetMapping("/top_post")
     public ResponseEntity getAllTopPost () {
 
         List<DevPost> posts = service.findAllTopPost ();
@@ -71,6 +69,13 @@ public class DevPostController {
         DevPost find = service.findPost(postId);
 
         return new ResponseEntity(mapper.EntityToResponse(find), HttpStatus.OK);
+    }
+    @GetMapping("/ranking_post")
+    public ResponseEntity rankingPosts () {
+
+        List<DevPost> posts = service.rankingPost();
+
+        return new ResponseEntity<>(mapper.ListResponse(posts), HttpStatus.OK);
     }
     @DeleteMapping("/{post-id}/{member-id}") // todo : security 적용 후 member-id 는 제거
     public ResponseEntity deletePost (@PathVariable("post-id") @Positive long postId,

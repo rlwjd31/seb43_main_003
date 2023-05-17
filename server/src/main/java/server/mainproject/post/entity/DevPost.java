@@ -47,6 +47,9 @@ public class DevPost extends Auditable {
     @Column
     private Double starAvg;
 
+    @Transient
+    private int score;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Recommend> recommends = new ArrayList<>();
 

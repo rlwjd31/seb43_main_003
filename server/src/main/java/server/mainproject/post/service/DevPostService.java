@@ -25,7 +25,9 @@ import server.mainproject.tag.Tag;
 import server.mainproject.tag.TagRepository;
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -181,7 +183,26 @@ public class DevPostService {
 
         return posts;
     }
+    @Transactional(readOnly = true)
+    public List<DevPost> rankingPost () {
+        LocalDateTime rightNow = LocalDateTime.now();
+        LocalDateTime oneWeek = rightNow.minusWeeks(1);
 
+        List<DevPost> posts = findAllPost()
+                .stream()
+                .filter(time -> time.getCreatedAt().isAfter(oneWeek))
+                .map(a -> {
+                    int score = (int) (a.getStarAvg()/10) * 5;
+                    score += a.getRecommend() * 5;
+                    a.setScore(score);
+                    return a;
+                })
+                .sorted(Comparator.comparing(DevPost::getScore).reversed())
+                .limit(3)
+                .collect(Collectors.toList());
+
+        return posts;
+    }
 
     public void deletePost (long postId, long memberId) {
 
