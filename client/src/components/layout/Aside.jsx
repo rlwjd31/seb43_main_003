@@ -5,7 +5,7 @@ function Aside({ title, categories }) {
     `text-[17px] font-normal ${isActive && 'text-activeBlue'}`;
 
   return (
-    <div className="mt-[282px] w-[13rem] mr-[4.125rem]">
+    <div className="mt-main-top w-[13rem] mr-[4.125rem]">
       <div className="w-[7.3rem] border-b-[3px] border-solid border-black3 font-bold text-[25px] text-black3 pb-[15px] mb-[2rem]">
         {title}
       </div>

@@ -4,7 +4,8 @@ import Body from './components/layout/Body';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import PageNotFound from './pages/PageNotFound';
-import Profile from './pages/Profile';
+import UserProfile from './pages/UserProfile';
+import UserActivity from './pages/UserActivity';
 
 const routerData = [
   {
@@ -23,6 +24,24 @@ const routerData = [
     layoutInfo: {
       isHeader: true,
       isMainContentWidthScreen: true,
+      isFooter: true,
+    },
+  },
+  {
+    path: '/user/profile',
+    element: <UserProfile />,
+    layoutInfo: {
+      isHeader: true,
+      isMainContentWidthScreen: false,
+      isFooter: true,
+    },
+  },
+  {
+    path: '/user/activities',
+    element: <UserActivity />,
+    layoutInfo: {
+      isHeader: true,
+      isMainContentWidthScreen: false,
       isFooter: true,
     },
   },

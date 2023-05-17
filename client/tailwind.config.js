@@ -4,6 +4,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      margin: {
+        'main-top': '96px',
+      },
       colors: {
         white1: '#FBF9F8',
         black1: '#OAOAOA',

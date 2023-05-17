@@ -8,7 +8,7 @@ function Tabs({ children }) {
   };
 
   return (
-    <div>
+    <>
       <div className="w-[50rem] py-[18px] border-solid border-b-[1px] border-gray4">
         {children.map(child => (
           <button
@@ -30,11 +30,11 @@ function Tabs({ children }) {
           return null;
         })}
       </div>
-    </div>
+    </>
   );
 }
 
-function Tab({ label, children }) {
+function TabItem({ label, children }) {
   return (
     <div label={label} className="hidden">
       {children}
@@ -42,4 +42,6 @@ function Tab({ label, children }) {
   );
 }
 
-export { Tabs, Tab };
+export { Tabs, TabItem };
+
+export default {};
