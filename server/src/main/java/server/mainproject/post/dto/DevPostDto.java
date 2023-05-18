@@ -37,6 +37,7 @@ public class DevPostDto {
         private String source;
 
         private List<String> tag;
+//        private String sorta;
 
 
         public Member getMember () {

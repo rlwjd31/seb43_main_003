@@ -29,53 +29,6 @@ public interface MemberMapper {
 
     MemberDto.Response memberToMemberResponseDto(Member member);
 
-//    default public MemberMyPageDto memberToMemberMyPageDto(Member member) {
-//        if ( member == null ) {
-//            return null;
-//        }
-//
-//        MemberMyPageDto memberMyPageDto = new MemberMyPageDto();
-//        memberMyPageDto.setMemberId(member.getMemberId());
-//        memberMyPageDto.setEmail(member.getEmail());
-//        memberMyPageDto.setUserName(member.getUserName());
-//        memberMyPageDto.setCreatedAt(member.getCreatedAt());
-//        memberMyPageDto.setModifiedAt(member.getModifiedAt());
-//
-//        List<DevPost> devPosts = member.getPosts();
-//        List<PostMyPageDto> postMyPageDtos = devPosts.stream().map(post ->{
-//            PostMyPageDto postMyPageDto = new PostMyPageDto();
-//            postMyPageDto.setPostId(post.getPostId());
-//            postMyPageDto.setTitle(post.getTitle());
-//            postMyPageDto.setContent(post.getContent());
-//            postMyPageDto.setLink(post.getLink());
-//            postMyPageDto.setStar(post.getStar());
-//            postMyPageDto.setStarAvg(post.getStarAvg());
-//            postMyPageDto.setRecommend(post.getRecommend());
-//            postMyPageDto.setPostTags(postTagDtoResponse(post.getPostTags()));
-//
-//            return postMyPageDto;
-//        }).collect(Collectors.toList());
-//
-//        memberMyPageDto.setPosts(postMyPageDtos);
-//
-//        List<Comment> comments = member.getComments();
-//        List<CommentMyPageDto> commentMyPageDtos = comments.stream().map(comment ->{
-//            CommentMyPageDto commentMyPageDto = new CommentMyPageDto();
-//            commentMyPageDto.setMemberId(commentMyPageDto.getMemberId());
-//            commentMyPageDto.setUserName(commentMyPageDto.getUserName());
-//            commentMyPageDto.setPostId(commentMyPageDto.getPostId());
-//            commentMyPageDto.setCommentId(commentMyPageDto.getCommentId());
-//            commentMyPageDto.setContent(commentMyPageDto.getContent());
-//            commentMyPageDto.setStar(commentMyPageDto.getStar());
-//
-//            return commentMyPageDto;
-//        }).collect(Collectors.toList());
-//
-//        memberMyPageDto.setComments(commentMyPageDtos);
-//
-//        return memberMyPageDto;
-//    }
-
     List<Member> membersToMemberReponseDtos(List<Member> members);
 
 
@@ -87,7 +40,6 @@ public interface MemberMapper {
 
         double answersReview = devPost.getComments()
                 .stream()
-//                .filter(id -> id.getDevPost().getPostId() == postId)
                 .map(review -> review.getStar())
                 .mapToDouble(avr -> avr)
                 .average()
@@ -173,6 +125,7 @@ public interface MemberMapper {
                 ))
                 .collect(Collectors.toList());
     }
+
     //Todo : Comment 수동 매핑
     default CommentDto.ResponseComment commentToResponseComment(Comment comment) {
         if ( comment == null ) {

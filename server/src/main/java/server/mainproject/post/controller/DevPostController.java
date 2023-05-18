@@ -27,6 +27,7 @@ import java.util.List;
 @RequestMapping("/post")
 @Validated
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class DevPostController {
     private final DevPostService service;
     private final DevPostMapper mapper;
@@ -47,6 +48,8 @@ public class DevPostController {
 
         return new ResponseEntity(mapper.EntityToResponse(service.updatePost(patch, postId)), HttpStatus.OK);
     }
+
+    //Todo : 최신이랑 평점 높은 순 하나로 합치기!!
     // 최신 글 순
     @GetMapping("/new_post") // page : 1 size : 9-16 1페이지에 9-16 개 정도의 게시물. 일단 16으로
     public ResponseEntity getAllNewPost() {
@@ -77,6 +80,18 @@ public class DevPostController {
 
         return new ResponseEntity<>(mapper.ListResponse(posts), HttpStatus.OK);
     }
+
+    //Todo : best post 로직 만들기! ("/best-post")
+    @GetMapping("/best-post")
+    public ResponseEntity bestPosts () {
+
+//        List<DevPost> posts = service.rankingPost();
+
+//        return new ResponseEntity<>(mapper.ListResponse(posts), HttpStatus.OK);
+        return null;
+    }
+
+
     @DeleteMapping("/{post-id}/{member-id}") // todo : security 적용 후 member-id 는 제거
     public ResponseEntity deletePost (@PathVariable("post-id") @Positive long postId,
                                       @PathVariable("member-id") @Positive long memberId) {

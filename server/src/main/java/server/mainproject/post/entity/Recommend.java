@@ -15,9 +15,6 @@ public class Recommend extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long recommendsId;
 
-//    @Column
-//    private Boolean likeStatus = false; // 좋아요 상태. 기본값 : 해제.
-
     @ManyToOne
     @JoinColumn(name = "POST_ID")
     private DevPost post;

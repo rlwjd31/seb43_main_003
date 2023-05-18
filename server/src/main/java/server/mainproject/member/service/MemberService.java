@@ -11,11 +11,9 @@ import server.mainproject.exception.BusinessLogicException;
 import server.mainproject.exception.ExceptionCode;
 import server.mainproject.member.entity.Member;
 import server.mainproject.member.repository.MemberRepository;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+
 import org.springframework.mail.javamail.JavaMailSender;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -132,8 +130,5 @@ public class MemberService {
         // 애플리케이션 URL 반환
         return "http://localhost:8080";
     }
-
-
-
 
 }

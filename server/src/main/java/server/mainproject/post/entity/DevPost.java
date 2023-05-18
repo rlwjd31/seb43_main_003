@@ -46,6 +46,8 @@ public class DevPost extends Auditable {
 
     @Column
     private Double starAvg;
+//    @Column
+//    private String sorta;
 
     @Transient
     private int score;

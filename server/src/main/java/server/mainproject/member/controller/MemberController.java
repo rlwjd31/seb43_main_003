@@ -31,6 +31,7 @@ import java.util.List;
 @Validated
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MemberController {
 
     private final MemberService memberService;
@@ -58,15 +59,18 @@ public class MemberController {
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(@Valid @RequestBody MemberDto.Patch requestBody,
                                       @PathVariable("member-id") Long memberId) {
+
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        String currentUserName = authentication.getPrincipal().toString()
         Member member = mapper.memberPatchDtoToMember(requestBody);
         member.setMemberId(memberId);
 
         Member findedMember = memberService.updateMember(member);
+        MemberDto.Response response = mapper.memberToMemberResponseDto(findedMember);
+        response.setStatus("success");
 
         return new ResponseEntity<>(
-                new SingleResponse<>(mapper.memberToMemberResponseDto(findedMember)),
+                new SingleResponse<>(response),
                 HttpStatus.OK);
     }
 
