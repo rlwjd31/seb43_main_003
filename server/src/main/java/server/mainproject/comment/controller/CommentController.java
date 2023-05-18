@@ -32,8 +32,10 @@ public class CommentController {
         this.mapper = mapper;
     }
 
-    @PostMapping("comments")  // 생성
-    public ResponseEntity postComment(@Valid @RequestBody CommentDto.PostComment post) {
+    @PostMapping("post/{post-id}")  // 생성
+    public ResponseEntity postComment(@PathVariable("post-id") @Positive Long postId,
+                                      @Valid @RequestBody CommentDto.PostComment post) {
+        post.setPostId(postId);
         Comment comment = mapper.postToComment(post);
 
         Comment response = service.createComment(comment);
@@ -52,7 +54,7 @@ public class CommentController {
         return new ResponseEntity<>(new SingleResponse<>(mapper.commentToResponse(comment)), HttpStatus.OK);
     }
 
-    @GetMapping("comments") // 모든 답변 조회
+    @GetMapping("*") // 모든 답변 조회
     public ResponseEntity getDevAnswers() {
         List<Comment> comments = service.findComments();
 
