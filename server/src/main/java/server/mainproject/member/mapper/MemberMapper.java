@@ -66,11 +66,11 @@ public interface MemberMapper {
         postId = devPost.getPostId();
         title = devPost.getTitle();
         content = devPost.getContent();
-        link = devPost.getLink();
+        link = devPost.getSourceURL();
         star = devPost.getStar();
         starAvg = roundedReview;
         recommend = devPost.getRecommend();
-        source = devPost.getSource();
+        source = devPost.getSourceMedia();
         postTags = postTagDtoResponse( devPost.getPostTags() );
         comments = commentListToResponseCommentList( devPost.getComments() );
         createdAt = devPost.getCreatedAt();
@@ -109,7 +109,7 @@ public interface MemberMapper {
                         recommend.getPost().getPostId(),
                         recommend.getMember().getMemberId(),
                         recommend.getPost().getTitle(),
-                        recommend.getPost().getLink(),
+                        recommend.getPost().getSourceURL(),
                         recommend.getPost().getStar(),
                         recommend.getPost().getComments()
                                 .stream()

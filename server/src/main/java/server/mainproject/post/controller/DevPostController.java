@@ -78,7 +78,7 @@ public class DevPostController {
 
         List<DevPost> posts = service.rankingPost();
 
-        return new ResponseEntity<>(mapper.ListResponse(posts), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.mainPageResponse(posts), HttpStatus.OK);
     }
 
     //Todo : best post 로직 만들기! ("/best-post")

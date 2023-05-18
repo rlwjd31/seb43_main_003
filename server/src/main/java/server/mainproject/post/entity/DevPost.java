@@ -7,7 +7,6 @@ import lombok.Setter;
 import server.mainproject.comment.entity.Comment;
 import server.mainproject.audit.Auditable;
 import server.mainproject.member.entity.Member;
-import server.mainproject.post.dto.DevPostPatchDto;
 import server.mainproject.tag.Post_Tag;
 
 import javax.persistence.*;
@@ -30,24 +29,28 @@ public class DevPost extends Auditable {
     private String content;
 
     @Column
-    private String userName;
+    private String name;
 
     @Column
-    private String link;
+    private String sourceURL;
 
     @Column
     private int recommend;
 
     @Column
-    private String source;
+    private String sourceMedia;
 
     @Column(nullable = false)
     private int star;
 
     @Column
+    private String thumbnailImage;
+
+    @Column
     private Double starAvg;
-//    @Column
-//    private String sorta;
+
+    @Column
+    private String sorta;
 
     @Transient
     private int score;
@@ -66,12 +69,12 @@ public class DevPost extends Auditable {
     private Set<Post_Tag> postTags = new HashSet<>();
 
     @Builder
-    public DevPost (String title, String content, String userName, String link, int star, String source) {
+    public DevPost (String title, String content, String name, String sourceURL, int star, String sourceMedia) {
         this.title = title;
         this.content = content;
-        this.link = link;
+        this.sourceURL = sourceURL;
         this.star = star;
-        this.source = source;
+        this.sourceMedia = sourceMedia;
     }
 
 }

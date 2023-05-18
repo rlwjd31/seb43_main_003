@@ -25,12 +25,4 @@ public class DevPostPatchDto {
         return member;
     }
 
-    public DevPost toEntity() {
-        return DevPost.builder()
-                .title(title)
-                .content(content)
-                .star(star)
-                .link(link)
-                .build();
-    }
 }

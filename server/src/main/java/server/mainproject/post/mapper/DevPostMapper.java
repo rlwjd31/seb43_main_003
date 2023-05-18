@@ -4,30 +4,29 @@ import org.mapstruct.Mapper;
 import server.mainproject.comment.dto.CommentDto;
 import server.mainproject.comment.entity.Comment;
 import server.mainproject.member.dto.AuthorResponseDto;
-import server.mainproject.member.entity.Member;
 import server.mainproject.post.dto.DevPostDto;
+import server.mainproject.post.dto.DevPostMainResponse;
 import server.mainproject.post.dto.Post_TagResponseDto;
 import server.mainproject.post.entity.DevPost;
 import server.mainproject.tag.Post_Tag;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface DevPostMapper {
-    DevPost postToEntity (DevPostDto.Post post);
+
     default DevPostDto.Response EntityToResponse (DevPost post) {
         Set<Post_Tag> postTags = post.getPostTags();
 
         DevPostDto.Response response = new DevPostDto.Response(
                 "success",
                 post.getPostId(), post.getTitle(), post.getContent(),
-                post.getLink(), post.getStar(), post.getStarAvg(),
+                post.getSourceURL(), post.getStar(), post.getStarAvg(),
                 post.getRecommend(),
-                post.getSource(),
+                post.getSourceMedia(),
                 postMemberDtoResponse(post),
                 postTagDtoResponse(postTags),
                 postCommentResponse(post.getComments()),
@@ -76,4 +75,53 @@ public interface DevPostMapper {
         return author;
     }
     List<DevPostDto.Response> ListResponse (List<DevPost> posts);
+//    default List<DevPostMainResponse> mainPageResponse (List<DevPost> posts) {
+//
+//    }
+
+    default List<DevPostMainResponse> mainPageResponse(List<DevPost> posts) {
+        if ( posts == null ) {
+            return null;
+        }
+
+        List<DevPostMainResponse> list = new ArrayList<DevPostMainResponse>( posts.size() );
+        for ( DevPost devPost : posts ) {
+            list.add( devPostToDevPostMainResponse( devPost ) );
+        }
+
+        return list;
+    }
+
+    default DevPostMainResponse devPostToDevPostMainResponse(DevPost devPost) {
+        if ( devPost == null ) {
+            return null;
+        }
+        Set<Post_Tag> postTags = devPost.getPostTags();
+
+
+        Long postId = null;
+        String title = null;
+        String sourceURL = null;
+        int star = 0;
+        Double starAvg = null;
+        int recommend = 0;
+        String sourceMedia = null;
+        String thumbnailImage = null;
+        String sorta = null;
+
+        postId = devPost.getPostId();
+        title = devPost.getTitle();
+        sourceURL = devPost.getSourceURL();
+        star = devPost.getStar();
+        starAvg = devPost.getStarAvg();
+        recommend = devPost.getRecommend();
+        sourceMedia = devPost.getSourceMedia();
+        thumbnailImage = devPost.getThumbnailImage();
+        sorta = devPost.getSorta();
+
+        DevPostMainResponse devPostMainResponse = new DevPostMainResponse( postId, title, sourceURL, star, starAvg, recommend, sourceMedia,
+                postMemberDtoResponse(devPost), postTagDtoResponse(postTags), thumbnailImage, sorta );
+
+        return devPostMainResponse;
+    }
 }

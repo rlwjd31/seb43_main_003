@@ -8,8 +8,6 @@ import server.mainproject.comment.dto.CommentDto;
 import server.mainproject.member.dto.AuthorResponseDto;
 import server.mainproject.member.entity.Member;
 import server.mainproject.post.entity.DevPost;
-import server.mainproject.tag.Post_Tag;
-import server.mainproject.tag.Tag;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -33,8 +31,9 @@ public class DevPostDto {
         @NotNull(message = "평점은 필수 입력 사항입니다.")
         private int star;
 
-        private String link;
-        private String source;
+        private String sourceURL;
+        private String sourceMedia;
+        private String thumbnailImage;
 
         private List<String> tag;
 //        private String sorta;
@@ -51,9 +50,9 @@ public class DevPostDto {
                     .builder()
                     .content(getContent())
                     .title(getTitle())
-                    .link(getLink())
+                    .sourceURL(getSourceURL())
                     .star(getStar())
-                    .source(getSource())
+                    .sourceMedia(getSourceMedia())
                     .build();
         }
     }
@@ -65,13 +64,13 @@ public class DevPostDto {
         private Long postId;
         private String title;
         private String content;
-        private String link;
+        private String sourceURL;
         private int star;
         private Double starAvg;
-        private int recommend;
-        private String source;
-        private List<AuthorResponseDto> authors;
-        private List<Post_TagResponseDto> postTags;
+        private int recommends;
+        private String sourceMedia;
+        private List<AuthorResponseDto> author;
+        private List<Post_TagResponseDto> tags;
         private List<CommentDto.ResponseComment> comments;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

@@ -2,9 +2,6 @@ package server.mainproject.post.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +44,7 @@ public class DevPostService {
         DevPost newPost = post.toEntity(); // 멤버 부분 수정
 
         newPost.setMember(member);
-        newPost.setUserName(member.getUserName());
+        newPost.setName(member.getUserName());
 
         DevPost savePost = repository.save(newPost);
 
@@ -102,12 +99,12 @@ public class DevPostService {
 
         Optional.ofNullable(patch.getTitle()).ifPresent(title -> find.setTitle(title));
         Optional.ofNullable(patch.getContent()).ifPresent(content -> find.setContent(content));
-        Optional.ofNullable(patch.getLink()).ifPresent(link -> find.setLink(link));
+        Optional.ofNullable(patch.getLink()).ifPresent(link -> find.setSourceURL(link));
 
         if (patch.getStar() != 0) {
             find.setStar(patch.getStar());
         }
-        find.setUserName(member.getUserName());
+        find.setName(member.getUserName());
 
         Post_Tag postTag = new Post_Tag();
 
@@ -200,6 +197,12 @@ public class DevPostService {
                 .sorted(Comparator.comparing(DevPost::getScore).reversed())
                 .limit(3)
                 .collect(Collectors.toList());
+
+        return posts;
+    }
+    @Transactional(readOnly = true)
+    public List<DevPost> mainPagePost () {
+        List<DevPost> posts = repository.findAll();
 
         return posts;
     }
