@@ -51,8 +51,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
 
-
-
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String authorization = request.getHeader("Authorization");
@@ -66,16 +64,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-
-    // =====
-    // 클래스 내 메서드 추가
-//    private Map<String, Object> verifyJws(HttpServletRequest request) {
-//        String jws = request.getHeader("Authorization").replace("Bearer ", "");
-//        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-//        Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
-//
-//        return claims;
-//    }
 
 
 

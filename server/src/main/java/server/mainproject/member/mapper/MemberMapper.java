@@ -52,11 +52,11 @@ public interface MemberMapper {
         Long postId = null;
         String title = null;
         String content = null;
-        String link = null;
+        String sourceURL = null;
         int star = 0;
         Double starAvg = null;
         int recommend = 0;
-        String source;
+        String sourceMedia;
         List<Post_TagResponseDto> postTags = null;
         List<CommentDto.ResponseComment> comments = null;
         LocalDateTime createdAt;
@@ -66,11 +66,11 @@ public interface MemberMapper {
         postId = devPost.getPostId();
         title = devPost.getTitle();
         content = devPost.getContent();
-        link = devPost.getSourceURL();
+        sourceURL = devPost.getSourceURL();
         star = devPost.getStar();
         starAvg = roundedReview;
         recommend = devPost.getRecommend();
-        source = devPost.getSourceMedia();
+        sourceMedia = devPost.getSourceMedia();
         postTags = postTagDtoResponse( devPost.getPostTags() );
         comments = commentListToResponseCommentList( devPost.getComments() );
         createdAt = devPost.getCreatedAt();
@@ -79,7 +79,7 @@ public interface MemberMapper {
         String status = "success";
         List<AuthorResponseDto> authors = postMemberDtoResponse (devPost);
 
-        DevPostDto.Response response = new DevPostDto.Response( status, postId, title, content, link, star, starAvg, recommend,source, authors, postTags, comments,createdAt, modifiedAt );
+        DevPostDto.Response response = new DevPostDto.Response( status, postId, title, content, sourceURL, star, starAvg, recommend,sourceMedia, authors, postTags, comments,createdAt, modifiedAt );
 
         return response;
     }

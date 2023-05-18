@@ -45,6 +45,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws ServletException, IOException {
+
+
+
         Member member = (Member) authResult.getPrincipal();
 
         String accessToken = delegateAccessToken(member);
@@ -58,7 +61,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.getWriter().write("{\"userName\": " + userName + "}");
 
         response.setHeader("Authorization", "Bearer " + accessToken);
-        response.setHeader("Refresh", refreshToken);
+        response.setHeader("Refresh", "Bearer " + refreshToken);
         response.setHeader("access-token-expiration-minutes", String.valueOf(jwtTokenizer.getAccessTokenExpirationMinutes()));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);  // 추가

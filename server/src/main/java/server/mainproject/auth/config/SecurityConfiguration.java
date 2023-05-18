@@ -78,13 +78,6 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 //                .loginPage("/oauth/login")
                 .userInfoEndpoint() // 사용자가 로그인에 성공하였을 경우,
                 .userService(oAuth2Service); // 해당 서비스 로직을 타도록 설정
-//                .oauth2Login(login -> login
-//                        .clientRegistrationRepository(clientRegistrationRepository())
-//                        .authorizedClientService(authorizedClientService())
-//                        .loginPage("/login")
-//                );
-
-
 
         return http.build();
     }
@@ -112,11 +105,11 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer());
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
+
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtUtils(), authorityUtils);
 
