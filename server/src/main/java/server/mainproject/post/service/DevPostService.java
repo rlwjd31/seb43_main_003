@@ -59,6 +59,11 @@ public class DevPostService {
                     pt.setPost(savePost);
                     ptr.save(pt);
                 }
+                else {
+                    pt.setPost(savePost);
+                    pt.setTag(tag);
+                    ptr.save(pt);
+                }
             }
         }
 
