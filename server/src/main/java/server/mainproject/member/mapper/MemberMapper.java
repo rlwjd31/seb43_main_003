@@ -79,7 +79,7 @@ public interface MemberMapper {
         modifiedAt = devPost.getModifiedAt();
 
         String status = "success";
-        List<AuthorResponseDto> author = postMemberDtoResponse (devPost);
+        AuthorResponseDto author = postMemberDtoResponse (devPost);
 
         DevPostDto.Response response = new DevPostDto.Response( status, postId, title, content, sourceURL, star, starAvg, recommends, sourceMedia, sorta, author, postTags, comments,createdAt, modifiedAt );
 
@@ -162,31 +162,28 @@ public interface MemberMapper {
     }
 
     //Todo: Author 수동매핑
-    default List<AuthorResponseDto> postMemberDtoResponse (DevPost devPost) {
-        List<AuthorResponseDto> author = new ArrayList<>();
+    default AuthorResponseDto postMemberDtoResponse (DevPost devPost) {
 
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
 //                .memberId(devPost.getMember().getMemberId())
                 .name(devPost.getMember().getUserName())
                 .build();
-        author.add(ar);
 
-        return author;
+        return ar;
     }
 
     //Todo: Author 수동매핑
-    default List<AuthorResponseDto> commentMemberDtoResponse (Comment comment) {
-        List<AuthorResponseDto> author = new ArrayList<>();
+    default AuthorResponseDto commentMemberDtoResponse (Comment comment) {
 
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
 //                .memberId(comment.getMember().getMemberId())
                 .name(comment.getMember().getUserName())
                 .build();
-        author.add(ar);
 
-        return author;
+
+        return ar;
     }
 
 }

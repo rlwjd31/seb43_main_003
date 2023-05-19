@@ -28,6 +28,8 @@ public class Member extends Auditable {
     @Column(nullable = false)
     private String userName;
 
+    private String profileImage;
+
     @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<DevPost> posts = new ArrayList<>();

@@ -63,20 +63,20 @@ public interface DevPostMapper {
         return result;
 
     }
-    default List<AuthorResponseDto> postMemberDtoResponse (DevPost devPost) {
-        List<AuthorResponseDto> author = new ArrayList<>();
+
+    default AuthorResponseDto postMemberDtoResponse (DevPost devPost) {
+
 
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
-//                .memberId(devPost.getMember().getMemberId())
                 .name(devPost.getMember().getUserName())
                 .build();
-        author.add(ar);
 
-        return author;
+        return ar;
     }
-    default List<AuthorResponseDto> mainPageMemberResponse (DevPost post) {
-        List<AuthorResponseDto> author = new ArrayList<>();
+
+        default AuthorResponseDto mainPageMemberResponse (DevPost post) {
+
 
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
@@ -84,14 +84,10 @@ public interface DevPostMapper {
                 .profileImage("")
                 .star(post.getStar())
                 .build();
-        author.add(ar);
 
-        return author;
+        return ar;
     }
     List<DevPostDto.Response> ListResponse (List<DevPost> posts);
-//    default List<DevPostMainResponse> mainPageResponse (List<DevPost> posts) {
-//
-//    }
 
     default List<DevPostMainResponse> mainPageResponse(List<DevPost> posts) {
         if ( posts == null ) {

@@ -72,7 +72,7 @@ public class DevPostDto {
         private int recommends;
         private String sourceMedia;
         private String sorta;
-        private List<AuthorResponseDto> author;
+        private AuthorResponseDto author;
         private List<Post_TagResponseDto> tags;
         private List<CommentDto.ResponseComment> comments;
         private LocalDateTime createdAt;

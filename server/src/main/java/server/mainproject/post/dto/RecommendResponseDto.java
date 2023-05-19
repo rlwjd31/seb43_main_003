@@ -20,8 +20,7 @@ public class RecommendResponseDto {
     private int star;
     private Double starAvg;
     private int recommend;
-//    private String sorta;
-    private List<AuthorResponseDto> authors;
+    private AuthorResponseDto author;
     private List<Post_TagResponseDto> postTags;
     private List<CommentDto.ResponseComment> comments;
 

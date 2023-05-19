@@ -72,7 +72,7 @@ public class CommentDto {
         private Long commentId;
         private String comment;
         private int star;
-        private List<AuthorResponseDto> author;
+        private AuthorResponseDto author;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }

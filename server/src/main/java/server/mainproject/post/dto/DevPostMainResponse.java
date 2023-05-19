@@ -17,7 +17,7 @@ public class DevPostMainResponse {
     private Double starAvg;
     private int recommend;
     private String sourceMedia;
-    private List<AuthorResponseDto> author;
+    private AuthorResponseDto author;
     private List<Post_TagResponseDto> tags;
     private String thumbnailImage;
     private String sorta;

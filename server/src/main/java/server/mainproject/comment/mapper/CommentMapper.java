@@ -51,16 +51,16 @@ public interface CommentMapper {
         return responseComments;
     }
 
-    default List<AuthorResponseDto> authorDtoResponse (Comment comment) {
-        List<AuthorResponseDto> author = new ArrayList<>();
+    default AuthorResponseDto authorDtoResponse (Comment comment) {
+
 
         AuthorResponseDto auth = AuthorResponseDto
                 .builder()
 //                .memberId(comment.getMember().getMemberId())
                 .name(comment.getMember().getUserName())
                 .build();
-        author.add(auth);
 
-        return author;
+
+        return auth;
     }
 }
