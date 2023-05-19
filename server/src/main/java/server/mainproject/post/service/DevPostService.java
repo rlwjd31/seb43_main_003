@@ -284,4 +284,22 @@ public class DevPostService {
             post.setStarAvg(roundedReview);
         });
     }
+
+    public void postCommentReviewAvg(List<Comment> comments, DecimalFormat df) {
+        DevPost post = repository.findById(comments.get(comments.size()-1).getPostId()).get();
+        double reviews = comments
+                .stream()
+                .filter(answer -> answer.getDevPost().getPostId().equals(post.getPostId()))
+                .mapToDouble(Comment::getStar)
+                .average()
+                .orElse(0.0);
+
+        String format = df.format(reviews);
+        double roundedReview = Double.parseDouble(format);
+
+        post.setStarAvg(roundedReview);
+        repository.save(post);
+
+    }
+
 }

@@ -7,7 +7,9 @@ import server.mainproject.comment.entity.Comment;
 import server.mainproject.comment.repository.CommentRepository;
 import server.mainproject.exception.BusinessLogicException;
 import server.mainproject.exception.ExceptionCode;
+import server.mainproject.post.service.DevPostService;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,16 +18,24 @@ import java.util.Optional;
 @Service
 public class CommentService {
     private CommentRepository commentRepository;
+    private final DevPostService devPostService;
 
-    public CommentService(CommentRepository commentRepository) {
+
+    public CommentService(CommentRepository commentRepository, DevPostService devPostService) {
         this.commentRepository = commentRepository;
+        this.devPostService = devPostService;
     }
 
     public Comment createComment(Comment comment) {  // 생성
-        return commentRepository.save(comment);
+        DecimalFormat df = new DecimalFormat("#.##");
+        Comment savedComment = commentRepository.save(comment);
+        List<Comment> comments = commentRepository.findAll();
+        devPostService.postCommentReviewAvg(comments,df);
+        return savedComment;
     }
 
-    public Comment updateComment(Comment comment) {  // 댓글과 별점 수정
+
+        public Comment updateComment(Comment comment) {  // 댓글과 별점 수정
         Comment findComment = findVerifiedComment(comment.getCommentId());
 
         Optional.ofNullable(comment.getComment())
