@@ -58,6 +58,7 @@ public class DevPostController {
 
         return new ResponseEntity<>(mapper.ListResponse(posts), HttpStatus.OK);
     }
+
     @GetMapping("/{post-id}")
     public ResponseEntity getPost (@PathVariable("post-id") @Positive long postId) {
 
@@ -68,7 +69,7 @@ public class DevPostController {
     @GetMapping("/realtime-ranking")
     public ResponseEntity rankingPosts () {
 
-        List<DevPost> posts = service.rankingPost();
+        List<DevPost> posts = service.realtimePost();
 
         return new ResponseEntity<>(mapper.mainPageResponse(posts), HttpStatus.OK);
     }
@@ -92,7 +93,7 @@ public class DevPostController {
         DevPost trendPost = trendPosts.get(0);
         response.add(trendPost);
 
-        return new ResponseEntity<>(mapper.mainPageResponse(response), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.mainPageResponse(service.findPost(response)), HttpStatus.OK);
     }
 
 

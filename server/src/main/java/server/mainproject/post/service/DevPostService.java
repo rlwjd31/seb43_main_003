@@ -170,40 +170,55 @@ public class DevPostService {
 
         return posts;
     }
-
-//    @Transactional(readOnly = true)
-//    public List<DevPost> findAllTopPost () {
-//
-//        List<DevPost> posts = repository.findAll();
-//
-//        DecimalFormat df = new DecimalFormat("#.#");
-//
-//        postAnswerReviewAvg(posts, df);
-//
-//        posts.sort(Comparator.comparingDouble(DevPost::getStarAvg).reversed());
-//
-//        return posts;
-//    }
     @Transactional(readOnly = true)
-    public List<DevPost> rankingPost () {
-        LocalDateTime rightNow = LocalDateTime.now();
-        LocalDateTime oneWeek = rightNow.minusWeeks(1);
+    public List<DevPost> realtimePost () {
 
-        List<DevPost> posts = findAllPost()
-                .stream()
-                .filter(time -> time.getCreatedAt().isAfter(oneWeek))
-                .map(a -> {
-                    int score = (int) (a.getStarAvg()/10) * 5;
-                    score += a.getRecommend() * 5;
-                    a.setScore(score);
-                    return a;
-                })
-                .sorted(Comparator.comparing(DevPost::getScore).reversed())
-                .limit(3)
-                .collect(Collectors.toList());
+       List<DevPost> posts = repository.findAll(Sort.by("recommend").descending())
+               .stream()
+               .limit(3)
+               .collect(Collectors.toList());
+
+        DecimalFormat df = new DecimalFormat("#.#");
+
+        postAnswerReviewAvg(posts, df);
+
 
         return posts;
     }
+
+    @Transactional(readOnly = true)
+    public List<DevPost> findPost (List<DevPost> post) {
+
+        List<DevPost> posts = repository.findAll();
+
+        DecimalFormat df = new DecimalFormat("#.#");
+
+        postAnswerReviewAvg(posts, df);
+
+        posts.sort(Comparator.comparingDouble(DevPost::getStarAvg).reversed());
+
+        return posts;
+    }
+//    @Transactional(readOnly = true)
+//    public List<DevPost> rankingPost () {
+////        LocalDateTime rightNow = LocalDateTime.now();
+////        LocalDateTime oneWeek = rightNow.minusWeeks(1);
+//
+//        List<DevPost> posts = findAllPost()
+//                .stream()
+//                .filter(time -> time.getCreatedAt().isAfter(oneWeek))
+//                .map(a -> {
+//                    int score = (int) (a.getStarAvg()/10) * 5;
+//                    score += a.getRecommend() * 5;
+//                    a.setScore(score);
+//                    return a;
+//                })
+//                .sorted(Comparator.comparing(DevPost::getScore).reversed())
+//                .limit(3)
+//                .collect(Collectors.toList());
+//
+//        return posts;
+//    }
     @Transactional(readOnly = true)
     public List<DevPost> mainPagePost () {
         List<DevPost> posts = repository.findAll();
