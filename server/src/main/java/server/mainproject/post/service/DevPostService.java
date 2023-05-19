@@ -22,7 +22,6 @@ import server.mainproject.tag.Tag;
 import server.mainproject.tag.TagRepository;
 
 import java.text.DecimalFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -103,7 +102,10 @@ public class DevPostService {
 
         Optional.ofNullable(patch.getTitle()).ifPresent(title -> find.setTitle(title));
         Optional.ofNullable(patch.getContent()).ifPresent(content -> find.setContent(content));
-        Optional.ofNullable(patch.getLink()).ifPresent(link -> find.setSourceURL(link));
+        Optional.ofNullable(patch.getSourceURL()).ifPresent(link -> find.setSourceURL(link));
+        Optional.ofNullable(patch.getSourceMedia()).ifPresent(source -> find.setSourceMedia(source));
+        Optional.ofNullable(patch.getThumbnailImage()).ifPresent(image -> find.setThumbnailImage(image));
+        Optional.ofNullable(patch.getSorta()).ifPresent(sorta -> find.setSorta(sorta));
 
         if (patch.getStar() != 0) {
             find.setStar(patch.getStar());

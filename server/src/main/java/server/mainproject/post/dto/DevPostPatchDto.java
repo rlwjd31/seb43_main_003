@@ -3,7 +3,6 @@ package server.mainproject.post.dto;
 import lombok.Getter;
 import lombok.Setter;
 import server.mainproject.member.entity.Member;
-import server.mainproject.post.entity.DevPost;
 
 import java.util.List;
 
@@ -14,7 +13,9 @@ public class DevPostPatchDto {
     private String title;
     private String content;
     private int star;
-    private String link;
+    private String sourceURL;
+    private String sourceMedia;
+    private String thumbnailImage;
     private List<String> tag;
     private String sorta;
 
