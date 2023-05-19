@@ -16,7 +16,7 @@ public class DevPostPatchDto {
     private int star;
     private String link;
     private List<String> tag;
-//    private String sorta;
+    private String sorta;
 
     public Member getMember () {
         Member member = new Member();
