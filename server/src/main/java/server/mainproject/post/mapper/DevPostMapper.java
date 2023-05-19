@@ -68,8 +68,21 @@ public interface DevPostMapper {
 
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
-                .memberId(devPost.getMember().getMemberId())
-                .userName(devPost.getMember().getUserName())
+//                .memberId(devPost.getMember().getMemberId())
+                .name(devPost.getMember().getUserName())
+                .build();
+        author.add(ar);
+
+        return author;
+    }
+    default List<AuthorResponseDto> mainPageMemberResponse (DevPost post) {
+        List<AuthorResponseDto> author = new ArrayList<>();
+
+        AuthorResponseDto ar = AuthorResponseDto
+                .builder()
+                .name(post.getMember().getUserName())
+                .profileImage("")
+                .star(post.getStar())
                 .build();
         author.add(ar);
 
@@ -121,7 +134,7 @@ public interface DevPostMapper {
         sorta = devPost.getSorta();
 
         DevPostMainResponse devPostMainResponse = new DevPostMainResponse( postId, title, sourceURL, star, starAvg, recommend, sourceMedia,
-                postMemberDtoResponse(devPost), postTagDtoResponse(postTags), thumbnailImage, sorta );
+                mainPageMemberResponse(devPost), postTagDtoResponse(postTags), thumbnailImage, sorta );
 
         return devPostMainResponse;
     }

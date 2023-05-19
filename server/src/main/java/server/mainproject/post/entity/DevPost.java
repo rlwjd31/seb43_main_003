@@ -69,13 +69,15 @@ public class DevPost extends Auditable {
     private Set<Post_Tag> postTags = new HashSet<>();
 
     @Builder
-    public DevPost (String title, String content, String name, String sourceURL, int star, String sourceMedia, String sorta) {
+    public DevPost (String title, String content, String name, String sourceURL,
+                    int star, String sourceMedia, String sorta, String thumbnailImage) {
         this.title = title;
         this.content = content;
         this.sourceURL = sourceURL;
         this.star = star;
         this.sourceMedia = sourceMedia;
         this.sorta = sorta;
+        this.thumbnailImage = thumbnailImage;
     }
 
 }

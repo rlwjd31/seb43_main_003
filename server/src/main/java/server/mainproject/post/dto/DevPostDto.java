@@ -34,9 +34,9 @@ public class DevPostDto {
         private String sourceURL;
         private String sourceMedia;
         private String thumbnailImage;
+        private String sorta;
 
         private List<String> tag;
-        private String sorta;
 
 
         public Member getMember () {
@@ -54,6 +54,7 @@ public class DevPostDto {
                     .star(getStar())
                     .sourceMedia(getSourceMedia())
                     .sorta(getSorta())
+                    .thumbnailImage(getThumbnailImage())
                     .build();
         }
     }

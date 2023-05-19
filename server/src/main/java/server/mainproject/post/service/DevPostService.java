@@ -36,7 +36,6 @@ public class DevPostService {
     private final MemberService memberService;
     private final Post_TagRepository ptr;
     private final TagRepository tagRepository;
-// 14, 16번
     public DevPost savePost(DevPostDto.Post post) {
 
         Member member = memberService.verifiedMember(post.getMemberId());
@@ -172,19 +171,19 @@ public class DevPostService {
         return posts;
     }
 
-    @Transactional(readOnly = true)
-    public List<DevPost> findAllTopPost () {
-
-        List<DevPost> posts = repository.findAll();
-
-        DecimalFormat df = new DecimalFormat("#.#");
-
-        postAnswerReviewAvg(posts, df);
-
-        posts.sort(Comparator.comparingDouble(DevPost::getStarAvg).reversed());
-
-        return posts;
-    }
+//    @Transactional(readOnly = true)
+//    public List<DevPost> findAllTopPost () {
+//
+//        List<DevPost> posts = repository.findAll();
+//
+//        DecimalFormat df = new DecimalFormat("#.#");
+//
+//        postAnswerReviewAvg(posts, df);
+//
+//        posts.sort(Comparator.comparingDouble(DevPost::getStarAvg).reversed());
+//
+//        return posts;
+//    }
     @Transactional(readOnly = true)
     public List<DevPost> rankingPost () {
         LocalDateTime rightNow = LocalDateTime.now();

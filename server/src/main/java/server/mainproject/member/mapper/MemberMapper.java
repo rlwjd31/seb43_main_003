@@ -167,8 +167,8 @@ public interface MemberMapper {
 
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
-                .memberId(devPost.getMember().getMemberId())
-                .userName(devPost.getMember().getUserName())
+//                .memberId(devPost.getMember().getMemberId())
+                .name(devPost.getMember().getUserName())
                 .build();
         author.add(ar);
 
@@ -181,8 +181,8 @@ public interface MemberMapper {
 
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
-                .memberId(comment.getMember().getMemberId())
-                .userName(comment.getMember().getUserName())
+//                .memberId(comment.getMember().getMemberId())
+                .name(comment.getMember().getUserName())
                 .build();
         author.add(ar);
 

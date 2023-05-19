@@ -56,8 +56,8 @@ public interface CommentMapper {
 
         AuthorResponseDto auth = AuthorResponseDto
                 .builder()
-                .memberId(comment.getMember().getMemberId())
-                .userName(comment.getMember().getUserName())
+//                .memberId(comment.getMember().getMemberId())
+                .name(comment.getMember().getUserName())
                 .build();
         author.add(auth);
 

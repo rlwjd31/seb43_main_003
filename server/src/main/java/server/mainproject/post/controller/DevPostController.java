@@ -1,8 +1,6 @@
 package server.mainproject.post.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -15,9 +13,6 @@ import server.mainproject.post.entity.Recommend;
 import server.mainproject.post.mapper.DevPostMapper;
 import server.mainproject.post.repository.DevPostRepository;
 import server.mainproject.post.service.DevPostService;
-import server.mainproject.response.MultiResponse;
-import server.mainproject.tag.Post_TagRepository;
-import server.mainproject.tag.TagRepository;
 import server.mainproject.utils.URICreator;
 
 import javax.validation.Valid;
@@ -29,7 +24,7 @@ import java.util.List;
 
 // todo : 회원이 탈퇴되도 글은 유지.
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/posts")
 @Validated
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -46,6 +41,7 @@ public class DevPostController {
 
         return ResponseEntity.created(uri).build();
     }
+
     @PatchMapping("/{post-id}/edit/{member-id}")    // todo : security 적용 후 memberId 는 제거
     public ResponseEntity patchPost(@PathVariable("post-id") @Positive long postId,
                                     @PathVariable("member-id") @Positive long memberId,
@@ -55,20 +51,10 @@ public class DevPostController {
         return new ResponseEntity(mapper.EntityToResponse(service.updatePost(patch, postId)), HttpStatus.OK);
     }
 
-    //Todo : 최신이랑 평점 높은 순 하나로 합치기!!
-    // 최신 글 순
-    @GetMapping("/new_post") // page : 1 size : 9-16 1페이지에 9-16 개 정도의 게시물. 일단 16으로
-    public ResponseEntity getAllNewPost() {
+    @GetMapping
+    public ResponseEntity getAllPosts() {
 
-        List<DevPost> posts = service.findAllPost ();
-
-        return new ResponseEntity<>(mapper.ListResponse(posts), HttpStatus.OK);
-    }
-    // 평점이 높은 순
-    @GetMapping("/top-post")
-    public ResponseEntity getAllTopPost () {
-
-        List<DevPost> posts = service.findAllTopPost ();
+        List<DevPost> posts = service.findAllPost();
 
         return new ResponseEntity<>(mapper.ListResponse(posts), HttpStatus.OK);
     }
@@ -79,7 +65,7 @@ public class DevPostController {
 
         return new ResponseEntity(mapper.EntityToResponse(find), HttpStatus.OK);
     }
-    @GetMapping("/ranking-post")
+    @GetMapping("/realtime-ranking")
     public ResponseEntity rankingPosts () {
 
         List<DevPost> posts = service.rankingPost();
