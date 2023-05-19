@@ -13,6 +13,7 @@ import server.mainproject.post.entity.Recommend;
 import server.mainproject.post.mapper.DevPostMapper;
 import server.mainproject.post.repository.DevPostRepository;
 import server.mainproject.post.service.DevPostService;
+import server.mainproject.response.SingleResponse;
 import server.mainproject.utils.URICreator;
 
 import javax.validation.Valid;
@@ -48,7 +49,7 @@ public class DevPostController {
                                     @RequestBody @Valid DevPostPatchDto patch) {
         patch.setMemberId(memberId);
 
-        return new ResponseEntity(mapper.EntityToResponse(service.updatePost(patch, postId)), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponse<>(mapper.EntityToResponse(service.updatePost(patch, postId))), HttpStatus.OK);
     }
 
     @GetMapping
@@ -56,7 +57,7 @@ public class DevPostController {
 
         List<DevPost> posts = service.findAllPost();
 
-        return new ResponseEntity<>(mapper.ListResponse(posts), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponse<>(mapper.ListResponse(posts)), HttpStatus.OK);
     }
 
     @GetMapping("/{post-id}")
@@ -64,18 +65,18 @@ public class DevPostController {
 
         DevPost find = service.findPost(postId);
 
-        return new ResponseEntity(mapper.EntityToResponse(find), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponse<>(mapper.EntityToResponse(find)), HttpStatus.OK);
     }
     @GetMapping("/realtime-ranking")
     public ResponseEntity rankingPosts () {
 
         List<DevPost> posts = service.realtimePost();
 
-        return new ResponseEntity<>(mapper.mainPageResponse(posts), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponse<>(mapper.mainPageResponse(posts)), HttpStatus.OK);
     }
 
     @GetMapping("/popular-ranking")  // 추천수 높은 순
-    public ResponseEntity<List<DevPostMainResponse>> getPopular() {
+    public ResponseEntity getPopular() {
         List<DevPost> response = new ArrayList<>();
 
         List<DevPost> textPosts = repository.findBySorta("text");
@@ -93,7 +94,7 @@ public class DevPostController {
         DevPost trendPost = trendPosts.get(0);
         response.add(trendPost);
 
-        return new ResponseEntity<>(mapper.mainPageResponse(service.findPost(response)), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponse<>(mapper.mainPageResponse(service.findPost(response))), HttpStatus.OK);
     }
 
 
