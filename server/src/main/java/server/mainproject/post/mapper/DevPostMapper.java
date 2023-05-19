@@ -27,6 +27,7 @@ public interface DevPostMapper {
                 post.getSourceURL(), post.getStar(), post.getStarAvg(),
                 post.getRecommend(),
                 post.getSourceMedia(),
+                post.getSorta(),
                 postMemberDtoResponse(post),
                 postTagDtoResponse(postTags),
                 postCommentResponse(post.getComments()),

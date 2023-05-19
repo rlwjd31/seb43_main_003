@@ -2,15 +2,18 @@ package server.mainproject.post.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import server.mainproject.post.dto.DevPostDto;
+import server.mainproject.post.dto.DevPostMainResponse;
 import server.mainproject.post.dto.DevPostPatchDto;
 import server.mainproject.post.entity.DevPost;
 import server.mainproject.post.entity.Recommend;
 import server.mainproject.post.mapper.DevPostMapper;
+import server.mainproject.post.repository.DevPostRepository;
 import server.mainproject.post.service.DevPostService;
 import server.mainproject.response.MultiResponse;
 import server.mainproject.tag.Post_TagRepository;
@@ -20,6 +23,8 @@ import server.mainproject.utils.URICreator;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 // todo : 회원이 탈퇴되도 글은 유지.
@@ -31,6 +36,7 @@ import java.util.List;
 public class DevPostController {
     private final DevPostService service;
     private final DevPostMapper mapper;
+    private final DevPostRepository repository;
 
     @PostMapping
     public ResponseEntity postPost(@RequestBody @Valid DevPostDto.Post post) {
@@ -81,14 +87,26 @@ public class DevPostController {
         return new ResponseEntity<>(mapper.mainPageResponse(posts), HttpStatus.OK);
     }
 
-    //Todo : best post 로직 만들기! ("/best-post")
-    @GetMapping("/best-post")
-    public ResponseEntity bestPosts () {
+    @GetMapping("/popular-ranking")  // 추천수 높은 순
+    public ResponseEntity<List<DevPostMainResponse>> getPopular() {
+        List<DevPost> response = new ArrayList<>();
 
-//        List<DevPost> posts = service.rankingPost();
+        List<DevPost> textPosts = repository.findBySorta("text");
+        textPosts.sort(Comparator.comparingInt(DevPost::getRecommend).reversed());
+        DevPost textPost = textPosts.get(0);
+        response.add(textPost);
 
-//        return new ResponseEntity<>(mapper.ListResponse(posts), HttpStatus.OK);
-        return null;
+        List<DevPost> videoPosts = repository.findBySorta("video");
+        videoPosts.sort(Comparator.comparingInt(DevPost::getRecommend).reversed());
+        DevPost videoPost = videoPosts.get(0);
+        response.add(videoPost);
+
+        List<DevPost> trendPosts = repository.findBySorta("trend");
+        trendPosts.sort(Comparator.comparingInt(DevPost::getRecommend).reversed());
+        DevPost trendPost = trendPosts.get(0);
+        response.add(trendPost);
+
+        return new ResponseEntity<>(mapper.mainPageResponse(response), HttpStatus.OK);
     }
 
 

@@ -36,7 +36,7 @@ public class DevPostDto {
         private String thumbnailImage;
 
         private List<String> tag;
-//        private String sorta;
+        private String sorta;
 
 
         public Member getMember () {
@@ -53,6 +53,7 @@ public class DevPostDto {
                     .sourceURL(getSourceURL())
                     .star(getStar())
                     .sourceMedia(getSourceMedia())
+                    .sorta(getSorta())
                     .build();
         }
     }
@@ -69,6 +70,7 @@ public class DevPostDto {
         private Double starAvg;
         private int recommends;
         private String sourceMedia;
+        private String sorta;
         private List<AuthorResponseDto> author;
         private List<Post_TagResponseDto> tags;
         private List<CommentDto.ResponseComment> comments;
