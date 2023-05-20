@@ -8,7 +8,7 @@ function Item({
   sourceMedia,
   thumbnailImage,
   starAvg,
-  recommends,
+  recommend,
   author,
   sorta,
   sourceURL,
@@ -46,12 +46,11 @@ function Item({
             </div>
             <div className="flex item-center">
               <UnionIcon className="mr-[9px] mb-[3px]" />
-              <p className="text-[12px] text-gray4 mt-[2px]">{recommends}</p>
+              <p className="text-[12px] text-gray4 mt-[2px]">{recommend}</p>
             </div>
           </div>
         </div>
       </div>
-
     </Link>
   );
 }
