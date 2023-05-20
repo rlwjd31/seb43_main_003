@@ -94,7 +94,7 @@ public class DevPostController {
         DevPost trendPost = trendPosts.get(0);
         response.add(trendPost);
 
-        return new ResponseEntity<>(new SingleResponse<>(mapper.mainPageResponse(service.findPost(response))), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponse<>(mapper.mainPageResponse(response)), HttpStatus.OK);
     }
 
 

@@ -39,7 +39,7 @@ public class DevPostService {
 
         Member member = memberService.verifiedMember(post.getMemberId());
 
-        DevPost newPost = post.toEntity(); // 멤버 부분 수정
+        DevPost newPost = post.toEntity();
 
         newPost.setMember(member);
         newPost.setName(member.getUserName());
@@ -160,7 +160,6 @@ public class DevPostService {
 
         return post;
     }
-    // 최신글 순으로 조회
     @Transactional(readOnly = true)
     public List<DevPost> findAllPost () {
 
@@ -198,32 +197,6 @@ public class DevPostService {
         postAnswerReviewAvg(posts, df);
 
         posts.sort(Comparator.comparingDouble(DevPost::getStarAvg).reversed());
-
-        return posts;
-    }
-//    @Transactional(readOnly = true)
-//    public List<DevPost> rankingPost () {
-////        LocalDateTime rightNow = LocalDateTime.now();
-////        LocalDateTime oneWeek = rightNow.minusWeeks(1);
-//
-//        List<DevPost> posts = findAllPost()
-//                .stream()
-//                .filter(time -> time.getCreatedAt().isAfter(oneWeek))
-//                .map(a -> {
-//                    int score = (int) (a.getStarAvg()/10) * 5;
-//                    score += a.getRecommend() * 5;
-//                    a.setScore(score);
-//                    return a;
-//                })
-//                .sorted(Comparator.comparing(DevPost::getScore).reversed())
-//                .limit(3)
-//                .collect(Collectors.toList());
-//
-//        return posts;
-//    }
-    @Transactional(readOnly = true)
-    public List<DevPost> mainPagePost () {
-        List<DevPost> posts = repository.findAll();
 
         return posts;
     }
