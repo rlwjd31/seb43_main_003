@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import {
   fetchPopularDevelopmentsAction,
   fetchRealTimeDevelopmentsAction,
+  fetchAllDevelopmentsAction,
 } from '../store/developmentSlice';
 
 import Carousel from '../components/Carousel';
@@ -18,12 +19,15 @@ const CaurouselConfig = {
 };
 
 function Home() {
-  const { popularRanking, realTimeRanking } = useSelector(state => state.development);
+  const { popularRanking, realTimeRanking, allDevelopments } = useSelector(
+    state => state.developments,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchPopularDevelopmentsAction());
     dispatch(fetchRealTimeDevelopmentsAction());
+    dispatch(fetchAllDevelopmentsAction());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
