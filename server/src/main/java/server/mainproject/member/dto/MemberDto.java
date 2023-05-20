@@ -23,7 +23,7 @@ public class MemberDto {
         private String password;
         @NotBlank
         private String userName;
-        private String profileImage;
+        private String profileBgColor;
     }
     @Getter
     @AllArgsConstructor
@@ -31,7 +31,7 @@ public class MemberDto {
         private long memberId;
         private String userName;
         private String password;
-        private String profileImage;
+        private String profileBgColor;
     }
 
     @Getter
@@ -42,7 +42,7 @@ public class MemberDto {
         private String memberId;
         private String email;
         private String userName;
-        private String profileImage;
+        private String profileBgColor;
         private List<DevPostDto.Response> posts;
         private List<CommentDto.ResponseComment> comments;
         private List<RecommendResponseDto> recommends;

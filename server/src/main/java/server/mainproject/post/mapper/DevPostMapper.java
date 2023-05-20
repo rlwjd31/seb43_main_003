@@ -81,7 +81,7 @@ public interface DevPostMapper {
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
                 .name(post.getMember().getUserName())
-                .profileImage("")
+                .profileBgColor("")
                 .star(post.getStar())
                 .build();
 

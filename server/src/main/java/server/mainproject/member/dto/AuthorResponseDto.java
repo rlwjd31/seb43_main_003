@@ -9,5 +9,5 @@ public class AuthorResponseDto {
 //    private Long memberId;
     private String name;
     private int star;
-    private String profileImage;
+    private String profileBgColor;
 }

@@ -168,6 +168,7 @@ public interface MemberMapper {
                 .builder()
 //                .memberId(devPost.getMember().getMemberId())
                 .name(devPost.getMember().getUserName())
+                .profileBgColor(devPost.getMember().getProfileBgColor())
                 .build();
 
         return ar;
@@ -180,6 +181,7 @@ public interface MemberMapper {
                 .builder()
 //                .memberId(comment.getMember().getMemberId())
                 .name(comment.getMember().getUserName())
+                .profileBgColor(comment.getMember().getProfileBgColor())
                 .build();
 
 
