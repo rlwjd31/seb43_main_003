@@ -1,7 +1,10 @@
 package server.mainproject.auth.utils;
 
 
+import io.jsonwebtoken.JwtException;
 import server.mainproject.auth.jwt.JwtTokenizer;
+import server.mainproject.exception.BusinessLogicException;
+import server.mainproject.exception.ExceptionCode;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -16,8 +19,12 @@ public class JwtUtils {
     public Map<String, Object> getJwsClaimsFromRequest(HttpServletRequest request) {
         String jws = request.getHeader("Authorization").replace("Bearer ", "");
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-        Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
+        try {
+            Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
+            return claims;
+        } catch (JwtException e) {
 
-        return claims;
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_ACCESSTOKEN);
+        }
     }
 }

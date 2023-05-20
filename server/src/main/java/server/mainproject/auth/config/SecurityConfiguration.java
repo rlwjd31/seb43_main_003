@@ -3,6 +3,7 @@ package server.mainproject.auth.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import server.mainproject.auth.Oauth.OAuth2Service;
 import server.mainproject.auth.filter.JwtAuthenticationFilter;
@@ -26,6 +28,12 @@ import server.mainproject.auth.jwt.JwtTokenizer;
 import server.mainproject.auth.utils.CustomAuthorityUtils;
 import server.mainproject.auth.utils.JwtUtils;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
 
 @Configuration
@@ -41,6 +49,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         http
                 .headers().frameOptions().sameOrigin()
                 .and()
+//                .addFilterAfter(new CookieHttpOnlyFilter(), JwtVerificationFilter.class)
                 .csrf().disable()
                 .cors(httpSecurityCorsConfigurer -> corsConfigurationSource())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -79,6 +88,11 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .userInfoEndpoint() // 사용자가 로그인에 성공하였을 경우,
                 .userService(oAuth2Service); // 해당 서비스 로직을 타도록 설정
 
+//        http
+//                .headers().frameOptions().sameOrigin()
+//                .and()
+//                .addFilterAfter(new CookieHttpOnlyFilter(), JwtVerificationFilter.class);
+
         return http.build();
     }
 
@@ -94,6 +108,8 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "PUT", "HEAD", "OPTIONS"));
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
+
+        configuration.setAllowCredentials(true); // credential 설정
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -117,6 +133,19 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         }
     }
 
+    // 쿠키를 생성하여 httpOnly 속성을 설정하는 필터
+
+    public class CookieHttpOnlyFilter extends OncePerRequestFilter {
+        @Override
+        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+            // 쿠키 생성 및 httpOnly 속성 설정
+            Cookie cookie = new Cookie("cookieName", "cookieValue");
+            cookie.setHttpOnly(true);
+            response.addCookie(cookie);
+
+            filterChain.doFilter(request, response);
+        }
+    }
 
     @Bean
     public JwtUtils jwtUtils() {

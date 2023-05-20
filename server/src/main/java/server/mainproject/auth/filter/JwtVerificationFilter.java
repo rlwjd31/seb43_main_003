@@ -2,10 +2,13 @@ package server.mainproject.auth.filter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import server.mainproject.auth.jwt.JwtTokenizer;
 import server.mainproject.auth.utils.CustomAuthorityUtils;
@@ -19,7 +22,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-
+//@Order(Ordered.HIGHEST_PRECEDENCE)
+//@Component
 public class JwtVerificationFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
