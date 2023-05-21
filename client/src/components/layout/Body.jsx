@@ -1,5 +1,5 @@
-import axios from '../../utils/axios';
 import { useEffect } from 'react';
+import axios from '../../utils/axios';
 
 import Footer from './Footer';
 import Header from './Header';
@@ -8,22 +8,6 @@ function Body({ children, layoutInfo }) {
   const { isMainContentWidthScreen } = layoutInfo;
 
   useEffect(() => {
-    const fetchAllDevelopmentsData = async () => {
-      try {
-        const response = await axios.get(
-          'http://ec2-3-34-183-170.ap-northeast-2.compute.amazonaws.com:8080/posts',
-        );
-        console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-        console.log('all development datas 👇');
-        console.log(response.data);
-        console.log('response.status', response.status);
-        // if (response.status >= 200 && response.status < 300) {
-        // }
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
     const fetchUserInfo = async () => {
       try {
         const response = await axios.get('userinfo');
@@ -36,7 +20,6 @@ function Body({ children, layoutInfo }) {
       }
     };
 
-    fetchAllDevelopmentsData();
     fetchUserInfo();
   }, []);
 

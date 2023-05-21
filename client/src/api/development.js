@@ -2,11 +2,12 @@
 
 import axios from '../utils/axios';
 
-// const popularRankingEndpoint = 'posts/popular-ranking';
-// const realTimeRankingEndpoint = 'posts/realtime-ranking';
-const popularRankingEndpoint = 'popularRanking';
-const realTimeRankingEndpoint = 'realTimeRanking';
-const allDevelopmentEndpoint = 'allDevelopments';
+const popularRankingEndpoint = 'posts/popular-ranking';
+const realTimeRankingEndpoint = 'posts/realtime-ranking';
+const allDevelopmentEndpoint = 'posts';
+// const popularRankingEndpoint = 'popularRanking';
+// const realTimeRankingEndpoint = 'realTimeRanking';
+// const allDevelopmentEndpoint = 'allDevelopments';
 
 export const fetchPopularDevelopments = async (something, rejectWithValue) => {
   try {

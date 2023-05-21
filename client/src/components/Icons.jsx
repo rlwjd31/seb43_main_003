@@ -5,6 +5,8 @@ import { ReactComponent as Union } from '../assets/union.svg';
 import { ReactComponent as GithubLogo } from '../assets/githubLogo.svg';
 import { ReactComponent as GoogleLogo } from '../assets/googleLogo.svg';
 import { ReactComponent as KakaoLogo } from '../assets/kakaoLogo.svg';
+import { ReactComponent as ChevronDown } from '../assets/chevron-down.svg';
+import { ReactComponent as Pencil } from '../assets/pencil.svg';
 
 const validateClassName = className => {
   return typeof className === 'string' && className.length > 0 ? { className } : '';
@@ -12,6 +14,14 @@ const validateClassName = className => {
 
 export function SearchIcon({ className }) {
   return <Search {...validateClassName(className)} />;
+}
+
+export function PencilIcon({ className }) {
+  return <Pencil {...validateClassName(className)} />;
+}
+
+export function ChevronDownIcon({ className }) {
+  return <ChevronDown {...validateClassName(className)} />;
 }
 
 export function UserIcon({ className }) {

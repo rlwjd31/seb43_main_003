@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import PageNotFound from './pages/PageNotFound';
 import UserProfile from './pages/UserProfile';
 import UserActivity from './pages/UserActivity';
+import AllDevelopment from './pages/AllDevelopments';
 
 const routerData = [
   {
@@ -15,6 +16,15 @@ const routerData = [
     layoutInfo: {
       isHeader: true,
       isMainContentWidthScreen: true,
+      isFooter: true,
+    },
+  },
+  {
+    path: '/developments',
+    element: <AllDevelopment />,
+    layoutInfo: {
+      isHeader: true,
+      isMainContentWidthScreen: false,
       isFooter: true,
     },
   },

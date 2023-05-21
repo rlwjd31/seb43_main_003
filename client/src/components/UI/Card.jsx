@@ -1,6 +1,6 @@
 function Card({ children, width }) {
   return (
-    <div style={{ width }} className="flex-col">
+    <div style={{ flex: `1 1 ${width}` }} className="grow shrink flex-col">
       {children}
     </div>
   );

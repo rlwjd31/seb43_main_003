@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { StarIcon, UnionIcon } from './Icons';
 
 function Item({
-  id,
+  postId,
   title,
   sourceMedia,
   thumbnailImage,
