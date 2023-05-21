@@ -15,7 +15,7 @@ function Item({
   tags,
 }) {
   return (
-    <Link to={sourceURL} className="w-full">
+    <Link to={sourceURL}>
       <div className="w-full h-[12rem] flex justify-center items-center bg-yellow-100">
         <img
           src={thumbnailImage}

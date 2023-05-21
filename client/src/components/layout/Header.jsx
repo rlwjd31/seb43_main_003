@@ -39,9 +39,9 @@ function Header() {
             />
           </form>
           <nav className="flex">
-            <NavLink to="/" className={applyNavLinkActivedStyle}>
+            {/* <NavLink to="/" className={applyNavLinkActivedStyle}>
               HOME
-            </NavLink>
+            </NavLink> */}
             <NavLink to="/about" className={applyNavLinkActivedStyle}>
               ABOUT
             </NavLink>

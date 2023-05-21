@@ -10,7 +10,7 @@ function Aside({ title, categories }) {
   const onActiveClickHandler = activeIndex => setIsActive(prev => activeIndex);
 
   return (
-    <div className="mt-main-top w-[13rem] mr-[4.125rem]">
+    <div className="mt-main-top w-[13rem] mr-[1rem]">
       <div className="w-[7.3rem] border-b-[3px] border-solid border-black3 font-bold text-xl text-black3 pb-[15px] mb-[2rem]">
         {title}
       </div>
