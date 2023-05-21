@@ -68,6 +68,7 @@ public class DevPostDto {
         private String content;
         private String sourceURL;
         private int star;
+        private String thumbnailImage;
         private Double starAvg;
         private int recommends;
         private String sourceMedia;

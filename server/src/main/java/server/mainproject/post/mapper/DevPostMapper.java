@@ -24,7 +24,8 @@ public interface DevPostMapper {
         DevPostDto.Response response = new DevPostDto.Response(
                 "success",
                 post.getPostId(), post.getTitle(), post.getContent(),
-                post.getSourceURL(), post.getStar(), post.getStarAvg(),
+                post.getSourceURL(), post.getStar(), post.getThumbnailImage(),
+                post.getStarAvg(),
                 post.getRecommend(),
                 post.getSourceMedia(),
                 post.getSorta(),
@@ -41,8 +42,14 @@ public interface DevPostMapper {
                 .stream()
                 .map(comment -> {
                     CommentDto.ResponseComment response = new CommentDto.ResponseComment();
+                    response.setStatus("success");
                     response.setPostId(comment.getPostId());
                     response.setCommentId(comment.getCommentId());
+                    response.setComment(comment.getComment());
+                    response.setAuthor(
+                            AuthorResponseDto.builder()
+                                    .name(comment.getUserName()).star(comment.getStar())
+                                    .build());
                     response.setStar(comment.getStar());
                     response.setCreatedAt(comment.getCreatedAt());
                     response.setModifiedAt(comment.getModifiedAt());

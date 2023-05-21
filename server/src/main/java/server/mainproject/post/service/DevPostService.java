@@ -165,7 +165,7 @@ public class DevPostService {
 
        List<DevPost> posts = repository.findAll(Sort.by("postId").descending());
 
-        DecimalFormat df = new DecimalFormat("#.#");
+        DecimalFormat df = new DecimalFormat("#.##");
 
         postAnswerReviewAvg(posts, df);
 
@@ -179,7 +179,7 @@ public class DevPostService {
                .limit(3)
                .collect(Collectors.toList());
 
-        DecimalFormat df = new DecimalFormat("#.#");
+        DecimalFormat df = new DecimalFormat("#.##");
 
         postAnswerReviewAvg(posts, df);
 
@@ -192,7 +192,7 @@ public class DevPostService {
 
         List<DevPost> posts = repository.findAll();
 
-        DecimalFormat df = new DecimalFormat("#.#");
+        DecimalFormat df = new DecimalFormat("#.##");
 
         postAnswerReviewAvg(posts, df);
 

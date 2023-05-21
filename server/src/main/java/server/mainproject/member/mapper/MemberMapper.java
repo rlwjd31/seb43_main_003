@@ -58,6 +58,7 @@ public interface MemberMapper {
         int recommends = 0;
         String sourceMedia;
         String sorta;
+        String thumbnailImage = null;
         List<Post_TagResponseDto> postTags = null;
         List<CommentDto.ResponseComment> comments = null;
         LocalDateTime createdAt;
@@ -77,11 +78,12 @@ public interface MemberMapper {
         comments = commentListToResponseCommentList( devPost.getComments() );
         createdAt = devPost.getCreatedAt();
         modifiedAt = devPost.getModifiedAt();
+        thumbnailImage = devPost.getThumbnailImage();
 
         String status = "success";
         AuthorResponseDto author = postMemberDtoResponse (devPost);
 
-        DevPostDto.Response response = new DevPostDto.Response( status, postId, title, content, sourceURL, star, starAvg, recommends, sourceMedia, sorta, author, postTags, comments,createdAt, modifiedAt );
+        DevPostDto.Response response = new DevPostDto.Response( status, postId, title, content, sourceURL, star, thumbnailImage, starAvg, recommends, sourceMedia, sorta, author, postTags, comments,createdAt, modifiedAt );
 
         return response;
     }
