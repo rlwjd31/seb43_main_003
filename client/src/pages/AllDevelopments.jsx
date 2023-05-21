@@ -243,7 +243,7 @@ function AllDevelopments() {
           </h3>
         </div>
         <div className="w-full flex flex-col max-w-limit">
-          <div className="w-full flex justify-between flex-wrap gap-6 py-8">
+          <div className="w-full flex justify-start flex-wrap gap-6 py-8">
             {filteredDevelopments.map(info => (
               <Card key={info.postId} flexItemwidth="30%">
                 <Item {...info} />
