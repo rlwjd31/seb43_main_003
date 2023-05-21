@@ -20,8 +20,12 @@ function AllDevelopments() {
   const onSortaButtonClickHandler = e => setSortaActive(prev => e.target.value);
 
   const onAccordianFilterVisibleClickHandler = () => setAccordianVisible(prev => !prev);
-  const onAccordianFilterValueClickHandler = filterValue =>
+  const onAccordianFilterValueClickHandler = filterValue => {
     setAccordianFilterValue(prev => filterValue);
+    // accordian에서 필터 값을 클릭한다면 accordian접기
+    setAccordianVisible(prev => false);
+  };
+
   // const onAcordian
   const activeStyle = 'bg-black3 text-white1';
   const notActiveStyle = 'bg-white1 text-black3';
@@ -53,28 +57,29 @@ function AllDevelopments() {
           }}
         />
       </section>
-      <section className="pt-main-top w-full">
-        <div className="relative flex justify-between mt-3">
-          <div className="flex gap-2">
-            {['전체', '글', '영상', '트렌드'].map((filterValue, index) => (
-              <Button
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-                value={filterValue}
-                onClick={e => onSortaButtonClickHandler(e)}
-                className={`text-xs px-3 py-1 border-[1px] border-solid border-gray8 rounded-2xl ${
-                  sortaActive === filterValue ? activeStyle : notActiveStyle
-                }`}
-              >
-                {filterValue}
+      <section className="w-full pt-28">
+        <div className="sticky top-36 flex flex-col pt-8 bg-gray1">
+          <div className="relative flex justify-between">
+            <div className="flex gap-2">
+              {['전체', '글', '영상', '트렌드'].map((filterValue, index) => (
+                <Button
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={index}
+                  value={filterValue}
+                  onClick={e => onSortaButtonClickHandler(e)}
+                  className={`text-xs px-3 py-1 border-[1px] border-solid border-gray8 rounded-2xl ${
+                    sortaActive === filterValue ? activeStyle : notActiveStyle
+                  }`}
+                >
+                  {filterValue}
+                </Button>
+              ))}
+            </div>
+            <div className="absolute top-0 right-0 flex flex-col border-[1px] border-gray6 border-solid text-[0.625rem] cursor-pointer">
+              <Button onClick={onAccordianFilterVisibleClickHandler}>
+                <span className="p-2">{accordianFilterValue}</span>{' '}
+                <ChevronDownIcon className="mr-2" />
               </Button>
-            ))}
-          </div>
-          <div className="absolute top-0 right-0 flex flex-col border-[1px] border-gray6 border-solid text-[0.625rem] cursor-pointer">
-            <Button onClick={onAccordianFilterVisibleClickHandler}>
-              <span className="p-2">최신순</span> <ChevronDownIcon className="mr-2" />
-            </Button>
-            {accordianVisible && (
               <Accordian
                 onClickHandler={onAccordianFilterValueClickHandler}
                 activeValue={accordianFilterValue}
@@ -83,16 +88,16 @@ function AllDevelopments() {
                 activeColor="text-activeBlue"
                 visible={accordianVisible}
               />
-            )}
+            </div>
           </div>
-        </div>
-        <div className="w-full flex flex-col max-w-limit">
           <h3 className="flex items-center text-[1.2rem] mt-5 border-b-[1px] border-solid border-gray4">
             <Link to="/developments/new" className="flex w-32 py-7 pr-4">
               <PencilIcon className="w-5 h-5 mr-3" />{' '}
               <span className="font-bold">글 쓰기</span>
             </Link>
           </h3>
+        </div>
+        <div className="w-full flex flex-col max-w-limit">
           <div className="w-full flex justify-between flex-wrap gap-6 py-8">
             {allDevelopments.data.map(info => (
               <Card key={info.postId} flexItemwidth="30%">

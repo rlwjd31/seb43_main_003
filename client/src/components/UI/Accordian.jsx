@@ -9,7 +9,7 @@ function Accordian({
   activeColor,
 }) {
   return (
-    <>
+    <div className="flex flex-col">
       {visible &&
         itemList.map((value, index) => (
           <Button
@@ -22,7 +22,7 @@ function Accordian({
           </Button>
         ))}
       {}
-    </>
+    </div>
   );
 }
 
