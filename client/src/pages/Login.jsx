@@ -1,18 +1,17 @@
 import { useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 
 import { GithubIcon, GoogleIcon, KakaoIcon } from '../components/Icons';
 
-const instanceAxios = axios.create({
-  withCredentials: true,
-});
-
 const fetchLogin = async loginInfo => {
-  const URL = 'http://localhost:4000/login';
+  // const URL = 'https://567f-118-32-224-80.ngrok-free.app/auth/login';
   const body = loginInfo;
-  console.log('body', body);
+  console.log('보낸 이메일과 비밀번호', body);
+  console.log(`보낸 서버 주소 👉🏻 ${axios.defaults.baseURL}/auth/login`);
   try {
-    const response = await instanceAxios.post(URL, body);
+    const response = await axios.post('/auth/login', body);
+    console.log(`응답 헤더 👉🏻`, response.headers);
+    console.log(`응답 바디 👉🏻`, response.data);
     return response.data;
   } catch (err) {
     console.log(`error: ${err.message}`);
@@ -23,18 +22,17 @@ const fetchLogin = async loginInfo => {
 
 function Login() {
   const [loginInfo, setLoginInfo] = useState({
-    userId: '',
+    email: '',
     password: '',
   });
 
   const onLoginSubmitHandler = e => {
     e.preventDefault();
     const userData = fetchLogin(loginInfo);
-    console.log('response.data ->', userData);
   };
 
   const onEmailChangeHandler = e =>
-    setLoginInfo(prev => ({ ...prev, userId: e.target.value }));
+    setLoginInfo(prev => ({ ...prev, email: e.target.value }));
 
   const onPasswordChangeHandler = e =>
     setLoginInfo(prev => ({ ...prev, password: e.target.value }));

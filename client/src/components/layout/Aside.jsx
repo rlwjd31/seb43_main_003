@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-function Aside({ title, categories }) {
-  const [isActive, setIsActive] = useState(0);
-
+function Aside({ title, categories, activeValue, onFilterClickHandler }) {
   const profileNavActiveStyle = ({ isActive }) =>
     `text-[14px] font-normal cursor-pointer ${isActive && 'text-activeBlue'}`;
 
-  const onActiveClickHandler = activeIndex => setIsActive(prev => activeIndex);
-
   return (
-    <div className="sticky top-44 mt-main-top w-[13rem] mr-[1rem]">
+    <div className="sticky top-44 mt-main-top w-[13rem] mr-[1rem] pb-28">
       <div className="w-[7.3rem] border-b-[3px] border-solid border-black3 font-bold text-xl text-black3 pb-[15px] mb-[2rem]">
         {title}
       </div>
@@ -28,8 +24,8 @@ function Aside({ title, categories }) {
               {!categories?.path && (
                 // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                 <div
-                  onClick={() => onActiveClickHandler(index)}
-                  className={profileNavActiveStyle({ isActive: index === isActive })}
+                  onClick={() => onFilterClickHandler(title)}
+                  className={profileNavActiveStyle({ isActive: title === activeValue })}
                 >
                   {title}
                 </div>
