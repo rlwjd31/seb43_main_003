@@ -2,8 +2,10 @@ package server.mainproject.auth.filter;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,6 +17,7 @@ import server.mainproject.member.entity.Member;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -41,15 +44,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
         return authenticationManager.authenticate(authenticationToken);
+
+
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws ServletException, IOException {
 
 
-
         Member member = (Member) authResult.getPrincipal();
-
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
 
@@ -57,12 +60,35 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String userName = member.getUserName();
 
         // Todo : response에 memberId 및 userName 추가! (login)
+
+        String Authorization = "Bearer_" + accessToken;
+        String refresh = "Bearer_" + refreshToken;
+
+        Cookie cookie1 = new Cookie("Authentication", Authorization);
+        Cookie cookie2 = new Cookie("Refresh", refresh);
+        Cookie cookie3 = new Cookie("memberId", String.valueOf(memberId));
+        Cookie cookie4 = new Cookie("userName", userName);
+
+        cookie1.setHttpOnly(true);
+        cookie2.setHttpOnly(true);
+        cookie3.setHttpOnly(true);
+        cookie4.setHttpOnly(true);
+//
+        response.addCookie(cookie1);
+        response.addCookie(cookie2);
+        response.addCookie(cookie3);
+        response.addCookie(cookie4);
+
+//        response.setHeader("Set-Cookie", "Refresh=" + refreshToken + "; HttpOnly");
+//        response.setHeader("Set-Cookie", "memberId=" + memberId + "; HttpOnly");
+//        response.setHeader("Set-Cookie", "userName=" + userName + "; HttpOnly");
+
         response.getWriter().write("{\"memberId\": " + memberId + "}");
         response.getWriter().write("{\"userName\": " + userName + "}");
 
-        response.setHeader("Authorization", "Bearer " + accessToken);
-        response.setHeader("Refresh", "Bearer " + refreshToken);
-        response.setHeader("access-token-expiration-minutes", String.valueOf(jwtTokenizer.getAccessTokenExpirationMinutes()));
+//        response.setHeader("Authorization", "Bearer_" + accessToken);
+//        response.setHeader("Refresh", "Bearer_" + refreshToken);
+//        response.setHeader("access-token-expiration-minutes", String.valueOf(jwtTokenizer.getAccessTokenExpirationMinutes()));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);  // 추가
     }

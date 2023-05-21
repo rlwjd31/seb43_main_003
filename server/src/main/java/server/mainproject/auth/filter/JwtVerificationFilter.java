@@ -19,11 +19,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-//@Order(Ordered.HIGHEST_PRECEDENCE)
-//@Component
 public class JwtVerificationFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;

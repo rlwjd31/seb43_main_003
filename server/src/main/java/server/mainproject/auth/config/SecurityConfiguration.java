@@ -49,12 +49,10 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         http
                 .headers().frameOptions().sameOrigin()
                 .and()
-//                .addFilterAfter(new CookieHttpOnlyFilter(), JwtVerificationFilter.class)
                 .csrf().disable()
                 .cors(httpSecurityCorsConfigurer -> corsConfigurationSource())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-//                .formLogin().permitAll()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .exceptionHandling()
@@ -88,11 +86,6 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .userInfoEndpoint() // 사용자가 로그인에 성공하였을 경우,
                 .userService(oAuth2Service); // 해당 서비스 로직을 타도록 설정
 
-//        http
-//                .headers().frameOptions().sameOrigin()
-//                .and()
-//                .addFilterAfter(new CookieHttpOnlyFilter(), JwtVerificationFilter.class);
-
         return http.build();
     }
 
@@ -104,7 +97,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:8080"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "PUT", "HEAD", "OPTIONS"));
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
@@ -129,23 +122,26 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtUtils(), authorityUtils);
 
+//            CookieHttpOnlyFilter cookieHttpOnlyFilter = new CookieHttpOnlyFilter(jwtVerificationFilter);
+
             builder.addFilter(jwtAuthenticationFilter).addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+
         }
     }
 
     // 쿠키를 생성하여 httpOnly 속성을 설정하는 필터
-
-    public class CookieHttpOnlyFilter extends OncePerRequestFilter {
-        @Override
-        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-            // 쿠키 생성 및 httpOnly 속성 설정
-            Cookie cookie = new Cookie("cookieName", "cookieValue");
-            cookie.setHttpOnly(true);
-            response.addCookie(cookie);
-
-            filterChain.doFilter(request, response);
-        }
-    }
+//@Order(2)
+//    public class CookieHttpOnlyFilter extends OncePerRequestFilter {
+//        @Override
+//        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+//            // 쿠키 생성 및 httpOnly 속성 설정
+//            Cookie cookie = new Cookie("cookieName", "cookieValue");
+//            cookie.setHttpOnly(true);
+//            response.addCookie(cookie);
+//
+//            filterChain.doFilter(request, response);
+//        }
+//    }
 
     @Bean
     public JwtUtils jwtUtils() {
