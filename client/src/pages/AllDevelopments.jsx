@@ -1,124 +1,3 @@
-// import { useEffect, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { Link } from 'react-router-dom';
-
-// import Aside from '../components/layout/Aside';
-// import Card from '../components/UI/Card';
-// import Item from '../components/Item';
-// import Button from '../components/UI/Button';
-// import Accordian from '../components/UI/Accordian';
-// import { fetchAllDevelopmentsAction } from '../store/developmentSlice';
-// import { ChevronDownIcon, PencilIcon } from '../components/Icons';
-
-// function AllDevelopments() {
-//   const [filterValue, setFilterValue] = useState({
-//     techStack: null,
-//     sorta: null,
-//     best: null,
-//   });
-//   const [sortaActive, setSortaActive] = useState('전체');
-//   const [accordianVisible, setAccordianVisible] = useState(false);
-//   const [accordianFilterValue, setAccordianFilterValue] = useState('최신순');
-//   const { allDevelopments } = useSelector(state => state.developments);
-//   const dispatch = useDispatch();
-
-//   const onSortaButtonClickHandler = e => setSortaActive(prev => e.target.value);
-
-//   const onAccordianFilterVisibleClickHandler = () => setAccordianVisible(prev => !prev);
-
-//   const onAccordianFilterValueClickHandler = filterValue => {
-//     setAccordianFilterValue(prev => filterValue);
-//     // accordian에서 필터 값을 클릭한다면 accordian접기
-//     setAccordianVisible(prev => false);
-//   };
-
-//   const activeStyle = 'bg-black3 text-white1';
-//   const notActiveStyle = 'bg-white1 text-black3';
-
-//   useEffect(() => {
-//     dispatch(fetchAllDevelopmentsAction());
-//   }, []);
-
-//   return (
-//     <>
-//       <section>
-//         <Aside
-//           title="Tech Stack"
-//           categories={{
-//             titles: [
-//               'all',
-//               'javascript',
-//               'typescript',
-//               'Authentication',
-//               'Webpack',
-//               'Css-in-js',
-//               'React',
-//               'Vue',
-//               'Angular',
-//               'Nextjs',
-//               'Database',
-//               'Network',
-//               'Algorithm',
-//             ],
-//           }}
-//         />
-//       </section>
-//       <section className="w-full pt-28">
-//         <div className="sticky top-36 flex flex-col pt-8 bg-gray1">
-//           <div className="relative flex justify-between">
-//             <div className="flex gap-2">
-//               {['전체', '글', '영상', '트렌드'].map((filterValue, index) => (
-//                 <Button
-//                   // eslint-disable-next-line react/no-array-index-key
-//                   key={index}
-//                   value={filterValue}
-//                   onClick={e => onSortaButtonClickHandler(e)}
-//                   className={`text-xs px-3 py-1 border-[1px] border-solid border-gray8 rounded-2xl ${
-//                     sortaActive === filterValue ? activeStyle : notActiveStyle
-//                   }`}
-//                 >
-//                   {filterValue}
-//                 </Button>
-//               ))}
-//             </div>
-//             <div className="absolute top-0 right-0 flex flex-col border-[1px] border-gray6 border-solid text-[0.625rem] cursor-pointer">
-//               <Button onClick={onAccordianFilterVisibleClickHandler}>
-//                 <span className="p-2">{accordianFilterValue}</span>{' '}
-//                 <ChevronDownIcon className="mr-2" />
-//               </Button>
-//               <Accordian
-//                 onClickHandler={onAccordianFilterValueClickHandler}
-//                 activeValue={accordianFilterValue}
-//                 itemList={['최신순', '인기순']}
-//                 className="border-t-[1px] p-2 border-gray6 border-solid"
-//                 activeColor="text-activeBlue"
-//                 visible={accordianVisible}
-//               />
-//             </div>
-//           </div>
-//           <h3 className="flex items-center text-[1.2rem] mt-5 border-b-[1px] border-solid border-gray4">
-//             <Link to="/developments/new" className="flex w-32 py-7 pr-4">
-//               <PencilIcon className="w-5 h-5 mr-3" />{' '}
-//               <span className="font-bold">글 쓰기</span>
-//             </Link>
-//           </h3>
-//         </div>
-//         <div className="w-full flex flex-col max-w-limit">
-//           <div className="w-full flex justify-between flex-wrap gap-6 py-8">
-//             {allDevelopments.data.map(info => (
-//               <Card key={info.postId} flexItemwidth="30%">
-//                 <Item {...info} />
-//               </Card>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-//     </>
-//   );
-// }
-
-// export default AllDevelopments;
-
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -130,6 +9,7 @@ import Button from '../components/UI/Button';
 import Accordian from '../components/UI/Accordian';
 import { fetchAllDevelopmentsAction } from '../store/developmentSlice';
 import { ChevronDownIcon, PencilIcon } from '../components/Icons';
+import Pagination from '../components/UI/Paginations';
 
 function AllDevelopments() {
   const { allDevelopments } = useSelector(state => state.developments);
@@ -140,23 +20,27 @@ function AllDevelopments() {
     best: '최신순',
   });
   const [accordianVisible, setAccordianVisible] = useState(false);
+  const [paginationValue, setPaginationValue] = useState(1);
 
   const onSortaButtonClickHandler = e =>
     setFilterValue(prev => ({ ...prev, sorta: e.target.value }));
 
   const onAccordianFilterVisibleClickHandler = () => setAccordianVisible(prev => !prev);
 
-  const onBestFilterClickHandler = filterValue => {
-    setFilterValue(prev => ({ ...prev, best: filterValue }));
+  const onBestFilterClickHandler = value => {
+    setFilterValue(prev => ({ ...prev, best: value }));
     // accordian에서 필터 값을 클릭한다면 accordian접기
-    setAccordianVisible(prev => false);
+    setAccordianVisible(false);
   };
+
+  const onPaginationButtonClickHandler = pageValue => setPaginationValue(pageValue);
 
   const activeStyle = 'bg-black3 text-white1';
   const notActiveStyle = 'bg-white1 text-black3';
 
   useEffect(() => {
     dispatch(fetchAllDevelopmentsAction());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filteredDevelopments = allDevelopments.data
@@ -173,6 +57,14 @@ function AllDevelopments() {
         : developmentInfo.sorta.toLowerCase() === filterValue.sorta.toLowerCase(),
     );
   // TODO: sort로직 구현해야 됨.
+
+  const paginationConfig = {
+    pagePerView: 12,
+    activeColor: 'text-activeBlue',
+    postTotalLength: filteredDevelopments.length,
+    paginationValue,
+    onPaginationButtonClickHandler,
+  };
 
   return (
     <>
@@ -244,12 +136,20 @@ function AllDevelopments() {
         </div>
         <div className="w-full flex flex-col max-w-limit">
           <div className="w-full flex justify-start flex-wrap gap-6 py-8">
-            {filteredDevelopments.map(info => (
-              <Card key={info.postId} flexItemwidth="30%">
-                <Item {...info} />
-              </Card>
-            ))}
+            {filteredDevelopments
+              .slice(
+                (paginationValue - 1) * paginationConfig.pagePerView,
+                paginationValue * paginationConfig.pagePerView,
+              )
+              .map(info => (
+                <Card key={info.postId} flexItemwidth="31%">
+                  <Item {...info} />
+                </Card>
+              ))}
           </div>
+        </div>
+        <div className="flex justify-center pt-4 pb-20">
+          <Pagination {...paginationConfig} />
         </div>
       </section>
     </>

@@ -7,6 +7,8 @@ import { ReactComponent as GoogleLogo } from '../assets/googleLogo.svg';
 import { ReactComponent as KakaoLogo } from '../assets/kakaoLogo.svg';
 import { ReactComponent as ChevronDown } from '../assets/chevron-down.svg';
 import { ReactComponent as Pencil } from '../assets/pencil.svg';
+import { ReactComponent as ChevronRight } from '../assets/chevron-right.svg';
+import { ReactComponent as ChevronLeft } from '../assets/chevron-left.svg';
 
 const validateClassName = className => {
   return typeof className === 'string' && className.length > 0 ? { className } : '';
@@ -22,6 +24,14 @@ export function PencilIcon({ className }) {
 
 export function ChevronDownIcon({ className }) {
   return <ChevronDown {...validateClassName(className)} />;
+}
+
+export function ChevronRightIcon({ className }) {
+  return <ChevronRight {...validateClassName(className)} />;
+}
+
+export function ChevronLeftIcon({ className }) {
+  return <ChevronLeft {...validateClassName(className)} />;
 }
 
 export function UserIcon({ className }) {
