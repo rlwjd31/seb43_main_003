@@ -8,24 +8,43 @@ function Pagination({
   paginationValue,
   onPaginationButtonClickHandler,
 }) {
-  return (
-    <div className="flex items-center gap-6">
-      <ChevronLeftIcon className="relative top-[1px] w-3 h-3" />
-      {Array(parseInt(postTotalLength / pagePerView, 10) + 1)
-        .fill(0)
-        .map((_, index) => (
-          <Button
-            onClick={() => onPaginationButtonClickHandler(index + 1)}
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
-            value={index + 1}
-            className={paginationValue === index + 1 ? activeColor : 'text-inherit'}
-          >
-            {index + 1}
-          </Button>
-        ))}
+  const numList = Array(parseInt(postTotalLength / pagePerView, 10) + 1)
+    .fill(0)
+    .map((_, index) => index + 1);
 
-      <ChevronRightIcon className="relative top-[1px] w-3 h-3" />
+  return (
+    <div className="flex items-center gap-5">
+      <Button
+        onClick={() => {
+          onPaginationButtonClickHandler(
+            paginationValue - 1 < numList[0] ? numList.at(-1) : paginationValue - 1,
+          );
+        }}
+        className="cursor-pointer"
+      >
+        <ChevronLeftIcon className="relative w-3 h-3 top-[2px]" />
+      </Button>
+      {numList.map(num => (
+        <Button
+          onClick={() => onPaginationButtonClickHandler(num)}
+          // eslint-disable-next-line react/no-array-index-key
+          key={num}
+          value={num + 1}
+          className={paginationValue === num ? activeColor : 'text-inherit'}
+        >
+          {num}
+        </Button>
+      ))}
+      <Button
+        onClick={() =>
+          onPaginationButtonClickHandler(
+            paginationValue + 1 > numList.at(-1) ? numList[0] : paginationValue + 1,
+          )
+        }
+        className="cursor-pointer"
+      >
+        <ChevronRightIcon className="relative w-3 h-3 top-[1px]" />
+      </Button>
     </div>
   );
 }
