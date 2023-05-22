@@ -4,11 +4,18 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      margin: {
+        'main-top': '96px',
+      },
+      padding: {
+        'main-top': '96px',
+      },
       colors: {
         white1: '#FBF9F8',
         black1: '#OAOAOA',
         black2: '#111111',
         black3: '#222222',
+        black4: '#4B4B4B',
         gray1: '#ECE9E7',
         gray2: '#DADADA',
         gray3: '#DCD9D6',
@@ -20,6 +27,7 @@ export default {
         gray9: '#7A7A7A',
         gray10: '#858585',
         gray11: '#717171',
+        gray12: '#C6C6C6',
         activeBlue: '#0045F6',
         kakaoYellow: '#FDDC3F',
       },
@@ -60,6 +68,20 @@ export default {
         'fadeIn-right': 'fadeIn-right 1s ease-in-out',
       },
     },
+  },
+  plugins: [],
+};
+
+module.exports = {
+  ...module.exports,
+  mode: 'jit',
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  darkMode: false,
+  theme: {
+    extend: {},
+  },
+  variants: {
+    extend: {},
   },
   plugins: [],
 };

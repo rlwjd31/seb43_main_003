@@ -1,7 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { fetchPopularDevelopments, fetchRealTimeDevelopments } from '../api/developInfos';
+import {
+  fetchPopularDevelopments,
+  fetchRealTimeDevelopments,
+  fetchAllDevelopments,
+} from '../api/development';
 
 const initialState = {
   status: 'loading',
@@ -13,20 +17,26 @@ const initialState = {
     status: 'loading',
     data: [],
   },
-  allDevelopments: [],
+  allDevelopments: {
+    status: 'loading',
+    data: [],
+  },
   error: null,
 };
 
 export const fetchPopularDevelopmentsAction = createAsyncThunk(
   'fetchPopularDevelopments',
-  async (something, rejectWithValue) =>
-    fetchPopularDevelopments(something, rejectWithValue),
+  async (_, rejectWithValue) => fetchPopularDevelopments(_, rejectWithValue),
 );
 
 export const fetchRealTimeDevelopmentsAction = createAsyncThunk(
   'fetchRealTimeDevelopments',
-  async (something, rejectWithValue) =>
-    fetchRealTimeDevelopments(something, rejectWithValue),
+  async (_, rejectWithValue) => fetchRealTimeDevelopments(_, rejectWithValue),
+);
+
+export const fetchAllDevelopmentsAction = createAsyncThunk(
+  'fetchAllDevelopments',
+  async (_, rejectWithValue) => fetchAllDevelopments(_, rejectWithValue),
 );
 
 const developmentsSlice = createSlice({
@@ -52,6 +62,16 @@ const developmentsSlice = createSlice({
     });
     builder.addCase(fetchRealTimeDevelopmentsAction.rejected, (state, action) => {
       state.realTimeRanking.status = 'failed';
+    });
+    builder.addCase(fetchAllDevelopmentsAction.pending, (state, action) => {
+      state.allDevelopments.status = 'loading';
+    });
+    builder.addCase(fetchAllDevelopmentsAction.fulfilled, (state, action) => {
+      state.allDevelopments.status = 'success';
+      state.allDevelopments.data = action.payload.allDevelopments;
+    });
+    builder.addCase(fetchAllDevelopmentsAction.rejected, (state, action) => {
+      state.allDevelopments.status = 'failed';
     });
   },
 });
