@@ -6,6 +6,7 @@ import server.mainproject.auth.jwt.JwtTokenizer;
 import server.mainproject.exception.BusinessLogicException;
 import server.mainproject.exception.ExceptionCode;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ public class JwtUtils {
     public Map<String, Object> getJwsClaimsFromRequest(HttpServletRequest request) {
 
         String jws = request.getHeader("Authorization").replace("Bearer_", "");
+//        String jws = request.getHeader("Cookie").replace("Authentication=Bearer", "");
 //        Cookie[] cookies = request.getCookies();
 //        String accessToken = null;
 //
@@ -32,7 +34,7 @@ public class JwtUtils {
 //                }
 //            }
 //        }
-
+//
 //        accessToken = accessToken.replace("Bearer_", "");
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
         try {

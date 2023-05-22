@@ -2,10 +2,12 @@ package server.mainproject.auth.filter;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
+import org.springframework.jdbc.support.incrementer.HsqlMaxValueIncrementer;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -64,27 +66,51 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String Authorization = "Bearer_" + accessToken;
         String refresh = "Bearer_" + refreshToken;
 
-        Cookie cookie1 = new Cookie("Authentication", Authorization);
+        Cookie cookie1 = new Cookie("Authorization", Authorization);
         Cookie cookie2 = new Cookie("Refresh", refresh);
         Cookie cookie3 = new Cookie("memberId", String.valueOf(memberId));
-        Cookie cookie4 = new Cookie("userName", userName);
+//        Cookie cookie4 = new Cookie("userName", userName);
 
         cookie1.setHttpOnly(true);
         cookie2.setHttpOnly(true);
         cookie3.setHttpOnly(true);
-        cookie4.setHttpOnly(true);
+//        cookie4.setHttpOnly(true);
+
+        cookie1.setPath("/");
+        cookie2.setPath("/");
+        cookie3.setPath("/");
+//        cookie4.setPath("/");
+
+        cookie1.setMaxAge(3600);
+        cookie2.setMaxAge(3600);
+        cookie3.setMaxAge(3600);
+//        cookie4.setMaxAge(3600);
+
+        cookie1.setDomain("localhost");
+        cookie1.setDomain("mainmay.s3-website.ap-northeast-2.amazonaws.com");
+        cookie2.setDomain("localhost");
+        cookie2.setDomain("mainmay.s3-website.ap-northeast-2.amazonaws.com");
+        cookie3.setDomain("localhost");
+        cookie3.setDomain("mainmay.s3-website.ap-northeast-2.amazonaws.com");
+
 //
         response.addCookie(cookie1);
         response.addCookie(cookie2);
         response.addCookie(cookie3);
-        response.addCookie(cookie4);
+//        response.addCookie(cookie4);
 
-//        response.setHeader("Set-Cookie", "Refresh=" + refreshToken + "; HttpOnly");
-//        response.setHeader("Set-Cookie", "memberId=" + memberId + "; HttpOnly");
-//        response.setHeader("Set-Cookie", "userName=" + userName + "; HttpOnly");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("memberId", memberId);
+        jsonObject.put("userName", userName);
 
-        response.getWriter().write("{\"memberId\": " + memberId + "}");
-        response.getWriter().write("{\"userName\": " + userName + "}");
+        // 응답 헤더 설정
+        response.setContentType("application/json");
+
+        // 응답 데이터 전송
+        response.getWriter().write(jsonObject.toString());
+
+//        response.getWriter().write("{\"memberId\": " + memberId + "}");
+//        response.getWriter().write("{\"userName\": " + userName + "}");
 
 //        response.setHeader("Authorization", "Bearer_" + accessToken);
 //        response.setHeader("Refresh", "Bearer_" + refreshToken);
@@ -120,4 +146,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         return refreshToken;
     }
+
+
 }
