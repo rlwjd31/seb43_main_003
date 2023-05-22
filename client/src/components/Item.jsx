@@ -2,18 +2,20 @@ import { Link } from 'react-router-dom';
 
 import { StarIcon, UnionIcon } from './Icons';
 
-function Item({
-  postId,
-  title,
-  sourceMedia,
-  thumbnailImage,
-  starAvg,
-  recommends,
-  author,
-  sorta,
-  sourceURL,
-  tags,
-}) {
+function Item(props) {
+  const {
+    postId,
+    title,
+    sourceMedia,
+    thumbnailImage,
+    starAvg,
+    recommends,
+    author,
+    sorta,
+    sourceURL,
+    tags,
+  } = props;
+
   return (
     <Link to={sourceURL}>
       <div className="w-full h-[12rem] flex justify-center items-center bg-yellow-100">
@@ -46,7 +48,9 @@ function Item({
             </div>
             <div className="flex item-center">
               <UnionIcon className="mr-[9px] mb-[3px]" />
-              <p className="text-[12px] text-gray4 mt-[2px]">{recommends}</p>
+              <p className="text-[12px] text-gray4 mt-[2px]">
+                {recommends >= 0 ? recommends : props.recommend}
+              </p>
             </div>
           </div>
         </div>

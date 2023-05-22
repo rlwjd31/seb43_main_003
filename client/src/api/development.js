@@ -40,7 +40,6 @@ export const fetchRealTimeDevelopments = async (something, rejectWithValue) => {
 export const fetchAllDevelopments = async (_, rejectWithValue) => {
   try {
     const response = await axios.get(allDevelopmentEndpoint);
-    console.log(response.data);
     if (response.status >= 200 && response.status < 300) {
       return { allDevelopments: response.data.data };
     }

@@ -8,7 +8,6 @@ function Pagination({
   paginationValue,
   onPaginationButtonClickHandler,
 }) {
-  console.log(pagePerView, activeColor, postTotalLength, paginationValue);
   return (
     <div className="flex items-center gap-6">
       <ChevronLeftIcon className="relative top-[1px] w-3 h-3" />
