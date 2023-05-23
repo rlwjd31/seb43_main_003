@@ -59,7 +59,8 @@ public interface MemberMapper {
         String sourceMedia;
         String sorta;
         String thumbnailImage = null;
-        List<Post_TagResponseDto> postTags = null;
+//        List<Post_TagResponseDto> postTags = null;
+        List<String> postTags = null;
         List<CommentDto.ResponseComment> comments = null;
         LocalDateTime createdAt;
         LocalDateTime modifiedAt;
@@ -89,20 +90,34 @@ public interface MemberMapper {
     }
 
 
-    //Todo : PostTag 수동 매핑
-    default List<Post_TagResponseDto> postTagDtoResponse (List<Post_Tag> postTags) {
-        List<Post_TagResponseDto> result = new ArrayList<>();
+    //Todo : PostTag 수동 매핑 (수정중)
+
+    default List<String> postTagDtoResponse (List<Post_Tag> postTags) {
+//        List<Post_TagResponseDto> result = new ArrayList<>();
         List<String> tagName = postTags.stream().map(tag -> tag.getTag().getName())
                 .collect(Collectors.toList());
 
-        result.add(Post_TagResponseDto
-                .builder()
-                .tags(tagName)
-                .build());
 
-        return result;
+        return tagName;
 
     }
+
+//    default List<Post_TagResponseDto> postTagDtoResponse (Set<Post_Tag> postTags) {
+//        List<Post_TagResponseDto> result = new ArrayList<>();
+//        List<String> tagName = postTags.stream().map(tag -> tag.getTag().getName())
+//                .collect(Collectors.toList());
+//
+//        result.add(Post_TagResponseDto
+//                .builder()
+//                .tags(tagName)
+//                .build());
+//
+//        return result;
+//
+//    }
+
+
+
 
     //Todo : Recommend 수동 매핑
     default List<RecommendResponseDto> getRecommendResponseDtos(List<Recommend> recommends) {
