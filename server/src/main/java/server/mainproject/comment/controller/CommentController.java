@@ -34,6 +34,7 @@ public class CommentController {
 
     @PostMapping("comments")  // 생성
     public ResponseEntity postComment(@Valid @RequestBody CommentDto.PostComment post) {
+
         Comment comment = mapper.postToComment(post);
 
         Comment response = service.createComment(comment);

@@ -21,7 +21,8 @@ public class RecommendResponseDto {
     private Double starAvg;
     private int recommend;
     private AuthorResponseDto author;
-    private List<Post_TagResponseDto> postTags;
+//    private List<Post_TagResponseDto> postTags;
+    private List<String> postTags;
     private List<CommentDto.ResponseComment> comments;
 
 }

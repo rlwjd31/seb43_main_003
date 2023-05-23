@@ -3,8 +3,11 @@ package server.mainproject.post.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import server.mainproject.member.entity.Member;
+import server.mainproject.member.repository.MemberRepository;
 import server.mainproject.post.dto.DevPostDto;
 import server.mainproject.post.dto.DevPostMainResponse;
 import server.mainproject.post.dto.DevPostPatchDto;
@@ -33,9 +36,13 @@ public class DevPostController {
     private final DevPostService service;
     private final DevPostMapper mapper;
     private final DevPostRepository repository;
+    private final MemberRepository memberRepository;
 
     @PostMapping
     public ResponseEntity postPost(@RequestBody @Valid DevPostDto.Post post) {
+
+        Member member = new Member();
+
 
         DevPost create = service.savePost(post);
         URI uri = URICreator.createUri("/post", create.getPostId());
@@ -43,11 +50,13 @@ public class DevPostController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PatchMapping("/{post-id}/edit/{member-id}")    // todo : security 적용 후 memberId 는 제거
+    @PatchMapping("/{post-id}/edit")    // todo : security 적용 후 memberId 는 제거
     public ResponseEntity patchPost(@PathVariable("post-id") @Positive long postId,
-                                    @PathVariable("member-id") @Positive long memberId,
                                     @RequestBody @Valid DevPostPatchDto patch) {
-        patch.setMemberId(memberId);
+
+//        String loginEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        long memberId = memberRepository.findByEmail(loginEmail).get().getMemberId();
+//        patch.setMemberId(memberId);
 
         return new ResponseEntity(new SingleResponse<>(mapper.EntityToResponse(service.updatePost(patch, postId))), HttpStatus.OK);
     }
@@ -101,8 +110,10 @@ public class DevPostController {
     @DeleteMapping("/{post-id}/{member-id}") // todo : security 적용 후 member-id 는 제거
     public ResponseEntity deletePost (@PathVariable("post-id") @Positive long postId,
                                       @PathVariable("member-id") @Positive long memberId) {
-
-        service.deletePost(postId, memberId);
+//        String loginEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        long memberId = memberRepository.findByEmail(loginEmail).get().getMemberId();
+//        service.deletePost(postId, memberId);
+        service.deletePost(postId,memberId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -110,7 +121,10 @@ public class DevPostController {
     public ResponseEntity recommendsPost(@PathVariable("post-id") @Positive long postId,
                                          @PathVariable("member-id") @Positive long memberId) {
 
-        Recommend create = service.saveRecommend(postId, memberId);
+//        String loginEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        long memberId = memberRepository.findByEmail(loginEmail).get().getMemberId();
+
+        service.saveRecommend(postId, memberId);
 
         return ResponseEntity.ok().build();
     }
@@ -119,7 +133,11 @@ public class DevPostController {
     public ResponseEntity unRecommendsPost(@PathVariable("post-id") @Positive long postId,
                                            @PathVariable("member-id") @Positive long memberId) {
 
-        service.unRecommendPost(postId, memberId);
+//        String loginEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        long memberId = memberRepository.findByEmail(loginEmail).get().getMemberId();
+
+//        service.unRecommendPost(postId, memberId);
+        service.unRecommendPost(postId,memberId);
         return ResponseEntity.ok().build();
     }
 

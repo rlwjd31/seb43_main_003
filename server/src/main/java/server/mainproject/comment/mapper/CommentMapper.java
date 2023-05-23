@@ -53,11 +53,11 @@ public interface CommentMapper {
 
     default AuthorResponseDto authorDtoResponse (Comment comment) {
 
-
         AuthorResponseDto auth = AuthorResponseDto
                 .builder()
-//                .memberId(comment.getMember().getMemberId())
                 .name(comment.getMember().getUserName())
+                .profileBgColor(comment.getMember().getProfileBgColor())
+                .star(comment.getStar())
                 .build();
 
 

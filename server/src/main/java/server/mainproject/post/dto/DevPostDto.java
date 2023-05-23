@@ -74,7 +74,7 @@ public class DevPostDto {
         private String sourceMedia;
         private String sorta;
         private AuthorResponseDto author;
-        private List<Post_TagResponseDto> tags;
+        private List<String> tags;
         private List<CommentDto.ResponseComment> comments;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

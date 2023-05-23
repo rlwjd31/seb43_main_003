@@ -1,5 +1,6 @@
 package server.mainproject.comment.service;
 
+import org.aspectj.weaver.Member;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +8,7 @@ import server.mainproject.comment.entity.Comment;
 import server.mainproject.comment.repository.CommentRepository;
 import server.mainproject.exception.BusinessLogicException;
 import server.mainproject.exception.ExceptionCode;
+import server.mainproject.member.service.MemberService;
 import server.mainproject.post.service.DevPostService;
 
 import java.text.DecimalFormat;
@@ -19,15 +21,19 @@ import java.util.Optional;
 public class CommentService {
     private CommentRepository commentRepository;
     private final DevPostService devPostService;
+    private final MemberService memberService;
 
 
-    public CommentService(CommentRepository commentRepository, DevPostService devPostService) {
+    public CommentService(CommentRepository commentRepository, DevPostService devPostService, MemberService memberService) {
         this.commentRepository = commentRepository;
         this.devPostService = devPostService;
+        this.memberService = memberService;
     }
 
     public Comment createComment(Comment comment) {  // 생성
+//        long memberId = memberService.getLoginMemberId();
         DecimalFormat df = new DecimalFormat("#.##");
+//        comment.getMember().setMemberId(memberId);
         Comment savedComment = commentRepository.save(comment);
         List<Comment> comments = commentRepository.findAll();
         devPostService.postCommentReviewAvg(comments,df);
@@ -35,7 +41,7 @@ public class CommentService {
     }
 
 
-        public Comment updateComment(Comment comment) {  // 댓글과 별점 수정
+    public Comment updateComment(Comment comment) {  // 댓글과 별점 수정
         Comment findComment = findVerifiedComment(comment.getCommentId());
 
         Optional.ofNullable(comment.getComment())

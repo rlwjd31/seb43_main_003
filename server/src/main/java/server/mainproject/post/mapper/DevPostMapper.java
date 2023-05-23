@@ -41,35 +41,49 @@ public interface DevPostMapper {
         return comments
                 .stream()
                 .map(comment -> {
-                    CommentDto.ResponseComment response = new CommentDto.ResponseComment();
-                    response.setStatus("success");
-                    response.setPostId(comment.getPostId());
-                    response.setCommentId(comment.getCommentId());
-                    response.setComment(comment.getComment());
-                    response.setAuthor(
-                            AuthorResponseDto.builder()
-                                    .name(comment.getUserName()).star(comment.getStar())
-                                    .build());
-                    response.setStar(comment.getStar());
-                    response.setCreatedAt(comment.getCreatedAt());
-                    response.setModifiedAt(comment.getModifiedAt());
-                    return response;
-                }
+                            CommentDto.ResponseComment response = new CommentDto.ResponseComment();
+                            response.setStatus("success");
+                            response.setPostId(comment.getPostId());
+                            response.setCommentId(comment.getCommentId());
+                            response.setComment(comment.getComment());
+                            response.setAuthor(
+                                    AuthorResponseDto.builder()
+                                            .name(comment.getUserName()).star(comment.getStar())
+                                            .profileBgColor(comment.getMember().getProfileBgColor())
+                                            .build());
+                            response.setStar(comment.getStar());
+                            response.setCreatedAt(comment.getCreatedAt());
+                            response.setModifiedAt(comment.getModifiedAt());
+                            return response;
+                        }
                 ).collect(Collectors.toList());
     }
-    default List<Post_TagResponseDto> postTagDtoResponse (List<Post_Tag> postTags) {
-        List<Post_TagResponseDto> result = new ArrayList<>();
+
+    //Todo: 수정중!!
+
+    default List<String> postTagDtoResponse (List<Post_Tag> postTags) {
         List<String> tagName = postTags.stream().map(tag -> tag.getTag().getName())
                 .collect(Collectors.toList());
 
-        result.add(Post_TagResponseDto
-                .builder()
-                .tags(tagName)
-                .build());
-
-        return result;
-
+        return tagName;
     }
+
+//    default List<Post_TagResponseDto> postTagDtoResponse (Set<Post_Tag> postTags) {
+//        List<Post_TagResponseDto> result = new ArrayList<>();
+//        List<String> tagName = postTags.stream().map(tag -> tag.getTag().getName())
+//                .collect(Collectors.toList());
+//
+//        result.add(Post_TagResponseDto
+//                .builder()
+//                .tags(tagName)
+//                .build());
+//
+//        return result;
+//
+//    }
+
+
+
 
     default AuthorResponseDto postMemberDtoResponse (DevPost devPost) {
 
@@ -82,13 +96,13 @@ public interface DevPostMapper {
         return ar;
     }
 
-        default AuthorResponseDto mainPageMemberResponse (DevPost post) {
+    default AuthorResponseDto mainPageMemberResponse (DevPost post) {
 
 
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
                 .name(post.getMember().getUserName())
-                .profileBgColor("")
+                .profileBgColor(post.getMember().getProfileBgColor())
                 .star(post.getStar())
                 .build();
 
