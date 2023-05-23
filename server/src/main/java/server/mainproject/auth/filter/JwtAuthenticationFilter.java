@@ -71,9 +71,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Cookie cookie3 = new Cookie("memberId", String.valueOf(memberId));
 //        Cookie cookie4 = new Cookie("userName", userName);
 
-        cookie1.setHttpOnly(true);
-        cookie2.setHttpOnly(true);
-        cookie3.setHttpOnly(true);
+//        cookie1.setHttpOnly(true);
+//        cookie2.setHttpOnly(true);
+//        cookie3.setHttpOnly(true);
 //        cookie4.setHttpOnly(true);
 
         cookie1.setPath("/");
@@ -81,16 +81,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         cookie3.setPath("/");
 //        cookie4.setPath("/");
 
-        cookie1.setMaxAge(3600);
-        cookie2.setMaxAge(3600);
-        cookie3.setMaxAge(3600);
+//        cookie1.setMaxAge(3600);
+//        cookie2.setMaxAge(3600);
+//        cookie3.setMaxAge(3600);
 //        cookie4.setMaxAge(3600);
 
-        cookie1.setDomain("localhost");
+//        cookie1.setDomain("localhost");
         cookie1.setDomain("http://mainmay.s3-website.ap-northeast-2.amazonaws.com");
-        cookie2.setDomain("localhost");
+//        cookie2.setDomain("localhost");
         cookie2.setDomain("http://mainmay.s3-website.ap-northeast-2.amazonaws.com");
-        cookie3.setDomain("localhost");
+//        cookie3.setDomain("localhost");
         cookie3.setDomain("http://mainmay.s3-website.ap-northeast-2.amazonaws.com");
 
 //
