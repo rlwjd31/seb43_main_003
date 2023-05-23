@@ -66,7 +66,7 @@ public class DevPost extends Auditable {
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<Post_Tag> postTags = new HashSet<>();
+    private List<Post_Tag> postTags = new ArrayList<>();
 
     @Builder
     public DevPost (String title, String content, String name, String sourceURL,

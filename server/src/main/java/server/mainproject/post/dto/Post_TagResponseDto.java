@@ -2,7 +2,6 @@ package server.mainproject.post.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import server.mainproject.tag.Tag;
 
 import java.util.List;
 

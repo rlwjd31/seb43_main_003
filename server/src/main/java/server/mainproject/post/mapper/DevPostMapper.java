@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public interface DevPostMapper {
 
     default DevPostDto.Response EntityToResponse (DevPost post) {
-        Set<Post_Tag> postTags = post.getPostTags();
+        List<Post_Tag> postTags = post.getPostTags();
 
         DevPostDto.Response response = new DevPostDto.Response(
                 "success",
@@ -57,7 +57,7 @@ public interface DevPostMapper {
                 }
                 ).collect(Collectors.toList());
     }
-    default List<Post_TagResponseDto> postTagDtoResponse (Set<Post_Tag> postTags) {
+    default List<Post_TagResponseDto> postTagDtoResponse (List<Post_Tag> postTags) {
         List<Post_TagResponseDto> result = new ArrayList<>();
         List<String> tagName = postTags.stream().map(tag -> tag.getTag().getName())
                 .collect(Collectors.toList());
@@ -113,7 +113,7 @@ public interface DevPostMapper {
         if ( devPost == null ) {
             return null;
         }
-        Set<Post_Tag> postTags = devPost.getPostTags();
+        List<Post_Tag> postTags = devPost.getPostTags();
 
 
         Long postId = null;

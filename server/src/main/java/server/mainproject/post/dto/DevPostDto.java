@@ -17,7 +17,7 @@ import java.util.List;
 
 @Getter
 public class DevPostDto {
-    @Getter
+    @Getter @Setter
     public static class Post {
         private Long memberId;
 

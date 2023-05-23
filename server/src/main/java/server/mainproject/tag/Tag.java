@@ -15,7 +15,7 @@ public class Tag {
     @Column @Setter
     private String name;
 
-    @OneToMany(mappedBy = "tag")
-    private Set<Post_Tag> postTags = new HashSet<>();
+    @OneToMany(mappedBy = "tag", orphanRemoval = true)
+    private List<Post_Tag> postTags = new ArrayList<>();
 
 }

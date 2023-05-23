@@ -90,7 +90,7 @@ public interface MemberMapper {
 
 
     //Todo : PostTag 수동 매핑
-    default List<Post_TagResponseDto> postTagDtoResponse (Set<Post_Tag> postTags) {
+    default List<Post_TagResponseDto> postTagDtoResponse (List<Post_Tag> postTags) {
         List<Post_TagResponseDto> result = new ArrayList<>();
         List<String> tagName = postTags.stream().map(tag -> tag.getTag().getName())
                 .collect(Collectors.toList());
