@@ -12,7 +12,6 @@ import server.mainproject.tag.Post_Tag;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
@@ -82,28 +81,13 @@ public interface DevPostMapper {
 //
 //    }
 
-
-
-
     default AuthorResponseDto postMemberDtoResponse (DevPost devPost) {
-
 
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
                 .name(devPost.getMember().getUserName())
-                .build();
-
-        return ar;
-    }
-
-    default AuthorResponseDto mainPageMemberResponse (DevPost post) {
-
-
-        AuthorResponseDto ar = AuthorResponseDto
-                .builder()
-                .name(post.getMember().getUserName())
-                .profileBgColor(post.getMember().getProfileBgColor())
-                .star(post.getStar())
+                .profileBgColor(devPost.getMember().getProfileBgColor())
+                .star(devPost.getStar())
                 .build();
 
         return ar;
@@ -129,7 +113,6 @@ public interface DevPostMapper {
         }
         List<Post_Tag> postTags = devPost.getPostTags();
 
-
         Long postId = null;
         String title = null;
         String sourceURL = null;
@@ -150,8 +133,13 @@ public interface DevPostMapper {
         thumbnailImage = devPost.getThumbnailImage();
         sorta = devPost.getSorta();
 
-        DevPostMainResponse devPostMainResponse = new DevPostMainResponse( postId, title, sourceURL, star, starAvg, recommend, sourceMedia,
-                mainPageMemberResponse(devPost), postTagDtoResponse(postTags), thumbnailImage, sorta );
+        DevPostMainResponse devPostMainResponse = new DevPostMainResponse(
+                postId,
+                title,
+                sourceURL,
+                star,
+                starAvg, recommend, sourceMedia, postMemberDtoResponse(devPost),
+                postTagDtoResponse(postTags), thumbnailImage, sorta );
 
         return devPostMainResponse;
     }

@@ -43,7 +43,6 @@ public class DevPostController {
 
         Member member = new Member();
 
-
         DevPost create = service.savePost(post);
         URI uri = URICreator.createUri("/post", create.getPostId());
 
@@ -58,7 +57,8 @@ public class DevPostController {
 //        long memberId = memberRepository.findByEmail(loginEmail).get().getMemberId();
 //        patch.setMemberId(memberId);
 
-        return new ResponseEntity(new SingleResponse<>(mapper.EntityToResponse(service.updatePost(patch, postId))), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponse<>
+                (mapper.EntityToResponse(service.updatePost(patch, postId))), HttpStatus.OK);
     }
 
     @GetMapping
@@ -106,7 +106,6 @@ public class DevPostController {
         return new ResponseEntity<>(new SingleResponse<>(mapper.mainPageResponse(response)), HttpStatus.OK);
     }
 
-
     @DeleteMapping("/{post-id}/{member-id}") // todo : security 적용 후 member-id 는 제거
     public ResponseEntity deletePost (@PathVariable("post-id") @Positive long postId,
                                       @PathVariable("member-id") @Positive long memberId) {
@@ -140,5 +139,4 @@ public class DevPostController {
         service.unRecommendPost(postId,memberId);
         return ResponseEntity.ok().build();
     }
-
 }

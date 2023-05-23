@@ -152,7 +152,7 @@ public class DevPostService {
                 .average()
                 .orElse(0.0);
 
-        DecimalFormat df = new DecimalFormat("#.#");
+        DecimalFormat df = new DecimalFormat("#.##");
         String formattedReview = df.format(answersReview);
         double roundedReview = Double.parseDouble(formattedReview);
 
@@ -182,7 +182,6 @@ public class DevPostService {
         DecimalFormat df = new DecimalFormat("#.##");
 
         postAnswerReviewAvg(posts, df);
-
 
         return posts;
     }
