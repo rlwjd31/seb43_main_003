@@ -71,9 +71,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Cookie cookie3 = new Cookie("memberId", String.valueOf(memberId));
 //        Cookie cookie4 = new Cookie("userName", userName);
 
-//        cookie1.setHttpOnly(true);
-//        cookie2.setHttpOnly(true);
-//        cookie3.setHttpOnly(true);
+        cookie1.setHttpOnly(true);
+        cookie2.setHttpOnly(true);
+        cookie3.setHttpOnly(true);
 //        cookie4.setHttpOnly(true);
 
         cookie1.setPath("/");
@@ -102,6 +102,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("memberId", memberId);
         jsonObject.put("userName", userName);
+        jsonObject.put("accessToken", Authorization);
+        jsonObject.put("refreshToken", refresh);
+
 
         // 응답 헤더 설정
         response.setContentType("application/json");

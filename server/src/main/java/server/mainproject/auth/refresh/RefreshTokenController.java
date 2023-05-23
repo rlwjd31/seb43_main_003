@@ -30,7 +30,7 @@ public class RefreshTokenController {
     @PostMapping("/refresh")
     public ResponseEntity<String> refreshAccessToken(HttpServletRequest request) {
         String refreshTokenHeader = request.getHeader("Refresh");
-        if (refreshTokenHeader != null && refreshTokenHeader.startsWith("Bearer ")) {
+        if (refreshTokenHeader != null && refreshTokenHeader.startsWith("Bearer_")) {
             String refreshToken = refreshTokenHeader.substring(7);
             try {
                 Jws<Claims> claims = jwtTokenizer.getClaims(refreshToken, jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey()));
@@ -42,7 +42,7 @@ public class RefreshTokenController {
                     Member member = optionalMember.get();
                     String accessToken = delegateAccessToken(member);
 
-                    return ResponseEntity.ok().header("Authorization", "Bearer " + accessToken).body("Access token refreshed");
+                    return ResponseEntity.ok().header("Authorization", "Bearer_" + accessToken).body("Access token refreshed");
                 } else {
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid member email");
                 }
