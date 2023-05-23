@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import developInfos from './developInfos';
+import developmentsSlice from './developmentSlice';
 
 const store = configureStore({
   reducer: {
-    developInfos: developInfos.reducer,
+    developments: developmentsSlice.reducer,
   },
 });
 
