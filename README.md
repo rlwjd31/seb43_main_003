@@ -9,6 +9,12 @@
 ## Team
 ### 🌅 Front-end
 
+|Frontend (팀장)|Frontend|Frontend|
+| :---: | :---: | :---: |
+| <img src="./image/kijung.png" width=150px alt="기정"/> | <img src="./image/yuha.jpeg" width=150px alt="유하"/> | <img src="./image/yunsu.png" width=150px alt="윤수"/> |
+|[박기정](https://github.com/rlwjd31)|[노유하](https://github.com/yuhallo)|[홍윤수](https://github.com/Yunsu0928)|
+
+
 <br/>
 
 ### 🌅 Back-end
