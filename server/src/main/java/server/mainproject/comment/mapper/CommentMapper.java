@@ -56,10 +56,9 @@ public interface CommentMapper {
         AuthorResponseDto auth = AuthorResponseDto
                 .builder()
                 .name(comment.getMember().getUserName())
-                .profileBgColor(comment.getMember().getProfileBgColor())
+                .profileImgNum(comment.getMember().getProfileImgNum())
                 .star(comment.getStar())
                 .build();
-
 
         return auth;
     }

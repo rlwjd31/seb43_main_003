@@ -48,7 +48,7 @@ public interface DevPostMapper {
                             response.setAuthor(
                                     AuthorResponseDto.builder()
                                             .name(comment.getUserName()).star(comment.getStar())
-                                            .profileBgColor(comment.getMember().getProfileBgColor())
+                                            .profileImgNum(comment.getMember().getProfileImgNum())
                                             .build());
                             response.setStar(comment.getStar());
                             response.setCreatedAt(comment.getCreatedAt());
@@ -86,7 +86,7 @@ public interface DevPostMapper {
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
                 .name(devPost.getMember().getUserName())
-                .profileBgColor(devPost.getMember().getProfileBgColor())
+                .profileImgNum(devPost.getMember().getProfileImgNum())
                 .star(devPost.getStar())
                 .build();
 
