@@ -47,7 +47,8 @@ public class MemberService {
 //            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
 //        }
 
-        Member findMember = memberRepository.findByMemberId(loginMemberId);
+//        Member findMember = memberRepository.findByMemberId(loginMemberId);
+        Member findMember = memberRepository.findByMemberId(member.getMemberId());
 
         Optional.ofNullable(member.getUserName())
                 .ifPresent(findMember::setUserName);
@@ -71,7 +72,8 @@ public class MemberService {
 //            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
 //        }
 
-        Member findMember = memberRepository.findByMemberId(loginMemberId);
+//        Member findMember = memberRepository.findByMemberId(loginMemberId);
+        Member findMember = memberRepository.findByMemberId(memberId);
 
         return findMember;
 
