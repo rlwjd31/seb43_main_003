@@ -183,9 +183,8 @@ public interface MemberMapper {
 
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
-//                .memberId(devPost.getMember().getMemberId())
                 .name(devPost.getMember().getUserName())
-                .profileBgColor(devPost.getMember().getProfileBgColor())
+                .profileImgNum(devPost.getMember().getProfileImgNum())
                 .build();
 
         return ar;
@@ -196,9 +195,8 @@ public interface MemberMapper {
 
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
-//                .memberId(comment.getMember().getMemberId())
                 .name(comment.getMember().getUserName())
-                .profileBgColor(comment.getMember().getProfileBgColor())
+                .profileImgNum(comment.getMember().getProfileImgNum())
                 .build();
 
 

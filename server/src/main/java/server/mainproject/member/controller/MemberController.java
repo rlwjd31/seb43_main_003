@@ -5,9 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import server.mainproject.exception.BusinessLogicException;
 import server.mainproject.exception.ExceptionCode;
 import server.mainproject.member.dto.MemberDto;
 import server.mainproject.member.entity.Member;
@@ -50,7 +53,7 @@ public class MemberController {
 
         Member createdMember = memberService.createMember(member);
 
-        URI uri = URICreator.createUri("/post", createdMember.getMemberId());
+        URI uri = URICreator.createUri("/members", createdMember.getMemberId());
 
         return ResponseEntity.created(uri).build();
     }
@@ -60,8 +63,11 @@ public class MemberController {
     public ResponseEntity patchMember(@Valid @RequestBody MemberDto.Patch requestBody,
                                       @PathVariable("member-id") Long memberId) {
 
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String currentUserName = authentication.getPrincipal().toString()
+//        long loginMemberId = getLoginMemberId();
+//        if (loginMemberId != memberId) {
+//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
+//        }
+
         Member member = mapper.memberPatchDtoToMember(requestBody);
         member.setMemberId(memberId);
 

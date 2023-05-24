@@ -23,7 +23,7 @@ public class MemberDto {
         private String password;
         @NotBlank
         private String userName;
-        private String profileBgColor;
+        private int profileIngNum;
     }
     @Getter
     @AllArgsConstructor
@@ -31,7 +31,7 @@ public class MemberDto {
         private long memberId;
         private String userName;
         private String password;
-        private String profileBgColor;
+        private int profileImgNum;
     }
 
     @Getter
@@ -39,10 +39,10 @@ public class MemberDto {
     @AllArgsConstructor
     public static class Response {
         private String status;
-        private String memberId;
+        private long memberId;
         private String email;
         private String userName;
-        private String profileBgColor;
+        private int profileImgNum;
         private List<DevPostDto.Response> posts;
         private List<CommentDto.ResponseComment> comments;
         private List<RecommendResponseDto> recommends;

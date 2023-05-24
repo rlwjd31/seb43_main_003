@@ -53,6 +53,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .cors(httpSecurityCorsConfigurer -> corsConfigurationSource())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+//                .formLogin().permitAll()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .exceptionHandling()
@@ -102,7 +103,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh","Cookie"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
 
-//        configuration.setAllowCredentials(true); // credential 설정
+        configuration.setAllowCredentials(true); // credential 설정
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -121,26 +122,10 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtUtils(), authorityUtils);
 
-//            CookieHttpOnlyFilter cookieHttpOnlyFilter = new CookieHttpOnlyFilter(jwtVerificationFilter);
-
             builder.addFilter(jwtAuthenticationFilter).addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
 
         }
     }
-
-    // 쿠키를 생성하여 httpOnly 속성을 설정하는 필터
-//@Order(2)
-//    public class CookieHttpOnlyFilter extends OncePerRequestFilter {
-//        @Override
-//        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-//            // 쿠키 생성 및 httpOnly 속성 설정
-//            Cookie cookie = new Cookie("cookieName", "cookieValue");
-//            cookie.setHttpOnly(true);
-//            response.addCookie(cookie);
-//
-//            filterChain.doFilter(request, response);
-//        }
-//    }
 
     @Bean
     public JwtUtils jwtUtils() {

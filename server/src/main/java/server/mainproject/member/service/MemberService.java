@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import server.mainproject.auth.utils.CustomAuthorityUtils;
@@ -41,12 +42,19 @@ public class MemberService {
 
     public Member updateMember(Member member) {
 
-        Member findMember = memberRepository.findByMemberId(member.getMemberId());
+//        long loginMemberId = getLoginMemberId();
+//        if (loginMemberId != member.getMemberId()) {
+//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
+//        }
+
+        Member findMember = memberRepository.findByMemberId(loginMemberId);
 
         Optional.ofNullable(member.getUserName())
                 .ifPresent(findMember::setUserName);
         Optional.ofNullable(member.getPassword())
                 .ifPresent(findMember::setPassword);
+        Optional.ofNullable(member.getProfileImgNum())
+                .ifPresent(findMember::setProfileImgNum);
 
         //변경된 비밀번호 암호화 해서 저장
         String encryptedPassword = passwordEncoder.encode(findMember.getPassword());
@@ -56,8 +64,14 @@ public class MemberService {
     }
 
     public Member findMember(long memberId) {
+        // 로그인 정보로 멤버 아이디! service쪽에 구현해서 이걸 method로 만들어서 다른 로직에서도 불러와서 사용하기!
 
-        Member findMember = memberRepository.findByMemberId(memberId);
+//        long loginMemberId = getLoginMemberId();
+//        if (loginMemberId != memberId) {
+//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
+//        }
+
+        Member findMember = memberRepository.findByMemberId(loginMemberId);
 
         return findMember;
 
@@ -68,6 +82,11 @@ public class MemberService {
     }
 
     public void deleteMember(long memberId) {
+
+//        long loginMemberId = getLoginMemberId();
+//        if (loginMemberId != memberId) {
+//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
+//        }
         memberRepository.deleteById(memberId);
     }
 
@@ -129,6 +148,12 @@ public class MemberService {
     private String getAppUrl() {
         // 애플리케이션 URL 반환
         return "http://localhost:8080";
+    }
+
+    public long getLoginMemberId() {
+        String loginEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long memberId = memberRepository.findByEmail(loginEmail).get().getMemberId();
+        return memberId;
     }
 
 }
