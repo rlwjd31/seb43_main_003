@@ -44,6 +44,7 @@ public class DevPost extends Auditable {
     private int star;
 
     @Column
+    @Lob
     private String thumbnailImage;
 
     @Column

@@ -43,6 +43,7 @@ public class DevPostService {
 
         newPost.setMember(member);
         newPost.setName(member.getUserName());
+        newPost.setStarAvg(0.0);
 
         DevPost savePost = repository.save(newPost);
 

@@ -41,12 +41,13 @@ public class DevPostController {
     @PostMapping
     public ResponseEntity postPost(@RequestBody @Valid DevPostDto.Post post) {
 
-        Member member = new Member();
-
         DevPost create = service.savePost(post);
         URI uri = URICreator.createUri("/post", create.getPostId());
 
-        return ResponseEntity.created(uri).build();
+        return new ResponseEntity(new SingleResponse<>
+                (mapper.EntityToResponse(create)), HttpStatus.OK);
+
+//        return ResponseEntity.created(uri).build();
     }
 
     @PatchMapping("/{post-id}/edit")    // todo : security 적용 후 memberId 는 제거
