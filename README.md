@@ -1,8 +1,9 @@
-* 팀 명 : 기정사실화
-* 프로젝트명 : Hello Developer
-* 프로젝트 소개 : 개발자 커뮤니티 Hello Developer
-* 프로젝트 기간 : 2023.05.01 - 2023.05.31
-* 배포링크:
+<img src="http://mainmay.s3-website.ap-northeast-2.amazonaws.com/assets/carousel-1-31edfaeb.png" alt ="이미지" width=350px height=150px>
+* 팀 명 : 기정사실화<br/>
+* 프로젝트명 : Hello Developer<br/>
+* 프로젝트 소개 : 개발자 커뮤니티 Hello Developer<br/>
+* 프로젝트 기간 : 2023.05.01 - 2023.05.31<br/>
+* 배포링크: <br/>
 
 <br/>
 
