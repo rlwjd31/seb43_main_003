@@ -23,7 +23,7 @@ public class MemberDto {
         private String password;
         @NotBlank
         private String userName;
-        private int profileIngNum;
+        private int profileImgNum;
     }
     @Getter
     @AllArgsConstructor

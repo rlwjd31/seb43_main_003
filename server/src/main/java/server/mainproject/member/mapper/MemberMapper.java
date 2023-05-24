@@ -121,28 +121,30 @@ public interface MemberMapper {
 
     //Todo : Recommend 수동 매핑
     default List<RecommendResponseDto> getRecommendResponseDtos(List<Recommend> recommends) {
+        if (recommends == null) return new ArrayList<>();
+        else {
+            return recommends.stream()
+                    .map(recommend -> new RecommendResponseDto(
+                            recommend.getRecommendsId(),
+                            recommend.getPost().getPostId(),
+                            recommend.getMember().getMemberId(),
+                            recommend.getPost().getTitle(),
+                            recommend.getPost().getSourceURL(),
+                            recommend.getPost().getStar(),
+                            recommend.getPost().getComments()
+                                    .stream()
+                                    .map(review -> review.getStar())
+                                    .mapToDouble(avr -> avr)
+                                    .average()
+                                    .orElse(0.0),
+                            recommend.getPost().getRecommend(),
+                            postMemberDtoResponse(recommend.getPost()),
+                            postTagDtoResponse(recommend.getPost().getPostTags()),
+                            commentListToResponseCommentList(recommend.getPost().getComments())
 
-        return recommends.stream()
-                .map(recommend -> new RecommendResponseDto(
-                        recommend.getRecommendsId(),
-                        recommend.getPost().getPostId(),
-                        recommend.getMember().getMemberId(),
-                        recommend.getPost().getTitle(),
-                        recommend.getPost().getSourceURL(),
-                        recommend.getPost().getStar(),
-                        recommend.getPost().getComments()
-                                .stream()
-                                .map(review -> review.getStar())
-                                .mapToDouble(avr -> avr)
-                                .average()
-                                .orElse(0.0),
-                        recommend.getPost().getRecommend(),
-                        postMemberDtoResponse (recommend.getPost()),
-                        postTagDtoResponse(recommend.getPost().getPostTags()),
-                        commentListToResponseCommentList(recommend.getPost().getComments() )
-
-                ))
-                .collect(Collectors.toList());
+                    ))
+                    .collect(Collectors.toList());
+        }
     }
 
     //Todo : Comment 수동 매핑
