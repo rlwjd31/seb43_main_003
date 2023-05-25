@@ -3,12 +3,16 @@ package server.mainproject.post.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import server.mainproject.member.entity.Member;
 import server.mainproject.member.repository.MemberRepository;
 import server.mainproject.post.dto.DevPostDto;
+import server.mainproject.post.dto.DevPostMainResponse;
 import server.mainproject.post.dto.DevPostPatchDto;
 import server.mainproject.post.entity.DevPost;
+import server.mainproject.post.entity.Recommend;
 import server.mainproject.post.mapper.DevPostMapper;
 import server.mainproject.post.repository.DevPostRepository;
 import server.mainproject.post.service.DevPostService;
@@ -37,12 +41,16 @@ public class DevPostController {
     @PostMapping
     public ResponseEntity postPost(@RequestBody @Valid DevPostDto.Post post) {
 
+        DevPost create = service.savePost(post);
 //        Member member = new Member();
 
         DevPost create = service.savedPost(post);
         URI uri = URICreator.createUri("/post", create.getPostId());
 
-        return ResponseEntity.created(uri).build();
+        return new ResponseEntity(new SingleResponse<>
+                (mapper.EntityToResponse(create)), HttpStatus.OK);
+
+//        return ResponseEntity.created(uri).build();
     }
 
     @PatchMapping("/{post-id}/edit")    // todo : security 적용 후 memberId 는 제거
