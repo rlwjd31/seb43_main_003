@@ -43,7 +43,7 @@ public class DevPost extends Auditable {
     @Column(nullable = false)
     private int star;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String thumbnailImage;
 
     @Column

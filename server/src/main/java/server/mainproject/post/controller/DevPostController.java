@@ -41,7 +41,6 @@ public class DevPostController {
     @PostMapping
     public ResponseEntity postPost(@RequestBody @Valid DevPostDto.Post post) {
 
-        DevPost create = service.savePost(post);
 //        Member member = new Member();
 
         DevPost create = service.savedPost(post);
