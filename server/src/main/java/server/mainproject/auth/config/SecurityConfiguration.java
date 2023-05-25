@@ -27,6 +27,7 @@ import server.mainproject.auth.handler.MemberAuthenticationSuccessHandler;
 import server.mainproject.auth.jwt.JwtTokenizer;
 import server.mainproject.auth.utils.CustomAuthorityUtils;
 import server.mainproject.auth.utils.JwtUtils;
+import server.mainproject.member.repository.MemberRepository;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -42,6 +43,7 @@ import java.util.Arrays;
 public class SecurityConfiguration implements WebMvcConfigurer {
     private final CustomAuthorityUtils authorityUtils;
     private final OAuth2Service oAuth2Service;
+    private final MemberRepository memberRepository;
 
 
     @Bean
@@ -114,33 +116,17 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer());
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer(), memberRepository);
             jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtUtils(), authorityUtils);
 
-//            CookieHttpOnlyFilter cookieHttpOnlyFilter = new CookieHttpOnlyFilter(jwtVerificationFilter);
-
             builder.addFilter(jwtAuthenticationFilter).addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
 
         }
     }
-
-    // 쿠키를 생성하여 httpOnly 속성을 설정하는 필터
-//@Order(2)
-//    public class CookieHttpOnlyFilter extends OncePerRequestFilter {
-//        @Override
-//        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-//            // 쿠키 생성 및 httpOnly 속성 설정
-//            Cookie cookie = new Cookie("cookieName", "cookieValue");
-//            cookie.setHttpOnly(true);
-//            response.addCookie(cookie);
-//
-//            filterChain.doFilter(request, response);
-//        }
-//    }
 
     @Bean
     public JwtUtils jwtUtils() {

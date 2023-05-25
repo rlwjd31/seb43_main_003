@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import server.mainproject.auth.dto.LoginDto;
 import server.mainproject.auth.jwt.JwtTokenizer;
 import server.mainproject.member.entity.Member;
+import server.mainproject.member.repository.MemberRepository;
 
 
 import javax.servlet.FilterChain;
@@ -31,10 +32,12 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
+    private final MemberRepository memberRepository;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer,MemberRepository memberRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
+        this.memberRepository = memberRepository;
     }
 
     @SneakyThrows
@@ -58,8 +61,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
 
+
+
         Long memberId = member.getMemberId();
+
+        Member member1 = memberRepository.findByMemberId(memberId);
+
         String userName = member.getUserName();
+        int profileImgNum = member1.getProfileImgNum();
 
         // Todo : response에 memberId 및 userName 추가! (login)
 
@@ -102,6 +111,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("memberId", memberId);
         jsonObject.put("userName", userName);
+        jsonObject.put("profileImgNum", profileImgNum);
         jsonObject.put("accessToken", Authorization);
         jsonObject.put("refreshToken", refresh);
 
@@ -111,13 +121,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // 응답 데이터 전송
         response.getWriter().write(jsonObject.toString());
-
-//        response.getWriter().write("{\"memberId\": " + memberId + "}");
-//        response.getWriter().write("{\"userName\": " + userName + "}");
-
-//        response.setHeader("Authorization", "Bearer_" + accessToken);
-//        response.setHeader("Refresh", "Bearer_" + refreshToken);
-//        response.setHeader("access-token-expiration-minutes", String.valueOf(jwtTokenizer.getAccessTokenExpirationMinutes()));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);  // 추가
     }
