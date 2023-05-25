@@ -35,7 +35,7 @@ public class DevPostService {
     private final MemberService memberService;
     private final Post_TagRepository ptr;
     private final TagRepository tagRepository;
-    public DevPost savePost(DevPostDto.Post post) {
+    public DevPost savedPost(DevPostDto.Post post) {
 
         Member member = memberService.verifiedMember(post.getMemberId());
 
@@ -47,21 +47,18 @@ public class DevPostService {
         DevPost savePost = repository.save(newPost);
 
         if (post.getTag() != null) {
-            for (String name : post.getTag()) {
-                Tag tag = tagRepository.findByName(name);
+            for (String tagName : post.getTag()) {
+                Tag tag = tagRepository.findByName(tagName);
                 Post_Tag pt = new Post_Tag();
                 if (tag == null) {
                     Tag t = new Tag();
-                    t.setName(name);
+                    t.setName(tagName);
                     pt.setTag(t);
-                    pt.setPost(savePost);
-                    ptr.save(pt);
                 }
-                else {
-                    pt.setPost(savePost);
-                    pt.setTag(tag);
-                    ptr.save(pt);
-                }
+                pt.setPost(savePost);
+                pt.setTag(tag);
+                ptr.save(pt);
+
             }
         }
 
