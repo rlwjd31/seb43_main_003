@@ -46,8 +46,8 @@ public class DevPostService {
 
         DevPost savePost = repository.save(newPost);
 
-        if (post.getTag() != null) {
-            for (String tagName : post.getTag()) {
+        if (post.getTags() != null) {
+            for (String tagName : post.getTags()) {
                 Tag tag = tagRepository.findByName(tagName);
                 Post_Tag pt = new Post_Tag();
                 if (tag == null) {
@@ -55,10 +55,11 @@ public class DevPostService {
                     t.setName(tagName);
                     pt.setTag(t);
                 }
+                if (pt.getTag() == null) {
+                    pt.setTag(tag);
+                }
                 pt.setPost(savePost);
-                pt.setTag(tag);
                 ptr.save(pt);
-
             }
         }
 

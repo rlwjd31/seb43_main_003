@@ -36,7 +36,7 @@ public class DevPostDto {
         private String thumbnailImage;
         private String sorta;
 
-        private List<String> tag;
+        private List<String> tags;
 
 
         public Member getMember () {
