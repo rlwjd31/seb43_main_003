@@ -8,7 +8,6 @@ import server.mainproject.member.dto.AuthorResponseDto;
 import server.mainproject.member.dto.MemberDto;
 import server.mainproject.member.entity.Member;
 import server.mainproject.post.dto.DevPostDto;
-import server.mainproject.post.dto.Post_TagResponseDto;
 import server.mainproject.post.dto.RecommendResponseDto;
 import server.mainproject.post.entity.DevPost;
 import server.mainproject.post.entity.Recommend;
@@ -18,7 +17,6 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
@@ -185,7 +183,7 @@ public interface MemberMapper {
                 .builder()
 //                .memberId(devPost.getMember().getMemberId())
                 .name(devPost.getMember().getUserName())
-                .profileBgColor(devPost.getMember().getProfileBgColor())
+                .profileImgNum(devPost.getMember().getProfileImgNum())
                 .build();
 
         return ar;
@@ -198,7 +196,7 @@ public interface MemberMapper {
                 .builder()
 //                .memberId(comment.getMember().getMemberId())
                 .name(comment.getMember().getUserName())
-                .profileBgColor(comment.getMember().getProfileBgColor())
+                .profileImgNum(comment.getMember().getProfileImgNum())
                 .build();
 
 

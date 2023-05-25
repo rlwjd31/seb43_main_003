@@ -28,7 +28,7 @@ public class Member extends Auditable {
     @Column(nullable = false)
     private String userName;
 
-    private String profileBgColor;
+    private int profileImgNum;
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")

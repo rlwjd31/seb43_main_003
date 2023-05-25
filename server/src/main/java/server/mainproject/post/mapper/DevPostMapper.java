@@ -6,7 +6,6 @@ import server.mainproject.comment.entity.Comment;
 import server.mainproject.member.dto.AuthorResponseDto;
 import server.mainproject.post.dto.DevPostDto;
 import server.mainproject.post.dto.DevPostMainResponse;
-import server.mainproject.post.dto.Post_TagResponseDto;
 import server.mainproject.post.entity.DevPost;
 import server.mainproject.tag.Post_Tag;
 
@@ -48,7 +47,7 @@ public interface DevPostMapper {
                             response.setAuthor(
                                     AuthorResponseDto.builder()
                                             .name(comment.getUserName()).star(comment.getStar())
-                                            .profileBgColor(comment.getMember().getProfileBgColor())
+                                            .profileImgNum(comment.getMember().getProfileImgNum())
                                             .build());
                             response.setStar(comment.getStar());
                             response.setCreatedAt(comment.getCreatedAt());
@@ -86,7 +85,7 @@ public interface DevPostMapper {
         AuthorResponseDto ar = AuthorResponseDto
                 .builder()
                 .name(devPost.getMember().getUserName())
-                .profileBgColor(devPost.getMember().getProfileBgColor())
+                .profileImgNum(devPost.getMember().getProfileImgNum())
                 .star(devPost.getStar())
                 .build();
 

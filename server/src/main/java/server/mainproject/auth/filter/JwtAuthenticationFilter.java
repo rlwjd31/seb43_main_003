@@ -87,11 +87,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        cookie4.setMaxAge(3600);
 
 //        cookie1.setDomain("localhost");
-        cookie1.setDomain("http://mainmay.s3-website.ap-northeast-2.amazonaws.com");
+        cookie1.setDomain("mainmay.s3-website.ap-northeast-2.amazonaws.com");
 //        cookie2.setDomain("localhost");
-        cookie2.setDomain("http://mainmay.s3-website.ap-northeast-2.amazonaws.com");
+        cookie2.setDomain("mainmay.s3-website.ap-northeast-2.amazonaws.com");
 //        cookie3.setDomain("localhost");
-        cookie3.setDomain("http://mainmay.s3-website.ap-northeast-2.amazonaws.com");
+        cookie3.setDomain("mainmay.s3-website.ap-northeast-2.amazonaws.com");
 
 //
         response.addCookie(cookie1);

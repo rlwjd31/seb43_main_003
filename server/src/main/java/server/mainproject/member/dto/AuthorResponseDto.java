@@ -7,5 +7,5 @@ import lombok.Getter;
 public class AuthorResponseDto {
     private String name;
     private int star;
-    private String profileBgColor;
+    private int profileImgNum;
 }
