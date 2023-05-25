@@ -112,9 +112,9 @@ public class DevPostService {
 
         Post_Tag postTag = new Post_Tag();
 
-        if (patch.getTag() != null) {
+        if (patch.getTags() != null) {
             List<Post_Tag> existingTags = find.getPostTags();
-            List<String> newTags = patch.getTag();
+            List<String> newTags = patch.getTags();
 
             existingTags.removeIf(tag -> !newTags.contains(tag.getTag().getName()));
 

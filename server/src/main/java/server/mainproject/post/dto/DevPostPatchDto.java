@@ -16,7 +16,7 @@ public class DevPostPatchDto {
     private String sourceURL;
     private String sourceMedia;
     private String thumbnailImage;
-    private List<String> tag;
+    private List<String> tags;
     private String sorta;
 
     public Member getMember () {
