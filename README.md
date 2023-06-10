@@ -32,6 +32,10 @@
 
 <br/>
 
+## ERD
+![image](https://github.com/codestates-seb/seb43_main_003/assets/88307264/df1cd12b-4fdc-41c3-81b5-c481536e170f)
+
+<br/>
 
 ## ⚙ Tech Stack
 ### 🌅 Front-end
