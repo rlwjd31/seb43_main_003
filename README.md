@@ -1,6 +1,6 @@
 <img src="http://mainmay.s3-website.ap-northeast-2.amazonaws.com/assets/carousel-1-31edfaeb.png" alt ="이미지" width=500px height=120px>
 * 팀 명 : 기정사실화<br/>
-* 프로젝트명 : DevMoa<br/>
+* 프로젝트명 : Hello, Developer<br/>
 * 프로젝트 소개 : 개발자들에게 도움이 되는 정보, 지식을 공유하는 개발자 커뮤니티 Hello Developer<br/>
 * 프로젝트 기간 : 2023.05.01 - 2023.05.31<br/>
 * 배포링크: http://mainmay.s3-website.ap-northeast-2.amazonaws.com/<br/>
@@ -25,10 +25,6 @@
 | <img src="./image/sangrae.jpeg" width=150px alt="상래"/> | <img src="./image/kyunga.jpeg" width=150px alt="경아"/> | <img src="./image/eunjung.png" width=150px alt="은정"/> |
 |[김상래](https://github.com/ksr0818)|[김경아](https://github.com/kkyunga)|[김은정](https://github.com/196code-gray)|
 
-<br/>
-
-## Demo
-###
 
 <br/>
 
